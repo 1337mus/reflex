@@ -1,0 +1,706 @@
+{
+  "checks": {
+    "kernels": {
+      "attention_implementation": "eager",
+      "optional_packages_installed": {
+        "causal_conv1d": false,
+        "fla": false,
+        "kernels": false
+      },
+      "passed": true,
+      "reference_functions_available": {
+        "causal_conv1d_fn": true,
+        "causal_conv1d_update": true,
+        "torch_chunk_gated_delta_rule": true
+      },
+      "use_hub_kernels": "NO",
+      "use_kernels_argument": false
+    },
+    "loading": {
+      "config_class": "Qwen3_5TextConfig",
+      "diagnostics": {
+        "allowed_unexpected_prefixes": [
+          "model.visual.",
+          "mtp."
+        ],
+        "error_msgs": [],
+        "mismatched_keys": [],
+        "missing_keys": [],
+        "unexpected_keys": [],
+        "unexplained_unexpected_keys": []
+      },
+      "layer_count": 24,
+      "model_class": "Qwen3_5ForCausalLM",
+      "no_meta_parameters": true,
+      "passed": true,
+      "tied_embeddings": true
+    },
+    "parity": {
+      "logit_tolerance": 0.125,
+      "passed": true,
+      "probability_tolerance": 0.02
+    },
+    "permutation_mapping": {
+      "answer_order_invariance_required": false,
+      "original_option_ids": [
+        "hold",
+        "close"
+      ],
+      "passed": true,
+      "reversed_option_ids": [
+        "close",
+        "hold"
+      ]
+    }
+  },
+  "limits": {
+    "buffer_containers": 0,
+    "cpu_physical_cores": [
+      2.0,
+      2.0
+    ],
+    "dollar_ceiling": null,
+    "gpu": "A10",
+    "input_timeout_seconds": 900,
+    "max_containers": 1,
+    "memory_mib": [
+      8192,
+      8192
+    ],
+    "min_containers": 0,
+    "retries": 0,
+    "scaledown_window_seconds": 2,
+    "single_use_containers": true,
+    "startup_timeout_seconds": 300
+  },
+  "provenance": {
+    "device": "NVIDIA A10",
+    "device_capability": [
+      8,
+      6
+    ],
+    "driver_version": "580.95.05",
+    "max_gpu_memory_allocated_bytes": 1661671936,
+    "modal_sdk_version": "1.6.1",
+    "model": "Qwen/Qwen3.5-0.8B-Base",
+    "model_revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+    "parameter_count": 752393024,
+    "python": "3.12.10",
+    "torch_cuda_runtime": "13.0",
+    "versions": {
+      "huggingface-hub": "1.33.0",
+      "pydantic": "2.13.5",
+      "safetensors": "0.8.0",
+      "tokenizers": "0.23.2",
+      "torch": "2.14.1+cu130",
+      "transformers": "5.18.0"
+    }
+  },
+  "requests": [
+    {
+      "batch": {
+        "candidate_logits": [
+          18.0,
+          18.5
+        ],
+        "scores": {
+          "abstained": false,
+          "answer_id": "close",
+          "calibration_id": null,
+          "calibration_status": "uncalibrated",
+          "min_confidence": null,
+          "model_revision": "Qwen/Qwen3.5-0.8B-Base@dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+          "reason": null,
+          "request_hash": "8f12f04fda0a641d7c28de5f4b8a986a0c93ed7da706bafa5c3008d53f5e3340",
+          "schema_hash": "8c6478edd79ae51ddf998454787a5d235d6aed07ccee1a0bb5cf78e02097a40a",
+          "scores": [
+            {
+              "log_probability": -0.9740769841801067,
+              "logit": 18.0,
+              "option_id": "hold",
+              "probability": 0.3775406687981454
+            },
+            {
+              "log_probability": -0.4740769841801067,
+              "logit": 18.5,
+              "option_id": "close",
+              "probability": 0.6224593312018546
+            }
+          ],
+          "temperature": 1.0,
+          "top_option_id": "close"
+        }
+      },
+      "candidate_mapping": [
+        {
+          "option_id": "hold",
+          "symbol": "A",
+          "token_id": 32
+        },
+        {
+          "option_id": "close",
+          "symbol": "B",
+          "token_id": 33
+        }
+      ],
+      "input_ids_hash": "72c2e86be48cd2bc970f1c8dd51bf37efd168bd37c718155e1c65e9117e10a3c",
+      "input_length": 62,
+      "mapping_consistent": true,
+      "parity": {
+        "failure_reasons": [],
+        "logit_differences": [
+          0.0,
+          0.0
+        ],
+        "logit_tolerance": 0.125,
+        "max_abs_logit_difference": 0.0,
+        "max_abs_probability_difference": 0.0,
+        "passed": true,
+        "probability_differences": [
+          0.0,
+          0.0
+        ],
+        "probability_tolerance": 0.02,
+        "top_id_agreement": true
+      },
+      "prompt_hash": "1880f265b3b7c860b9d3394255aea1c1877a4db52354b01899546b9cfd66c7a6",
+      "request_hash": "8f12f04fda0a641d7c28de5f4b8a986a0c93ed7da706bafa5c3008d53f5e3340",
+      "schema_hash": "8c6478edd79ae51ddf998454787a5d235d6aed07ccee1a0bb5cf78e02097a40a",
+      "single": {
+        "candidate_logits": [
+          18.0,
+          18.5
+        ],
+        "scores": {
+          "abstained": false,
+          "answer_id": "close",
+          "calibration_id": null,
+          "calibration_status": "uncalibrated",
+          "min_confidence": null,
+          "model_revision": "Qwen/Qwen3.5-0.8B-Base@dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+          "reason": null,
+          "request_hash": "8f12f04fda0a641d7c28de5f4b8a986a0c93ed7da706bafa5c3008d53f5e3340",
+          "schema_hash": "8c6478edd79ae51ddf998454787a5d235d6aed07ccee1a0bb5cf78e02097a40a",
+          "scores": [
+            {
+              "log_probability": -0.9740769841801067,
+              "logit": 18.0,
+              "option_id": "hold",
+              "probability": 0.3775406687981454
+            },
+            {
+              "log_probability": -0.4740769841801067,
+              "logit": 18.5,
+              "option_id": "close",
+              "probability": 0.6224593312018546
+            }
+          ],
+          "temperature": 1.0,
+          "top_option_id": "close"
+        }
+      }
+    },
+    {
+      "batch": {
+        "candidate_logits": [
+          16.625,
+          16.0,
+          15.4375,
+          15.4375,
+          15.3125,
+          12.9375,
+          14.5,
+          13.875,
+          15.125,
+          14.125,
+          15.0625,
+          13.125,
+          12.375,
+          13.625,
+          13.0625,
+          13.4375
+        ],
+        "scores": {
+          "abstained": false,
+          "answer_id": "route-01",
+          "calibration_id": null,
+          "calibration_status": "uncalibrated",
+          "min_confidence": null,
+          "model_revision": "Qwen/Qwen3.5-0.8B-Base@dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+          "reason": null,
+          "request_hash": "af758400f4fd7aa407cbba6b0dee4f0d6acec90c929657e774722745f9fea673",
+          "schema_hash": "5413d5aa577cdc26e7d45697f849a5413aeab277ab36aadc4289afcf6a76bed6",
+          "scores": [
+            {
+              "log_probability": -1.1943728615005078,
+              "logit": 16.625,
+              "option_id": "route-01",
+              "probability": 0.3028938510253458
+            },
+            {
+              "log_probability": -1.8193728615005078,
+              "logit": 16.0,
+              "option_id": "route-02",
+              "probability": 0.1621273953894448
+            },
+            {
+              "log_probability": -2.381872861500508,
+              "logit": 15.4375,
+              "option_id": "route-03",
+              "probability": 0.09237740531126508
+            },
+            {
+              "log_probability": -2.381872861500508,
+              "logit": 15.4375,
+              "option_id": "route-04",
+              "probability": 0.09237740531126508
+            },
+            {
+              "log_probability": -2.506872861500508,
+              "logit": 15.3125,
+              "option_id": "route-05",
+              "probability": 0.08152277405599317
+            },
+            {
+              "log_probability": -4.881872861500508,
+              "logit": 12.9375,
+              "option_id": "route-06",
+              "probability": 0.007582799187854535
+            },
+            {
+              "log_probability": -3.319372861500508,
+              "logit": 14.5,
+              "option_id": "route-07",
+              "probability": 0.03617551169769462
+            },
+            {
+              "log_probability": -3.944372861500508,
+              "logit": 13.875,
+              "option_id": "route-08",
+              "probability": 0.019363356068713464
+            },
+            {
+              "log_probability": -2.694372861500508,
+              "logit": 15.125,
+              "option_id": "route-09",
+              "probability": 0.06758475348726005
+            },
+            {
+              "log_probability": -3.694372861500508,
+              "logit": 14.125,
+              "option_id": "route-10",
+              "probability": 0.024863041344602915
+            },
+            {
+              "log_probability": -2.756872861500508,
+              "logit": 15.0625,
+              "option_id": "route-11",
+              "probability": 0.0634900002729607
+            },
+            {
+              "log_probability": -4.694372861500508,
+              "logit": 13.125,
+              "option_id": "route-12",
+              "probability": 0.009146601755674985
+            },
+            {
+              "log_probability": -5.444372861500508,
+              "logit": 12.375,
+              "option_id": "route-13",
+              "probability": 0.004320548740623106
+            },
+            {
+              "log_probability": -4.194372861500508,
+              "logit": 13.625,
+              "option_id": "route-14",
+              "probability": 0.015080196869204485
+            },
+            {
+              "log_probability": -4.756872861500508,
+              "logit": 13.0625,
+              "option_id": "route-15",
+              "probability": 0.008592437169633753
+            },
+            {
+              "log_probability": -4.381872861500508,
+              "logit": 13.4375,
+              "option_id": "route-16",
+              "probability": 0.012501922312463429
+            }
+          ],
+          "temperature": 1.0,
+          "top_option_id": "route-01"
+        }
+      },
+      "candidate_mapping": [
+        {
+          "option_id": "route-01",
+          "symbol": "A",
+          "token_id": 32
+        },
+        {
+          "option_id": "route-02",
+          "symbol": "B",
+          "token_id": 33
+        },
+        {
+          "option_id": "route-03",
+          "symbol": "C",
+          "token_id": 34
+        },
+        {
+          "option_id": "route-04",
+          "symbol": "D",
+          "token_id": 35
+        },
+        {
+          "option_id": "route-05",
+          "symbol": "E",
+          "token_id": 36
+        },
+        {
+          "option_id": "route-06",
+          "symbol": "F",
+          "token_id": 37
+        },
+        {
+          "option_id": "route-07",
+          "symbol": "G",
+          "token_id": 38
+        },
+        {
+          "option_id": "route-08",
+          "symbol": "H",
+          "token_id": 39
+        },
+        {
+          "option_id": "route-09",
+          "symbol": "I",
+          "token_id": 40
+        },
+        {
+          "option_id": "route-10",
+          "symbol": "J",
+          "token_id": 41
+        },
+        {
+          "option_id": "route-11",
+          "symbol": "K",
+          "token_id": 42
+        },
+        {
+          "option_id": "route-12",
+          "symbol": "L",
+          "token_id": 43
+        },
+        {
+          "option_id": "route-13",
+          "symbol": "M",
+          "token_id": 44
+        },
+        {
+          "option_id": "route-14",
+          "symbol": "N",
+          "token_id": 45
+        },
+        {
+          "option_id": "route-15",
+          "symbol": "O",
+          "token_id": 46
+        },
+        {
+          "option_id": "route-16",
+          "symbol": "P",
+          "token_id": 47
+        }
+      ],
+      "input_ids_hash": "d13495cf636f6c5759654ea9a300127d8d148ea8ae0dad37379a046282f839be",
+      "input_length": 269,
+      "mapping_consistent": true,
+      "parity": {
+        "failure_reasons": [],
+        "logit_differences": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0625,
+          -0.0625,
+          0.0,
+          0.0,
+          0.0,
+          -0.0625,
+          -0.0625,
+          -0.125,
+          0.0,
+          0.0,
+          -0.0625,
+          -0.0625
+        ],
+        "logit_tolerance": 0.125,
+        "max_abs_logit_difference": 0.125,
+        "max_abs_probability_difference": 0.004188866211296549,
+        "passed": true,
+        "probability_differences": [
+          0.004188866211296549,
+          0.002242138512133507,
+          0.001277532014881455,
+          0.001277532014881455,
+          -0.0040576369392821415,
+          -0.00037741902730964796,
+          0.0005002887252873178,
+          0.00026778525776923606,
+          0.0009346623885669592,
+          -0.001237509348166535,
+          -0.0031600908257323895,
+          -0.0010745207549765542,
+          5.975096745143831e-05,
+          0.00020855136844565893,
+          -0.0004276717869539145,
+          -0.0006222587782923686
+        ],
+        "probability_tolerance": 0.02,
+        "top_id_agreement": true
+      },
+      "prompt_hash": "ce03e9dc8dc657c5d24f7c0c0d1bce7d3b3ffed08a7e11112d786a98ce6e71bf",
+      "request_hash": "af758400f4fd7aa407cbba6b0dee4f0d6acec90c929657e774722745f9fea673",
+      "schema_hash": "5413d5aa577cdc26e7d45697f849a5413aeab277ab36aadc4289afcf6a76bed6",
+      "single": {
+        "candidate_logits": [
+          16.625,
+          16.0,
+          15.4375,
+          15.4375,
+          15.375,
+          13.0,
+          14.5,
+          13.875,
+          15.125,
+          14.1875,
+          15.125,
+          13.25,
+          12.375,
+          13.625,
+          13.125,
+          13.5
+        ],
+        "scores": {
+          "abstained": false,
+          "answer_id": "route-01",
+          "calibration_id": null,
+          "calibration_status": "uncalibrated",
+          "min_confidence": null,
+          "model_revision": "Qwen/Qwen3.5-0.8B-Base@dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+          "reason": null,
+          "request_hash": "af758400f4fd7aa407cbba6b0dee4f0d6acec90c929657e774722745f9fea673",
+          "schema_hash": "5413d5aa577cdc26e7d45697f849a5413aeab277ab36aadc4289afcf6a76bed6",
+          "scores": [
+            {
+              "log_probability": -1.2082988655362514,
+              "logit": 16.625,
+              "option_id": "route-01",
+              "probability": 0.2987049848140492
+            },
+            {
+              "log_probability": -1.8332988655362514,
+              "logit": 16.0,
+              "option_id": "route-02",
+              "probability": 0.15988525687731128
+            },
+            {
+              "log_probability": -2.3957988655362517,
+              "logit": 15.4375,
+              "option_id": "route-03",
+              "probability": 0.09109987329638362
+            },
+            {
+              "log_probability": -2.3957988655362517,
+              "logit": 15.4375,
+              "option_id": "route-04",
+              "probability": 0.09109987329638362
+            },
+            {
+              "log_probability": -2.4582988655362517,
+              "logit": 15.375,
+              "option_id": "route-05",
+              "probability": 0.08558041099527532
+            },
+            {
+              "log_probability": -4.833298865536252,
+              "logit": 13.0,
+              "option_id": "route-06",
+              "probability": 0.007960218215164183
+            },
+            {
+              "log_probability": -3.3332988655362517,
+              "logit": 14.5,
+              "option_id": "route-07",
+              "probability": 0.0356752229724073
+            },
+            {
+              "log_probability": -3.9582988655362517,
+              "logit": 13.875,
+              "option_id": "route-08",
+              "probability": 0.019095570810944228
+            },
+            {
+              "log_probability": -2.7082988655362517,
+              "logit": 15.125,
+              "option_id": "route-09",
+              "probability": 0.06665009109869309
+            },
+            {
+              "log_probability": -3.6457988655362517,
+              "logit": 14.1875,
+              "option_id": "route-10",
+              "probability": 0.02610055069276945
+            },
+            {
+              "log_probability": -2.7082988655362517,
+              "logit": 15.125,
+              "option_id": "route-11",
+              "probability": 0.06665009109869309
+            },
+            {
+              "log_probability": -4.583298865536252,
+              "logit": 13.25,
+              "option_id": "route-12",
+              "probability": 0.01022112251065154
+            },
+            {
+              "log_probability": -5.458298865536252,
+              "logit": 12.375,
+              "option_id": "route-13",
+              "probability": 0.0042607977731716675
+            },
+            {
+              "log_probability": -4.208298865536252,
+              "logit": 13.625,
+              "option_id": "route-14",
+              "probability": 0.014871645500758826
+            },
+            {
+              "log_probability": -4.708298865536252,
+              "logit": 13.125,
+              "option_id": "route-15",
+              "probability": 0.009020108956587667
+            },
+            {
+              "log_probability": -4.333298865536252,
+              "logit": 13.5,
+              "option_id": "route-16",
+              "probability": 0.013124181090755797
+            }
+          ],
+          "temperature": 1.0,
+          "top_option_id": "route-01"
+        }
+      }
+    },
+    {
+      "batch": {
+        "candidate_logits": [
+          17.375,
+          18.5
+        ],
+        "scores": {
+          "abstained": false,
+          "answer_id": "hold",
+          "calibration_id": null,
+          "calibration_status": "uncalibrated",
+          "min_confidence": null,
+          "model_revision": "Qwen/Qwen3.5-0.8B-Base@dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+          "reason": null,
+          "request_hash": "8f12f04fda0a641d7c28de5f4b8a986a0c93ed7da706bafa5c3008d53f5e3340",
+          "schema_hash": "8c6478edd79ae51ddf998454787a5d235d6aed07ccee1a0bb5cf78e02097a40a",
+          "scores": [
+            {
+              "log_probability": -1.4061501362483149,
+              "logit": 17.375,
+              "option_id": "close",
+              "probability": 0.2450850131323717
+            },
+            {
+              "log_probability": -0.2811501362483148,
+              "logit": 18.5,
+              "option_id": "hold",
+              "probability": 0.7549149868676283
+            }
+          ],
+          "temperature": 1.0,
+          "top_option_id": "hold"
+        }
+      },
+      "candidate_mapping": [
+        {
+          "option_id": "close",
+          "symbol": "A",
+          "token_id": 32
+        },
+        {
+          "option_id": "hold",
+          "symbol": "B",
+          "token_id": 33
+        }
+      ],
+      "input_ids_hash": "62cdf955f9fae71d25338758d503b15dc05b5a33264ee6da0bf93b3328ecf48f",
+      "input_length": 62,
+      "mapping_consistent": true,
+      "parity": {
+        "failure_reasons": [],
+        "logit_differences": [
+          0.0,
+          0.0
+        ],
+        "logit_tolerance": 0.125,
+        "max_abs_logit_difference": 0.0,
+        "max_abs_probability_difference": 0.0,
+        "passed": true,
+        "probability_differences": [
+          0.0,
+          0.0
+        ],
+        "probability_tolerance": 0.02,
+        "top_id_agreement": true
+      },
+      "prompt_hash": "555f25ad7f222479a707dd5eada4eae9ca34b3a44379e46e032b23ef144b3ed4",
+      "request_hash": "8f12f04fda0a641d7c28de5f4b8a986a0c93ed7da706bafa5c3008d53f5e3340",
+      "schema_hash": "8c6478edd79ae51ddf998454787a5d235d6aed07ccee1a0bb5cf78e02097a40a",
+      "single": {
+        "candidate_logits": [
+          17.375,
+          18.5
+        ],
+        "scores": {
+          "abstained": false,
+          "answer_id": "hold",
+          "calibration_id": null,
+          "calibration_status": "uncalibrated",
+          "min_confidence": null,
+          "model_revision": "Qwen/Qwen3.5-0.8B-Base@dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+          "reason": null,
+          "request_hash": "8f12f04fda0a641d7c28de5f4b8a986a0c93ed7da706bafa5c3008d53f5e3340",
+          "schema_hash": "8c6478edd79ae51ddf998454787a5d235d6aed07ccee1a0bb5cf78e02097a40a",
+          "scores": [
+            {
+              "log_probability": -1.4061501362483149,
+              "logit": 17.375,
+              "option_id": "close",
+              "probability": 0.2450850131323717
+            },
+            {
+              "log_probability": -0.2811501362483148,
+              "logit": 18.5,
+              "option_id": "hold",
+              "probability": 0.7549149868676283
+            }
+          ],
+          "temperature": 1.0,
+          "top_option_id": "hold"
+        }
+      }
+    }
+  ],
+  "schema_version": 1,
+  "status": "passed"
+}

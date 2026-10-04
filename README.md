@@ -1,6 +1,6 @@
 # Reflex
 
-Reflex is a research project for decisions over options supplied at runtime. The current CPU foundation validates decision records and split lineage, applies a deterministic policy to saved candidate logits, and computes offline evaluation metrics. It does not run a language model or train adapters.
+Reflex is a research project for decisions over options supplied at runtime. The current CPU foundation validates decision records and split lineage, applies a deterministic policy to saved candidate logits, and computes offline evaluation metrics. The CPU tools do not run a language model or train adapters. A separate, explicit Modal command is available for a one-shot Qwen compatibility smoke; no remote model inference has been verified yet.
 
 All checked-in records and logits are synthetic fixtures. They demonstrate the file formats and evaluator only; they are not model results. A narrow tokenization check on the public Qwen3.5-0.8B-Base tokenizer JSON at revision `dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68` found that the newline-ending suffix `\nAnswer:\n` tokenizes all 16 `A`–`P` candidates singly; the trailing-space suffix `\nAnswer: ` does not. This does not establish end-to-end Qwen compatibility: weight loading, inference, and batching remain unverified. There are no Reflex model accuracy or performance results.
 
@@ -23,6 +23,8 @@ uv run reflex evaluate \
 ```
 
 Validation and evaluation run locally on CPU and do not contact a model service. `evaluate` joins predictions by `record_id` and writes a JSON report with input hashes. See [the CPU foundation guide](docs/cpu-foundation.md) for the formats, metrics, calibration limits, and leakage controls.
+
+See the [Modal smoke guide](docs/modal-smoke.md) for a plan-only command and the separately guarded one-call remote check. The smoke is not an accuracy or performance evaluation.
 
 ## Research status
 

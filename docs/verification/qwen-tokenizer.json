@@ -1,0 +1,55 @@
+{
+  "model_revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+  "tokenizer_source_url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/resolve/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/tokenizer.json",
+  "tokenizer_sha256": "fe000e3ed39ed12b8d2481d527d44f93c65d37e87645d2dcc80d1bf9d50d2927",
+  "tokenizers_version": "0.23.2",
+  "checks": [
+    {
+      "option_count": 2,
+      "suffix": "\nAnswer: ",
+      "passed": false,
+      "error": "candidate symbol 'A' retokenizes the prompt boundary"
+    },
+    {
+      "option_count": 2,
+      "suffix": "\nAnswer:\n",
+      "passed": true,
+      "tokens": 54,
+      "candidates": [
+        32,
+        33
+      ]
+    },
+    {
+      "option_count": 16,
+      "suffix": "\nAnswer: ",
+      "passed": false,
+      "error": "candidate symbol 'A' retokenizes the prompt boundary"
+    },
+    {
+      "option_count": 16,
+      "suffix": "\nAnswer:\n",
+      "passed": true,
+      "tokens": 256,
+      "candidates": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ]
+    }
+  ],
+  "scope": "Tokenizer only; no model weights, inference, training, or GPU"
+}

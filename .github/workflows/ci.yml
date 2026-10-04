@@ -36,3 +36,14 @@ jobs:
 
       - name: Run tests
         run: uv run pytest
+
+      - name: Smoke test installed CLI
+        run: |
+          uv run --locked reflex validate \
+            --records data/fixtures/records.jsonl \
+            --manifest data/fixtures/manifest.json
+          uv run --locked reflex evaluate \
+            --records data/fixtures/records.jsonl \
+            --manifest data/fixtures/manifest.json \
+            --predictions data/fixtures/predictions.jsonl \
+            --output /tmp/reflex-fixture-report.json

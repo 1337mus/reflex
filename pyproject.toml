@@ -5,10 +5,13 @@ build-backend = "hatchling.build"
 [project]
 name = "reflex-decisions"
 version = "0.1.0"
-description = "CPU-side contracts for runtime-defined decisions"
+description = "CPU-side contracts and evaluation tools for runtime-defined decisions"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = ["pydantic>=2,<3"]
+
+[project.scripts]
+reflex = "reflex_decisions.cli:main"
 
 [dependency-groups]
 dev = ["mypy>=1.15", "pytest>=8", "ruff>=0.11"]
@@ -32,3 +35,4 @@ python_version = "3.12"
 strict = true
 packages = ["reflex_decisions"]
 mypy_path = "src"
+

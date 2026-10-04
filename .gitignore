@@ -1,0 +1,41 @@
+# Local-only planning context and temporary evidence packs
+.context/
+.research/
+
+# Credentials and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# Python and tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.venv/
+venv/
+
+# Experiment outputs, downloaded corpora, and model artifacts
+data/raw/
+data/cache/
+data/processed/
+datasets/
+checkpoints/
+outputs/
+artifacts/
+hf_cache/
+wandb/
+mlruns/
+lightning_logs/
+*.bin
+*.safetensors
+*.gguf
+*.ckpt
+*.pt
+*.pth

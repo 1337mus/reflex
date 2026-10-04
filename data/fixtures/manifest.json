@@ -1,0 +1,33 @@
+{
+  "data_kind": "fixture",
+  "datasets": [
+    {
+      "dataset_id": "support-routing",
+      "source_id": "synthetic-support-fixture",
+      "task_family": "support-routing",
+      "split": "test",
+      "source_uri": "local://fixtures/records.jsonl#support-routing",
+      "source_revision": "fixture-v1",
+      "license": "synthetic fixture authored for Reflex; no external data"
+    },
+    {
+      "dataset_id": "policy-action",
+      "source_id": "synthetic-policy-fixture",
+      "task_family": "policy-action",
+      "split": "test",
+      "source_uri": "local://fixtures/records.jsonl#policy-action",
+      "source_revision": "fixture-v1",
+      "license": "synthetic fixture authored for Reflex; no external data"
+    },
+    {
+      "dataset_id": "incident-triage",
+      "source_id": "synthetic-triage-fixture",
+      "task_family": "incident-triage",
+      "split": "test",
+      "source_uri": "local://fixtures/records.jsonl#incident-triage",
+      "source_revision": "fixture-v1",
+      "license": "synthetic fixture authored for Reflex; no external data"
+    }
+  ],
+  "held_out_families": ["support-routing", "policy-action", "incident-triage"]
+}

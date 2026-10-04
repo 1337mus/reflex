@@ -1,0 +1,9 @@
+{"record_id":"support-1","logits":{"billing":3.0,"access":0.0,"fraud":0.0},"model_revision":"synthetic-logits-v1","request_hash":"4da573e7f0acf6b67f26bd5b319d508a2b86b9f7af4398e0f21ffdd1829d3e61"}
+{"record_id":"support-2","logits":{"billing":0.0,"access":3.0,"fraud":0.0},"model_revision":"synthetic-logits-v1","request_hash":"86c5c7a1228130d6dc3757f54ff008d425d5e4c4a481546f480b401172eb4772"}
+{"record_id":"support-3","logits":{"billing":3.0,"access":0.0,"fraud":0.0},"model_revision":"synthetic-logits-v1","request_hash":"172fd2def93b7d0298e283f7535f1871209cf66395ecbbe9311d79044e70d828"}
+{"record_id":"policy-1","logits":{"allow":2.0,"deny":0.0},"model_revision":"synthetic-logits-v1","request_hash":"e5a26fc0aee74d3c046e3a7401b07ff0d1e0257bf2a9eda46f7ef534834d68f2"}
+{"record_id":"policy-2","logits":{"allow":0.0,"deny":2.0},"model_revision":"synthetic-logits-v1","request_hash":"404a9bd60b43a2425a184a8c534422a11ea8c7f535f8db40b9b15dffcafa62b7"}
+{"record_id":"policy-3","logits":{"allow":0.0,"deny":0.0},"model_revision":"synthetic-logits-v1","request_hash":"e2f38e31165e1e175c0f2445a8945316afc762068ffa0134240f0e584262bf9d"}
+{"record_id":"triage-1","logits":{"routine":0.0,"urgent":3.0,"unknown":0.0},"model_revision":"synthetic-logits-v1","request_hash":"361f0171b7bfb3f889b23932bf1609c74ad54d84a559261f556250223ff60ac0"}
+{"record_id":"triage-2","logits":{"routine":0.0,"urgent":0.0,"unknown":0.0},"model_revision":"synthetic-logits-v1","request_hash":"15f88286aeb67e22507b9ba754ca9f2b5106feb0d859f2a43c862e7e9a4a519a"}
+{"record_id":"triage-3","logits":{"routine":2.0,"urgent":0.0,"unknown":0.0},"model_revision":"synthetic-logits-v1","request_hash":"0f41496215df454e7b6bc296957e34ce3e69bf05db06aa70938f8e61af5e79b6"}

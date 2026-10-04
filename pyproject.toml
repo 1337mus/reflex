@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "reflex-decisions"
+version = "0.1.0"
+description = "CPU-side contracts for runtime-defined decisions"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2,<3"]
+
+[dependency-groups]
+dev = ["mypy>=1.15", "pytest>=8", "ruff>=0.11"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/reflex_decisions"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["reflex_decisions"]
+mypy_path = "src"

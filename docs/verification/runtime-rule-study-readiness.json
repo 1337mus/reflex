@@ -1210,11 +1210,10 @@
   },
   "preflight_git_head_interpretation": "The aggregate git_head records the checkout HEAD at preflight time. The final signed and pushed source commit is the separately pinned source_commit; source identity is bound by the frozen SHA-256 values.",
   "readiness_limits": [
-    "Data, schedules, saved answers, analysis rules, worker input packages and partial-work accounting are verified.",
-    "No new study model training or scoring has run.",
-    "New calibration and test content remains sealed and unused.",
-    "There are only 14 development groups per new family and one study seed. The treatment has about 55% more training tokens.",
-    "Returned-result validation, the GPU runtime, launch host and concrete launch checks remain unfinished."
+    "The fixed study completed and passed execution/storage checks; the learning recipe failed 4 of 21 checks.",
+    "Calibration and test content remains sealed and unused.",
+    "Only 14 development groups per new family and one study seed; new practice used about 55 percent more training text.",
+    "The earlier selected adapter remains selected; any later training needs a new data plan and fixed comparison."
   ],
   "root_checks": {
     "checks": [
@@ -1324,7 +1323,7 @@
     "sha": "c883de9f0053e82554fab332fbb5b86a980a54ea",
     "url": "https://github.com/1337mus/reflex/commit/c883de9f0053e82554fab332fbb5b86a980a54ea"
   },
-  "status": "prelaunch_cpu_result_validation_verified",
+  "status": "fixed_study_completed_learning_gate_failed",
   "cache_statistics_and_worker_contracts": {
     "status": "verified",
     "source_freeze_sha256": {
@@ -2089,5 +2088,129 @@
       "Finish and review GPU scorer, fixed training loop, worker entry point and Modal host.",
       "Freeze real study inputs and exact signed source; verify CI and refresh personal Modal usage before compute."
     ]
-  }
+  },
+  "runner_delivery": {
+    "source_commit": "6fa151e4d10ed61d44da35a89e89d8dbe751c5be",
+    "ci_run_id": 37314334195,
+    "ci_conclusion": "success",
+    "ci_tests_passed": 1178,
+    "independent_reviews": "approved",
+    "historical_sources_unchanged": 60,
+    "candidate_files": 16
+  },
+  "study_r1_launch": {
+    "study_id": "runtime-rules-2026-10-05-r1",
+    "source_commit": "6fa151e4d10ed61d44da35a89e89d8dbe751c5be",
+    "source_files": 87,
+    "plan_sha256": "d380eb726051ceb502230064a10d254f142c5f85c4d47d835921feff01a56b57",
+    "rates_sha256": "e88674673c2e41e4d73f8a9b425e6d89b9091db455b9c0e73115fc61a3039eaf",
+    "bundle_sha256": "8317e3228b700811b2d24b16319a84f46f3229a116c34a09fcf6a70c267c715c",
+    "roles": {
+      "unchanged": {
+        "payload_sha256": "5cf99577436fda142d0188eeb8e8fea7bf84e90a8815f33e04ed5417d489fa9c",
+        "payload_file_sha256": "79d1684bd654a826734b6f06d42809b40af429366da5c6663b1fc03f2fa1812c",
+        "forward_counts": {
+          "final_evaluation": 164,
+          "reload_parity": 0,
+          "total": 164,
+          "training": 0
+        },
+        "input_token_counts": {
+          "training": 0,
+          "final_evaluation": 92958,
+          "reload_parity": 0,
+          "total": 92958
+        },
+        "worker_settings": {
+          "buffer_containers": 0,
+          "cpu": 2,
+          "gpu": "A10",
+          "memory_mib": 16384,
+          "min_containers": 0,
+          "retries": 0,
+          "scaledown_window_seconds": 2,
+          "single_use": true,
+          "startup_timeout_seconds": 300,
+          "timeout_seconds": 900
+        }
+      },
+      "continued_practice": {
+        "payload_sha256": "ec7f0312eb5f714cadb8e1e0403c91d512b52e5f527097b20ebca315fac684d6",
+        "payload_file_sha256": "73df35e45b5582ae42210bf30053e530c99283b766471c14aa20195a8c273aa8",
+        "forward_counts": {
+          "final_evaluation": 3946,
+          "reload_parity": 32,
+          "total": 5322,
+          "training": 1344
+        },
+        "input_token_counts": {
+          "training": 225924,
+          "final_evaluation": 921580,
+          "reload_parity": 16436,
+          "total": 1163940
+        },
+        "worker_settings": {
+          "buffer_containers": 0,
+          "cpu": 2,
+          "gpu": "A10",
+          "memory_mib": 16384,
+          "min_containers": 0,
+          "retries": 0,
+          "scaledown_window_seconds": 2,
+          "single_use": true,
+          "startup_timeout_seconds": 300,
+          "timeout_seconds": 3600
+        }
+      },
+      "runtime_mix": {
+        "payload_sha256": "a809a2a8e58387c38ff3b3220286401f41da79b836cd6d2cc472f1f272d5046a",
+        "payload_file_sha256": "c2c7ff08a470a00d6b0bf6038136e853c7b74d1367c8efef63d4a5858f2257f4",
+        "forward_counts": {
+          "final_evaluation": 3946,
+          "reload_parity": 32,
+          "total": 5322,
+          "training": 1344
+        },
+        "input_token_counts": {
+          "training": 349296,
+          "final_evaluation": 921580,
+          "reload_parity": 16436,
+          "total": 1287312
+        },
+        "worker_settings": {
+          "buffer_containers": 0,
+          "cpu": 2,
+          "gpu": "A10",
+          "memory_mib": 16384,
+          "min_containers": 0,
+          "retries": 0,
+          "scaledown_window_seconds": 2,
+          "single_use": true,
+          "startup_timeout_seconds": 300,
+          "timeout_seconds": 3600
+        }
+      }
+    },
+    "authorized_at_utc": "2026-10-05T13:18:16Z",
+    "status": "completed_execution_passed_learning_gate_failed",
+    "metered_workspace_usd_before_launch": "2.30658054",
+    "billed_after_credits_usd_before_launch": "0",
+    "fixed_worker_estimate_usd": "3.32",
+    "reserve_usd": "10",
+    "calibration_test_read": false,
+    "local_model_execution": false
+  },
+  "study_r1_result": {
+    "summary": "docs/verification/runtime-rule-study-summary.json",
+    "report": "docs/runtime-rule-study-results.md",
+    "execution_passed": true,
+    "learning_gate_passed": false,
+    "checks_passed": 17,
+    "checks_total": 21,
+    "saved_files_verified": 14,
+    "apps_stopped_zero_tasks": 2,
+    "candidate_promoted": false
+  },
+  "historical_checkpoint_note": "The source_commit and implementation evidence sections record earlier CPU checkpoints. Their pending/no-model-execution statements are historical. runner_delivery and study_r1_result describe the completed current study; no work in the fixed study remains.",
+  "current_study_source_commit": "6fa151e4d10ed61d44da35a89e89d8dbe751c5be"
 }

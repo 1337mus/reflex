@@ -1,0 +1,1950 @@
+{
+  "date": "2026-10-05",
+  "study_id": "runtime-rules-2026-10-05-r1",
+  "status": "completed_learning_gate_failed",
+  "execution_passed": true,
+  "learning_gate_passed": false,
+  "checks_passed": 17,
+  "checks_total": 21,
+  "candidate_promoted": false,
+  "sealed_calibration_or_test_used": false,
+  "local_model_execution": false,
+  "source_commit": "6fa151e4d10ed61d44da35a89e89d8dbe751c5be",
+  "source_ci_run_id": 37314334195,
+  "source_ci_tests_passed": 1178,
+  "plan_sha256": "d380eb726051ceb502230064a10d254f142c5f85c4d47d835921feff01a56b57",
+  "evidence_files_sha256": {
+    "artifacts/runtime-rules-2026-10-05-r1-host-receipt.json": "4bc33b90ae8e388c60fd4d5cbd76210517642ef0b480770e193c7ff6fcc3c259",
+    "artifacts/runtime-rules-2026-10-05-r1-audit.json": "3926c5b55058b0de4d8776fd1367bee1876a3d9804696df8687713ce00aab1f8",
+    "artifacts/runtime-rules-2026-10-05-r1-storage-verification.json": "5cd28f0b2597b11b059a7613c968c62ff1b984bcb70c9ed09136ce0dcbbd6cd1",
+    "artifacts/runtime-rules-2026-10-05-r1-teardown-billing.json": "d57314e09c10d68250a188c529ce41948b642dda8c0e33318a113ae642cb719c",
+    "artifacts/runtime-rules-2026-10-05-r1-development-errors.json": "af1c5b4c42cc7c956bd10eaf597e4af460a9070c88508d7df60fe32e55955ede"
+  },
+  "audit": {
+    "script_sha256": "54e629cbeea4f1e7495e7f1cb99d8037062792b3efc7a222be81777098937af6",
+    "checks": {
+      "all_21_gates_match": true,
+      "bootstrap_intervals_match": true,
+      "point_deltas_match": true,
+      "task_aggregates_match": true
+    }
+  },
+  "analysis": {
+    "bootstrap": {
+      "percentile_interpolation": "type-7 at h=(n-1)*p, p=0.025 and 0.975",
+      "replicates": 2000,
+      "resample_bank_sha256": "97bf6d968a427e924b1b1d7b4e01f7e7f775c0ac67067b6226072f74ec9d4b73",
+      "sampling_unit": "source_group_id within task; new family macro pairs routing and tool draws",
+      "seed": 20266010
+    },
+    "gates": {
+      "components": {
+        "runtime_mix_minus_continued_practice.boolq-dev-pilot-v1_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 32,
+              "numerator": -1
+            },
+            "value": -0.03125
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.140625,
+            "upper": 0.047265625
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.copa-dev-pilot-v1_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 64,
+              "numerator": 1
+            },
+            "value": 0.015625
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": 0.0,
+            "upper": 0.046875
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.dbpedia14-pilot-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 392,
+              "numerator": 1
+            },
+            "value": 0.002551020408163265
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.004464285714285714,
+            "upper": 0.009582270408163266
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.new_family_macro_minimum": {
+          "delta": {
+            "fraction": {
+              "denominator": 24,
+              "numerator": 1
+            },
+            "value": 0.041666666666666664
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": 1
+            },
+            "value": 0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.15773809523809523,
+            "upper": 0.23214285714285715
+          },
+          "passed": false,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.new_family_macro_positive_interval": {
+          "delta": {
+            "fraction": {
+              "denominator": 24,
+              "numerator": 1
+            },
+            "value": 0.041666666666666664
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.15773809523809523,
+            "upper": 0.23214285714285715
+          },
+          "passed": false,
+          "positive_interval_lower_required": true
+        },
+        "runtime_mix_minus_continued_practice.routing-data-v1-development_nonnegative": {
+          "delta": {
+            "fraction": {
+              "denominator": 21,
+              "numerator": 2
+            },
+            "value": 0.09523809523809523
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.22924107142857142,
+            "upper": 0.4166666666666667
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.sms-pilot-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": 0.0,
+            "upper": 0.0
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.snli-balanced-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 384,
+              "numerator": -11
+            },
+            "value": -0.028645833333333332
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.06336805555555555,
+            "upper": 0.005208333333333333
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.synthetic-atomic-fact-inference-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": 0.0,
+            "upper": 0.0
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.synthetic-numeric-selection-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 800,
+              "numerator": -17
+            },
+            "value": -0.02125
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.06253125,
+            "upper": 0.0125
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_continued_practice.tool-data-v1-development_nonnegative": {
+          "delta": {
+            "fraction": {
+              "denominator": 84,
+              "numerator": -1
+            },
+            "value": -0.011904761904761904
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.20238095238095238,
+            "upper": 0.21726190476190477
+          },
+          "passed": false,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.boolq-dev-pilot-v1_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 32,
+              "numerator": 1
+            },
+            "value": 0.03125
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.0625,
+            "upper": 0.125
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.copa-dev-pilot-v1_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 32,
+              "numerator": -1
+            },
+            "value": -0.03125
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.09375,
+            "upper": 0.015625
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.dbpedia14-pilot-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 1568,
+              "numerator": 23
+            },
+            "value": 0.014668367346938776
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": 0.0,
+            "upper": 0.04145408163265306
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.new_family_macro_minimum": {
+          "delta": {
+            "fraction": {
+              "denominator": 56,
+              "numerator": 3
+            },
+            "value": 0.05357142857142857
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": 1
+            },
+            "value": 0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.11755952380952381,
+            "upper": 0.22027529761904763
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.routing-data-v1-development_nonnegative": {
+          "delta": {
+            "fraction": {
+              "denominator": 336,
+              "numerator": 55
+            },
+            "value": 0.1636904761904762
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.1072172619047619,
+            "upper": 0.42566964285714287
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.sms-pilot-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.025,
+            "upper": 0.025
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.snli-balanced-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 576,
+              "numerator": 1
+            },
+            "value": 0.001736111111111111
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.025173611111111112,
+            "upper": 0.026909722222222224
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.synthetic-atomic-fact-inference-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 75,
+              "numerator": 1
+            },
+            "value": 0.013333333333333334
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": 0.0044444444444444444,
+            "upper": 0.022222222222222223
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.synthetic-numeric-selection-v1-development_retention_floor": {
+          "delta": {
+            "fraction": {
+              "denominator": 800,
+              "numerator": 53
+            },
+            "value": 0.06625
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 20,
+              "numerator": -1
+            },
+            "value": -0.05
+          },
+          "paired_bootstrap_95": {
+            "lower": 0.01375,
+            "upper": 0.1225
+          },
+          "passed": true,
+          "positive_interval_lower_required": false
+        },
+        "runtime_mix_minus_unchanged.tool-data-v1-development_nonnegative": {
+          "delta": {
+            "fraction": {
+              "denominator": 336,
+              "numerator": -19
+            },
+            "value": -0.05654761904761905
+          },
+          "minimum": {
+            "fraction": {
+              "denominator": 1,
+              "numerator": 0
+            },
+            "value": 0.0
+          },
+          "paired_bootstrap_95": {
+            "lower": -0.23511904761904762,
+            "upper": 0.16666666666666666
+          },
+          "passed": false,
+          "positive_interval_lower_required": false
+        }
+      },
+      "overall_passed": false
+    },
+    "paired_bootstrap_95": {
+      "runtime_mix_minus_continued_practice": {
+        "boolq-dev-pilot-v1": {
+          "lower": -0.140625,
+          "upper": 0.047265625
+        },
+        "copa-dev-pilot-v1": {
+          "lower": 0.0,
+          "upper": 0.046875
+        },
+        "dbpedia14-pilot-v1-development": {
+          "lower": -0.004464285714285714,
+          "upper": 0.009582270408163266
+        },
+        "new_family_macro": {
+          "lower": -0.15773809523809523,
+          "upper": 0.23214285714285715
+        },
+        "routing-data-v1-development": {
+          "lower": -0.22924107142857142,
+          "upper": 0.4166666666666667
+        },
+        "sms-pilot-v1-development": {
+          "lower": 0.0,
+          "upper": 0.0
+        },
+        "snli-balanced-v1-development": {
+          "lower": -0.06336805555555555,
+          "upper": 0.005208333333333333
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "lower": 0.0,
+          "upper": 0.0
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "lower": -0.06253125,
+          "upper": 0.0125
+        },
+        "tool-data-v1-development": {
+          "lower": -0.20238095238095238,
+          "upper": 0.21726190476190477
+        }
+      },
+      "runtime_mix_minus_unchanged": {
+        "boolq-dev-pilot-v1": {
+          "lower": -0.0625,
+          "upper": 0.125
+        },
+        "copa-dev-pilot-v1": {
+          "lower": -0.09375,
+          "upper": 0.015625
+        },
+        "dbpedia14-pilot-v1-development": {
+          "lower": 0.0,
+          "upper": 0.04145408163265306
+        },
+        "new_family_macro": {
+          "lower": -0.11755952380952381,
+          "upper": 0.22027529761904763
+        },
+        "routing-data-v1-development": {
+          "lower": -0.1072172619047619,
+          "upper": 0.42566964285714287
+        },
+        "sms-pilot-v1-development": {
+          "lower": -0.025,
+          "upper": 0.025
+        },
+        "snli-balanced-v1-development": {
+          "lower": -0.025173611111111112,
+          "upper": 0.026909722222222224
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "lower": 0.0044444444444444444,
+          "upper": 0.022222222222222223
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "lower": 0.01375,
+          "upper": 0.1225
+        },
+        "tool-data-v1-development": {
+          "lower": -0.23511904761904762,
+          "upper": 0.16666666666666666
+        }
+      }
+    },
+    "point_deltas": {
+      "runtime_mix_minus_continued_practice": {
+        "boolq-dev-pilot-v1": {
+          "fraction": {
+            "denominator": 32,
+            "numerator": -1
+          },
+          "value": -0.03125
+        },
+        "copa-dev-pilot-v1": {
+          "fraction": {
+            "denominator": 64,
+            "numerator": 1
+          },
+          "value": 0.015625
+        },
+        "dbpedia14-pilot-v1-development": {
+          "fraction": {
+            "denominator": 392,
+            "numerator": 1
+          },
+          "value": 0.002551020408163265
+        },
+        "new_family_macro": {
+          "fraction": {
+            "denominator": 24,
+            "numerator": 1
+          },
+          "value": 0.041666666666666664
+        },
+        "routing-data-v1-development": {
+          "fraction": {
+            "denominator": 21,
+            "numerator": 2
+          },
+          "value": 0.09523809523809523
+        },
+        "sms-pilot-v1-development": {
+          "fraction": {
+            "denominator": 1,
+            "numerator": 0
+          },
+          "value": 0.0
+        },
+        "snli-balanced-v1-development": {
+          "fraction": {
+            "denominator": 384,
+            "numerator": -11
+          },
+          "value": -0.028645833333333332
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "fraction": {
+            "denominator": 1,
+            "numerator": 0
+          },
+          "value": 0.0
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "fraction": {
+            "denominator": 800,
+            "numerator": -17
+          },
+          "value": -0.02125
+        },
+        "tool-data-v1-development": {
+          "fraction": {
+            "denominator": 84,
+            "numerator": -1
+          },
+          "value": -0.011904761904761904
+        }
+      },
+      "runtime_mix_minus_unchanged": {
+        "boolq-dev-pilot-v1": {
+          "fraction": {
+            "denominator": 32,
+            "numerator": 1
+          },
+          "value": 0.03125
+        },
+        "copa-dev-pilot-v1": {
+          "fraction": {
+            "denominator": 32,
+            "numerator": -1
+          },
+          "value": -0.03125
+        },
+        "dbpedia14-pilot-v1-development": {
+          "fraction": {
+            "denominator": 1568,
+            "numerator": 23
+          },
+          "value": 0.014668367346938776
+        },
+        "new_family_macro": {
+          "fraction": {
+            "denominator": 56,
+            "numerator": 3
+          },
+          "value": 0.05357142857142857
+        },
+        "routing-data-v1-development": {
+          "fraction": {
+            "denominator": 336,
+            "numerator": 55
+          },
+          "value": 0.1636904761904762
+        },
+        "sms-pilot-v1-development": {
+          "fraction": {
+            "denominator": 1,
+            "numerator": 0
+          },
+          "value": 0.0
+        },
+        "snli-balanced-v1-development": {
+          "fraction": {
+            "denominator": 576,
+            "numerator": 1
+          },
+          "value": 0.001736111111111111
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "fraction": {
+            "denominator": 75,
+            "numerator": 1
+          },
+          "value": 0.013333333333333334
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "fraction": {
+            "denominator": 800,
+            "numerator": 53
+          },
+          "value": 0.06625
+        },
+        "tool-data-v1-development": {
+          "fraction": {
+            "denominator": 336,
+            "numerator": -19
+          },
+          "value": -0.05654761904761905
+        }
+      }
+    },
+    "states": {
+      "continued_practice": {
+        "new_family_macro_accuracy": 0.33035714285714285,
+        "new_family_macro_accuracy_fraction": {
+          "denominator": 112,
+          "numerator": 37
+        },
+        "tasks": {
+          "boolq-dev-pilot-v1": {
+            "accuracy": 0.84375,
+            "accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 27
+            },
+            "original_order_accuracy": 0.875,
+            "original_order_accuracy_fraction": {
+              "denominator": 8,
+              "numerator": 7
+            },
+            "original_order_correct": 28,
+            "original_order_presentations": 32,
+            "raw_accuracy": 0.84375,
+            "raw_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 27
+            },
+            "raw_correct": 54,
+            "raw_presentations": 64,
+            "record_count": 32,
+            "source_group_count": 32
+          },
+          "copa-dev-pilot-v1": {
+            "accuracy": 0.859375,
+            "accuracy_fraction": {
+              "denominator": 64,
+              "numerator": 55
+            },
+            "original_order_accuracy": 0.78125,
+            "original_order_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 25
+            },
+            "original_order_correct": 25,
+            "original_order_presentations": 32,
+            "raw_accuracy": 0.859375,
+            "raw_accuracy_fraction": {
+              "denominator": 64,
+              "numerator": 55
+            },
+            "raw_correct": 55,
+            "raw_presentations": 64,
+            "record_count": 32,
+            "source_group_count": 32
+          },
+          "dbpedia14-pilot-v1-development": {
+            "accuracy": 0.9853316326530612,
+            "accuracy_fraction": {
+              "denominator": 1568,
+              "numerator": 1545
+            },
+            "original_order_accuracy": 1.0,
+            "original_order_accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "original_order_correct": 56,
+            "original_order_presentations": 56,
+            "raw_accuracy": 0.9853316326530612,
+            "raw_accuracy_fraction": {
+              "denominator": 1568,
+              "numerator": 1545
+            },
+            "raw_correct": 1545,
+            "raw_presentations": 1568,
+            "record_count": 56,
+            "source_group_count": 56
+          },
+          "routing-data-v1-development": {
+            "accuracy": 0.2857142857142857,
+            "accuracy_fraction": {
+              "denominator": 7,
+              "numerator": 2
+            },
+            "original_order_accuracy": 0.2857142857142857,
+            "original_order_accuracy_fraction": {
+              "denominator": 7,
+              "numerator": 2
+            },
+            "original_order_correct": 4,
+            "original_order_presentations": 14,
+            "raw_accuracy": 0.2682926829268293,
+            "raw_accuracy_fraction": {
+              "denominator": 41,
+              "numerator": 11
+            },
+            "raw_correct": 22,
+            "raw_presentations": 82,
+            "record_count": 14,
+            "source_group_count": 14
+          },
+          "sms-pilot-v1-development": {
+            "accuracy": 0.9666666666666667,
+            "accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "original_order_accuracy": 0.9666666666666667,
+            "original_order_accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "original_order_correct": 58,
+            "original_order_presentations": 60,
+            "raw_accuracy": 0.9666666666666667,
+            "raw_accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "raw_correct": 116,
+            "raw_presentations": 120,
+            "record_count": 60,
+            "source_group_count": 60
+          },
+          "snli-balanced-v1-development": {
+            "accuracy": 0.8949652777777778,
+            "accuracy_fraction": {
+              "denominator": 1152,
+              "numerator": 1031
+            },
+            "original_order_accuracy": 0.9114583333333334,
+            "original_order_accuracy_fraction": {
+              "denominator": 192,
+              "numerator": 175
+            },
+            "original_order_correct": 175,
+            "original_order_presentations": 192,
+            "raw_accuracy": 0.8949652777777778,
+            "raw_accuracy_fraction": {
+              "denominator": 1152,
+              "numerator": 1031
+            },
+            "raw_correct": 1031,
+            "raw_presentations": 1152,
+            "record_count": 192,
+            "source_group_count": 64
+          },
+          "synthetic-atomic-fact-inference-v1-development": {
+            "accuracy": 1.0,
+            "accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "original_order_accuracy": 1.0,
+            "original_order_accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "original_order_correct": 75,
+            "original_order_presentations": 75,
+            "raw_accuracy": 1.0,
+            "raw_accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "raw_correct": 450,
+            "raw_presentations": 450,
+            "record_count": 75,
+            "source_group_count": 25
+          },
+          "synthetic-numeric-selection-v1-development": {
+            "accuracy": 0.9,
+            "accuracy_fraction": {
+              "denominator": 10,
+              "numerator": 9
+            },
+            "original_order_accuracy": 0.94,
+            "original_order_accuracy_fraction": {
+              "denominator": 50,
+              "numerator": 47
+            },
+            "original_order_correct": 47,
+            "original_order_presentations": 50,
+            "raw_accuracy": 0.8571428571428571,
+            "raw_accuracy_fraction": {
+              "denominator": 7,
+              "numerator": 6
+            },
+            "raw_correct": 312,
+            "raw_presentations": 364,
+            "record_count": 50,
+            "source_group_count": 25
+          },
+          "tool-data-v1-development": {
+            "accuracy": 0.375,
+            "accuracy_fraction": {
+              "denominator": 8,
+              "numerator": 3
+            },
+            "original_order_accuracy": 0.2857142857142857,
+            "original_order_accuracy_fraction": {
+              "denominator": 7,
+              "numerator": 2
+            },
+            "original_order_correct": 4,
+            "original_order_presentations": 14,
+            "raw_accuracy": 0.4146341463414634,
+            "raw_accuracy_fraction": {
+              "denominator": 41,
+              "numerator": 17
+            },
+            "raw_correct": 34,
+            "raw_presentations": 82,
+            "record_count": 14,
+            "source_group_count": 14
+          }
+        }
+      },
+      "runtime_mix": {
+        "new_family_macro_accuracy": 0.37202380952380953,
+        "new_family_macro_accuracy_fraction": {
+          "denominator": 336,
+          "numerator": 125
+        },
+        "tasks": {
+          "boolq-dev-pilot-v1": {
+            "accuracy": 0.8125,
+            "accuracy_fraction": {
+              "denominator": 16,
+              "numerator": 13
+            },
+            "original_order_accuracy": 0.84375,
+            "original_order_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 27
+            },
+            "original_order_correct": 27,
+            "original_order_presentations": 32,
+            "raw_accuracy": 0.8125,
+            "raw_accuracy_fraction": {
+              "denominator": 16,
+              "numerator": 13
+            },
+            "raw_correct": 52,
+            "raw_presentations": 64,
+            "record_count": 32,
+            "source_group_count": 32
+          },
+          "copa-dev-pilot-v1": {
+            "accuracy": 0.875,
+            "accuracy_fraction": {
+              "denominator": 8,
+              "numerator": 7
+            },
+            "original_order_accuracy": 0.78125,
+            "original_order_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 25
+            },
+            "original_order_correct": 25,
+            "original_order_presentations": 32,
+            "raw_accuracy": 0.875,
+            "raw_accuracy_fraction": {
+              "denominator": 8,
+              "numerator": 7
+            },
+            "raw_correct": 56,
+            "raw_presentations": 64,
+            "record_count": 32,
+            "source_group_count": 32
+          },
+          "dbpedia14-pilot-v1-development": {
+            "accuracy": 0.9878826530612245,
+            "accuracy_fraction": {
+              "denominator": 1568,
+              "numerator": 1549
+            },
+            "original_order_accuracy": 1.0,
+            "original_order_accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "original_order_correct": 56,
+            "original_order_presentations": 56,
+            "raw_accuracy": 0.9878826530612245,
+            "raw_accuracy_fraction": {
+              "denominator": 1568,
+              "numerator": 1549
+            },
+            "raw_correct": 1549,
+            "raw_presentations": 1568,
+            "record_count": 56,
+            "source_group_count": 56
+          },
+          "routing-data-v1-development": {
+            "accuracy": 0.38095238095238093,
+            "accuracy_fraction": {
+              "denominator": 21,
+              "numerator": 8
+            },
+            "original_order_accuracy": 0.5714285714285714,
+            "original_order_accuracy_fraction": {
+              "denominator": 7,
+              "numerator": 4
+            },
+            "original_order_correct": 8,
+            "original_order_presentations": 14,
+            "raw_accuracy": 0.3902439024390244,
+            "raw_accuracy_fraction": {
+              "denominator": 41,
+              "numerator": 16
+            },
+            "raw_correct": 32,
+            "raw_presentations": 82,
+            "record_count": 14,
+            "source_group_count": 14
+          },
+          "sms-pilot-v1-development": {
+            "accuracy": 0.9666666666666667,
+            "accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "original_order_accuracy": 0.9666666666666667,
+            "original_order_accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "original_order_correct": 58,
+            "original_order_presentations": 60,
+            "raw_accuracy": 0.9666666666666667,
+            "raw_accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "raw_correct": 116,
+            "raw_presentations": 120,
+            "record_count": 60,
+            "source_group_count": 60
+          },
+          "snli-balanced-v1-development": {
+            "accuracy": 0.8663194444444444,
+            "accuracy_fraction": {
+              "denominator": 576,
+              "numerator": 499
+            },
+            "original_order_accuracy": 0.875,
+            "original_order_accuracy_fraction": {
+              "denominator": 8,
+              "numerator": 7
+            },
+            "original_order_correct": 168,
+            "original_order_presentations": 192,
+            "raw_accuracy": 0.8663194444444444,
+            "raw_accuracy_fraction": {
+              "denominator": 576,
+              "numerator": 499
+            },
+            "raw_correct": 998,
+            "raw_presentations": 1152,
+            "record_count": 192,
+            "source_group_count": 64
+          },
+          "synthetic-atomic-fact-inference-v1-development": {
+            "accuracy": 1.0,
+            "accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "original_order_accuracy": 1.0,
+            "original_order_accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "original_order_correct": 75,
+            "original_order_presentations": 75,
+            "raw_accuracy": 1.0,
+            "raw_accuracy_fraction": {
+              "denominator": 1,
+              "numerator": 1
+            },
+            "raw_correct": 450,
+            "raw_presentations": 450,
+            "record_count": 75,
+            "source_group_count": 25
+          },
+          "synthetic-numeric-selection-v1-development": {
+            "accuracy": 0.87875,
+            "accuracy_fraction": {
+              "denominator": 800,
+              "numerator": 703
+            },
+            "original_order_accuracy": 0.9,
+            "original_order_accuracy_fraction": {
+              "denominator": 10,
+              "numerator": 9
+            },
+            "original_order_correct": 45,
+            "original_order_presentations": 50,
+            "raw_accuracy": 0.8076923076923077,
+            "raw_accuracy_fraction": {
+              "denominator": 26,
+              "numerator": 21
+            },
+            "raw_correct": 294,
+            "raw_presentations": 364,
+            "record_count": 50,
+            "source_group_count": 25
+          },
+          "tool-data-v1-development": {
+            "accuracy": 0.3630952380952381,
+            "accuracy_fraction": {
+              "denominator": 168,
+              "numerator": 61
+            },
+            "original_order_accuracy": 0.21428571428571427,
+            "original_order_accuracy_fraction": {
+              "denominator": 14,
+              "numerator": 3
+            },
+            "original_order_correct": 3,
+            "original_order_presentations": 14,
+            "raw_accuracy": 0.3902439024390244,
+            "raw_accuracy_fraction": {
+              "denominator": 41,
+              "numerator": 16
+            },
+            "raw_correct": 32,
+            "raw_presentations": 82,
+            "record_count": 14,
+            "source_group_count": 14
+          }
+        }
+      },
+      "unchanged": {
+        "new_family_macro_accuracy": 0.31845238095238093,
+        "new_family_macro_accuracy_fraction": {
+          "denominator": 336,
+          "numerator": 107
+        },
+        "tasks": {
+          "boolq-dev-pilot-v1": {
+            "accuracy": 0.78125,
+            "accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 25
+            },
+            "original_order_accuracy": 0.84375,
+            "original_order_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 27
+            },
+            "original_order_correct": 27,
+            "original_order_presentations": 32,
+            "raw_accuracy": 0.78125,
+            "raw_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 25
+            },
+            "raw_correct": 50,
+            "raw_presentations": 64,
+            "record_count": 32,
+            "source_group_count": 32
+          },
+          "copa-dev-pilot-v1": {
+            "accuracy": 0.90625,
+            "accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 29
+            },
+            "original_order_accuracy": 0.84375,
+            "original_order_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 27
+            },
+            "original_order_correct": 27,
+            "original_order_presentations": 32,
+            "raw_accuracy": 0.90625,
+            "raw_accuracy_fraction": {
+              "denominator": 32,
+              "numerator": 29
+            },
+            "raw_correct": 58,
+            "raw_presentations": 64,
+            "record_count": 32,
+            "source_group_count": 32
+          },
+          "dbpedia14-pilot-v1-development": {
+            "accuracy": 0.9732142857142857,
+            "accuracy_fraction": {
+              "denominator": 112,
+              "numerator": 109
+            },
+            "original_order_accuracy": 0.9821428571428571,
+            "original_order_accuracy_fraction": {
+              "denominator": 56,
+              "numerator": 55
+            },
+            "original_order_correct": 55,
+            "original_order_presentations": 56,
+            "raw_accuracy": 0.9732142857142857,
+            "raw_accuracy_fraction": {
+              "denominator": 112,
+              "numerator": 109
+            },
+            "raw_correct": 1526,
+            "raw_presentations": 1568,
+            "record_count": 56,
+            "source_group_count": 56
+          },
+          "routing-data-v1-development": {
+            "accuracy": 0.21726190476190477,
+            "accuracy_fraction": {
+              "denominator": 336,
+              "numerator": 73
+            },
+            "original_order_accuracy": 0.35714285714285715,
+            "original_order_accuracy_fraction": {
+              "denominator": 14,
+              "numerator": 5
+            },
+            "original_order_correct": 5,
+            "original_order_presentations": 14,
+            "raw_accuracy": 0.2073170731707317,
+            "raw_accuracy_fraction": {
+              "denominator": 82,
+              "numerator": 17
+            },
+            "raw_correct": 17,
+            "raw_presentations": 82,
+            "record_count": 14,
+            "source_group_count": 14
+          },
+          "sms-pilot-v1-development": {
+            "accuracy": 0.9666666666666667,
+            "accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "original_order_accuracy": 0.9666666666666667,
+            "original_order_accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "original_order_correct": 58,
+            "original_order_presentations": 60,
+            "raw_accuracy": 0.9666666666666667,
+            "raw_accuracy_fraction": {
+              "denominator": 30,
+              "numerator": 29
+            },
+            "raw_correct": 116,
+            "raw_presentations": 120,
+            "record_count": 60,
+            "source_group_count": 60
+          },
+          "snli-balanced-v1-development": {
+            "accuracy": 0.8645833333333334,
+            "accuracy_fraction": {
+              "denominator": 96,
+              "numerator": 83
+            },
+            "original_order_accuracy": 0.8697916666666666,
+            "original_order_accuracy_fraction": {
+              "denominator": 192,
+              "numerator": 167
+            },
+            "original_order_correct": 167,
+            "original_order_presentations": 192,
+            "raw_accuracy": 0.8645833333333334,
+            "raw_accuracy_fraction": {
+              "denominator": 96,
+              "numerator": 83
+            },
+            "raw_correct": 996,
+            "raw_presentations": 1152,
+            "record_count": 192,
+            "source_group_count": 64
+          },
+          "synthetic-atomic-fact-inference-v1-development": {
+            "accuracy": 0.9866666666666667,
+            "accuracy_fraction": {
+              "denominator": 75,
+              "numerator": 74
+            },
+            "original_order_accuracy": 0.9733333333333334,
+            "original_order_accuracy_fraction": {
+              "denominator": 75,
+              "numerator": 73
+            },
+            "original_order_correct": 73,
+            "original_order_presentations": 75,
+            "raw_accuracy": 0.9866666666666667,
+            "raw_accuracy_fraction": {
+              "denominator": 75,
+              "numerator": 74
+            },
+            "raw_correct": 444,
+            "raw_presentations": 450,
+            "record_count": 75,
+            "source_group_count": 25
+          },
+          "synthetic-numeric-selection-v1-development": {
+            "accuracy": 0.8125,
+            "accuracy_fraction": {
+              "denominator": 16,
+              "numerator": 13
+            },
+            "original_order_accuracy": 0.82,
+            "original_order_accuracy_fraction": {
+              "denominator": 50,
+              "numerator": 41
+            },
+            "original_order_correct": 41,
+            "original_order_presentations": 50,
+            "raw_accuracy": 0.7115384615384616,
+            "raw_accuracy_fraction": {
+              "denominator": 52,
+              "numerator": 37
+            },
+            "raw_correct": 259,
+            "raw_presentations": 364,
+            "record_count": 50,
+            "source_group_count": 25
+          },
+          "tool-data-v1-development": {
+            "accuracy": 0.41964285714285715,
+            "accuracy_fraction": {
+              "denominator": 112,
+              "numerator": 47
+            },
+            "original_order_accuracy": 0.2857142857142857,
+            "original_order_accuracy_fraction": {
+              "denominator": 7,
+              "numerator": 2
+            },
+            "original_order_correct": 4,
+            "original_order_presentations": 14,
+            "raw_accuracy": 0.45121951219512196,
+            "raw_accuracy_fraction": {
+              "denominator": 82,
+              "numerator": 37
+            },
+            "raw_correct": 37,
+            "raw_presentations": 82,
+            "record_count": 14,
+            "source_group_count": 14
+          }
+        }
+      }
+    },
+    "task_order": [
+      "routing-data-v1-development",
+      "tool-data-v1-development",
+      "dbpedia14-pilot-v1-development",
+      "sms-pilot-v1-development",
+      "snli-balanced-v1-development",
+      "synthetic-atomic-fact-inference-v1-development",
+      "synthetic-numeric-selection-v1-development",
+      "boolq-dev-pilot-v1",
+      "copa-dev-pilot-v1"
+    ]
+  },
+  "training": {
+    "continued_practice": {
+      "updates": 336,
+      "completed_forward_counts": {
+        "final_evaluation": 3946,
+        "reload_parity": 32,
+        "total": 5322,
+        "training": 1344
+      },
+      "completed_input_token_counts": {
+        "final_evaluation": 921580,
+        "reload_parity": 16436,
+        "total": 1163940,
+        "training": 225924
+      },
+      "initial_tensor_sha256": "b9ade96b9f6077934985a4b261a6f7400a1e210003b02094b492f36c8a844324",
+      "final_tensor_sha256": "ac184571722764552e2252546961800f5d9f9fe3fde72dd420cccb2dcac58d3e",
+      "base_gradients_none": true,
+      "changed_adapter_tensors": 120,
+      "snapshots": {
+        "168": {
+          "files_sha256": {
+            "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+            "adapter_config.json": "dd6c4e7b2d954feedd2ef1570d5b9d6fb9796768368bdda73701519dd3a3c1d1",
+            "adapter_model.safetensors": "e64a00a954704293d774a8c5fd66bc4f488c44a298e87e6ac5a147d166241932"
+          },
+          "path": "/artifacts/runs/runtime-rules-2026-10-05-r1-control/adapter-update-168",
+          "update": 168
+        },
+        "336": {
+          "files_sha256": {
+            "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+            "adapter_config.json": "dd6c4e7b2d954feedd2ef1570d5b9d6fb9796768368bdda73701519dd3a3c1d1",
+            "adapter_model.safetensors": "f21508493314f72943ef53e8f1193f99665c7889d9d3d13adf0606e5c570381a"
+          },
+          "path": "/artifacts/runs/runtime-rules-2026-10-05-r1-control/adapter-update-336",
+          "update": 336
+        }
+      },
+      "reload": {
+        "max_candidate_logit_difference": 0.0,
+        "tensor_equal": true,
+        "tensor_sha256": "ac184571722764552e2252546961800f5d9f9fe3fde72dd420cccb2dcac58d3e",
+        "winner_match_count": 32
+      }
+    },
+    "runtime_mix": {
+      "updates": 336,
+      "completed_forward_counts": {
+        "final_evaluation": 3946,
+        "reload_parity": 32,
+        "total": 5322,
+        "training": 1344
+      },
+      "completed_input_token_counts": {
+        "final_evaluation": 921580,
+        "reload_parity": 16436,
+        "total": 1287312,
+        "training": 349296
+      },
+      "initial_tensor_sha256": "b9ade96b9f6077934985a4b261a6f7400a1e210003b02094b492f36c8a844324",
+      "final_tensor_sha256": "ffee790078db1aa923f43f48de0b8fccaf3872e468e36ca16246041d40f30df3",
+      "base_gradients_none": true,
+      "changed_adapter_tensors": 120,
+      "snapshots": {
+        "168": {
+          "files_sha256": {
+            "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+            "adapter_config.json": "da61dd25ed8890353984995355814c67e9cdb9ffe06c41d4fb59d35e447b3637",
+            "adapter_model.safetensors": "21e7ebd84f7af3c8e4a48baa01deac6dfc187825ca8a10e9b846d8a909c0b21b"
+          },
+          "path": "/artifacts/runs/runtime-rules-2026-10-05-r1-runtime/adapter-update-168",
+          "update": 168
+        },
+        "336": {
+          "files_sha256": {
+            "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+            "adapter_config.json": "da61dd25ed8890353984995355814c67e9cdb9ffe06c41d4fb59d35e447b3637",
+            "adapter_model.safetensors": "103cb6078e047ac53f2d86b990caa7b15d2774b7c236c67efff67d5ec35fa6ea"
+          },
+          "path": "/artifacts/runs/runtime-rules-2026-10-05-r1-runtime/adapter-update-336",
+          "update": 336
+        }
+      },
+      "reload": {
+        "max_candidate_logit_difference": 0.0,
+        "tensor_equal": true,
+        "tensor_sha256": "ffee790078db1aa923f43f48de0b8fccaf3872e468e36ca16246041d40f30df3",
+        "winner_match_count": 32
+      }
+    }
+  },
+  "completed_model_passes": 10808,
+  "completed_input_tokens": 2544210,
+  "remote_storage": {
+    "files_verified": 14,
+    "report_sha256": "5cd28f0b2597b11b059a7613c968c62ff1b984bcb70c9ed09136ce0dcbbd6cd1",
+    "verifier_source_sha256": "22f31a69ef972ed389e49ff2d3c57c6cc15e4fac81e5043992e1bdfd97add154",
+    "weights_downloaded_to_host": false,
+    "scope": "the two receipt-scoped training run roots only",
+    "observed": {
+      "runtime-rules-2026-10-05-r1-control": {
+        "directories": [
+          "",
+          "adapter-update-168",
+          "adapter-update-336"
+        ],
+        "files": {
+          "adapter-update-168/README.md": {
+            "bytes": 5376,
+            "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+          },
+          "adapter-update-168/adapter_config.json": {
+            "bytes": 1201,
+            "sha256": "dd6c4e7b2d954feedd2ef1570d5b9d6fb9796768368bdda73701519dd3a3c1d1"
+          },
+          "adapter-update-168/adapter_model.safetensors": {
+            "bytes": 8077112,
+            "sha256": "e64a00a954704293d774a8c5fd66bc4f488c44a298e87e6ac5a147d166241932"
+          },
+          "adapter-update-336/README.md": {
+            "bytes": 5376,
+            "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+          },
+          "adapter-update-336/adapter_config.json": {
+            "bytes": 1201,
+            "sha256": "dd6c4e7b2d954feedd2ef1570d5b9d6fb9796768368bdda73701519dd3a3c1d1"
+          },
+          "adapter-update-336/adapter_model.safetensors": {
+            "bytes": 8077112,
+            "sha256": "f21508493314f72943ef53e8f1193f99665c7889d9d3d13adf0606e5c570381a"
+          },
+          "progress.json": {
+            "bytes": 2946427,
+            "sha256": "4bd8f59ee29708ef4a6b3ff20de58108d66175a0cd7c327e052bf57da06c5d35"
+          }
+        }
+      },
+      "runtime-rules-2026-10-05-r1-runtime": {
+        "directories": [
+          "",
+          "adapter-update-168",
+          "adapter-update-336"
+        ],
+        "files": {
+          "adapter-update-168/README.md": {
+            "bytes": 5376,
+            "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+          },
+          "adapter-update-168/adapter_config.json": {
+            "bytes": 1201,
+            "sha256": "da61dd25ed8890353984995355814c67e9cdb9ffe06c41d4fb59d35e447b3637"
+          },
+          "adapter-update-168/adapter_model.safetensors": {
+            "bytes": 8077112,
+            "sha256": "21e7ebd84f7af3c8e4a48baa01deac6dfc187825ca8a10e9b846d8a909c0b21b"
+          },
+          "adapter-update-336/README.md": {
+            "bytes": 5376,
+            "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+          },
+          "adapter-update-336/adapter_config.json": {
+            "bytes": 1201,
+            "sha256": "da61dd25ed8890353984995355814c67e9cdb9ffe06c41d4fb59d35e447b3637"
+          },
+          "adapter-update-336/adapter_model.safetensors": {
+            "bytes": 8077112,
+            "sha256": "103cb6078e047ac53f2d86b990caa7b15d2774b7c236c67efff67d5ec35fa6ea"
+          },
+          "progress.json": {
+            "bytes": 2941960,
+            "sha256": "81abcd7bbbfb5cfa0e3c37171aacc749a820f80eb0d87f7738724f58e191e6bc"
+          }
+        }
+      }
+    }
+  },
+  "stopped_apps": [
+    {
+      "schema_version": 1,
+      "app_id": "ap-uPI3EvQgGuYMRAGIHpI9Mn",
+      "verified": true,
+      "stop_requested": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-05T13:34:09Z",
+          "state": "APP_STATE_STOPPED",
+          "n_tasks": 0
+        }
+      ],
+      "errors": []
+    },
+    {
+      "schema_version": 1,
+      "app_id": "ap-bgvGrTvlDQksSYjvTt9NB8",
+      "verified": true,
+      "stop_requested": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-05T13:34:09Z",
+          "state": "APP_STATE_STOPPED",
+          "n_tasks": 0
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "billing_snapshot": {
+    "schema_version": 1,
+    "checked_at_utc": "2026-10-05T13:34:10Z",
+    "sdk_version": "1.6.1",
+    "profile": "reflex-personal",
+    "workspace": "rajath-61258",
+    "billing_cycle": "2026-10",
+    "billing": {
+      "metered_cost": "2.90742916",
+      "billed_cost": "0.00000000",
+      "adjustments": {
+        "Credits": "-2.90000000",
+        "Free Storage": "-0.00023130",
+        "Network Egress Allowance": "-0.00719785",
+        "Plan Cost": "0.00000000",
+        "Reservation Adjustment": "-0.00000000"
+      }
+    },
+    "rates_usd": {
+      "cpu_hour": "0.0471600",
+      "gpu_hour_a10g": "1.101600",
+      "mem_gib_hour": "0.00799200"
+    },
+    "rate_evidence": {
+      "source_url": "https://modal.com/pricing",
+      "checked_at_utc": "2026-10-05T12:21:46.084981+00:00"
+    },
+    "apps": [
+      {
+        "name": "runtime-rule-study-runtime-rules-2026-10-05-r1",
+        "app_id": "ap-uPI3EvQgGuYMRAGIHpI9Mn",
+        "state": "APP_STATE_STOPPED",
+        "n_running_tasks": 0
+      }
+    ]
+  },
+  "limits": [
+    "14 new development groups per family; tiny inspected panels",
+    "One seed; no seed uncertainty estimate",
+    "Treatment used 349296 training tokens versus 225924 in control, about 55 percent more",
+    "Retention gates constrain observed point differences, not confidence-interval bounds",
+    "No sealed test, broad superiority, public release, or winning checkpoint/seed search"
+  ],
+  "development_only_diagnostic": {
+    "study_id": "runtime-rules-2026-10-05-r1",
+    "status": "passed",
+    "worker_case_counts_match": true,
+    "worker_error_audit_sha256": "8f626452e03bd6fd5d3fdaecd00e50aa4fae6eed8660c5f7249e1a316e9948b6",
+    "host_receipt_sha256": "4bc33b90ae8e388c60fd4d5cbd76210517642ef0b480770e193c7ff6fcc3c259",
+    "method": "Program parser/classifier/solver; only pinned development files. Winner-change counts compare option IDs; correctness-change counts are a separate statistic.",
+    "calibration_test_files_read": false,
+    "families": {
+      "routing": {
+        "continued_practice": {
+          "case_counts": {
+            "complete_route": {
+              "correct": 6,
+              "presentations": 10,
+              "groups": 2
+            },
+            "missing_no_route_agree": {
+              "correct": 0,
+              "presentations": 10,
+              "groups": 2
+            },
+            "missing_route_conflict": {
+              "correct": 0,
+              "presentations": 14,
+              "groups": 2
+            },
+            "multiple_missing": {
+              "correct": 4,
+              "presentations": 10,
+              "groups": 2
+            },
+            "complete_no_route": {
+              "correct": 0,
+              "presentations": 14,
+              "groups": 2
+            },
+            "missing_route_vs_none": {
+              "correct": 0,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_route_agree": {
+              "correct": 12,
+              "presentations": 12,
+              "groups": 2
+            }
+          },
+          "answer_order": {
+            "rotations": 68,
+            "winner_changed": 19,
+            "correctness_changed": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0,
+            "groups_with_winner_change": 7
+          }
+        },
+        "runtime_mix": {
+          "case_counts": {
+            "complete_route": {
+              "correct": 2,
+              "presentations": 10,
+              "groups": 2
+            },
+            "missing_no_route_agree": {
+              "correct": 8,
+              "presentations": 10,
+              "groups": 2
+            },
+            "missing_route_conflict": {
+              "correct": 7,
+              "presentations": 14,
+              "groups": 2
+            },
+            "multiple_missing": {
+              "correct": 5,
+              "presentations": 10,
+              "groups": 2
+            },
+            "complete_no_route": {
+              "correct": 1,
+              "presentations": 14,
+              "groups": 2
+            },
+            "missing_route_vs_none": {
+              "correct": 9,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_route_agree": {
+              "correct": 0,
+              "presentations": 12,
+              "groups": 2
+            }
+          },
+          "answer_order": {
+            "rotations": 68,
+            "winner_changed": 31,
+            "correctness_changed": 20,
+            "correct_to_wrong": 18,
+            "wrong_to_correct": 2,
+            "groups_with_winner_change": 11
+          }
+        },
+        "unchanged": {
+          "case_counts": {
+            "complete_route": {
+              "correct": 6,
+              "presentations": 10,
+              "groups": 2
+            },
+            "missing_no_route_agree": {
+              "correct": 0,
+              "presentations": 10,
+              "groups": 2
+            },
+            "missing_route_conflict": {
+              "correct": 0,
+              "presentations": 14,
+              "groups": 2
+            },
+            "multiple_missing": {
+              "correct": 3,
+              "presentations": 10,
+              "groups": 2
+            },
+            "complete_no_route": {
+              "correct": 0,
+              "presentations": 14,
+              "groups": 2
+            },
+            "missing_route_vs_none": {
+              "correct": 1,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_route_agree": {
+              "correct": 7,
+              "presentations": 12,
+              "groups": 2
+            }
+          },
+          "answer_order": {
+            "rotations": 68,
+            "winner_changed": 20,
+            "correctness_changed": 13,
+            "correct_to_wrong": 12,
+            "wrong_to_correct": 1,
+            "groups_with_winner_change": 8
+          }
+        }
+      },
+      "tool": {
+        "continued_practice": {
+          "case_counts": {
+            "missing_tool_agree": {
+              "correct": 0,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_tool_vs_none": {
+              "correct": 2,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_none_agree": {
+              "correct": 5,
+              "presentations": 10,
+              "groups": 2
+            },
+            "multiple_missing": {
+              "correct": 5,
+              "presentations": 10,
+              "groups": 2
+            },
+            "complete_no_eligible": {
+              "correct": 14,
+              "presentations": 14,
+              "groups": 2
+            },
+            "missing_tool_conflict": {
+              "correct": 8,
+              "presentations": 14,
+              "groups": 2
+            },
+            "complete_tool": {
+              "correct": 0,
+              "presentations": 10,
+              "groups": 2
+            }
+          },
+          "answer_order": {
+            "rotations": 68,
+            "winner_changed": 15,
+            "correctness_changed": 10,
+            "correct_to_wrong": 1,
+            "wrong_to_correct": 9,
+            "groups_with_winner_change": 8
+          }
+        },
+        "runtime_mix": {
+          "case_counts": {
+            "missing_tool_agree": {
+              "correct": 0,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_tool_vs_none": {
+              "correct": 9,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_none_agree": {
+              "correct": 3,
+              "presentations": 10,
+              "groups": 2
+            },
+            "multiple_missing": {
+              "correct": 3,
+              "presentations": 10,
+              "groups": 2
+            },
+            "complete_no_eligible": {
+              "correct": 7,
+              "presentations": 14,
+              "groups": 2
+            },
+            "missing_tool_conflict": {
+              "correct": 10,
+              "presentations": 14,
+              "groups": 2
+            },
+            "complete_tool": {
+              "correct": 0,
+              "presentations": 10,
+              "groups": 2
+            }
+          },
+          "answer_order": {
+            "rotations": 68,
+            "winner_changed": 38,
+            "correctness_changed": 24,
+            "correct_to_wrong": 5,
+            "wrong_to_correct": 19,
+            "groups_with_winner_change": 13
+          }
+        },
+        "unchanged": {
+          "case_counts": {
+            "missing_tool_agree": {
+              "correct": 0,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_tool_vs_none": {
+              "correct": 2,
+              "presentations": 12,
+              "groups": 2
+            },
+            "missing_none_agree": {
+              "correct": 5,
+              "presentations": 10,
+              "groups": 2
+            },
+            "multiple_missing": {
+              "correct": 7,
+              "presentations": 10,
+              "groups": 2
+            },
+            "complete_no_eligible": {
+              "correct": 13,
+              "presentations": 14,
+              "groups": 2
+            },
+            "missing_tool_conflict": {
+              "correct": 10,
+              "presentations": 14,
+              "groups": 2
+            },
+            "complete_tool": {
+              "correct": 0,
+              "presentations": 10,
+              "groups": 2
+            }
+          },
+          "answer_order": {
+            "rotations": 68,
+            "winner_changed": 21,
+            "correctness_changed": 17,
+            "correct_to_wrong": 3,
+            "wrong_to_correct": 14,
+            "groups_with_winner_change": 11
+          }
+        }
+      }
+    }
+  }
+}

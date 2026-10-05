@@ -1,6 +1,8 @@
 # Runtime-rule study readiness
 
-The result checks are complete. The GPU runner is still being built. No model has trained or scored in this new study. There is no new performance result yet.
+The GPU runner is complete. Its signed [source commit](https://github.com/1337mus/reflex/commit/6fa151e4d10ed61d44da35a89e89d8dbe751c5be) passed [all 1,178 GitHub tests](https://github.com/1337mus/reflex/actions/runs/37314334195). Both independent source reviews passed.
+
+Study `runtime-rules-2026-10-05-r1` completed on 2026-10-05. Execution and saved-file checks passed, but the learning recipe passed only **17 of 21 checks**. Routing scored higher and tool choice scored lower. Keep the earlier selected adapter. Read the [completed results and limits](runtime-rule-study-results.md). Calibration and test data remain sealed.
 
 The result code is signed and pushed in [38984e5](https://github.com/1337mus/reflex/commit/38984e5ea081431a735f4ac54c872c39c103610d). [GitHub checks passed](https://github.com/1337mus/reflex/actions/runs/37307020076) on that exact commit. The earlier worker packages also passed [their checks](https://github.com/1337mus/reflex/actions/runs/37305014205).
 
@@ -17,7 +19,7 @@ The loader checks pinned file hashes. The prompt compiler records token counts a
 | Total planned input tokens | 2,544,210 |
 | Longest prompt / limit | 695 / 2,048 tokens |
 | New calibration or test files opened | 0 |
-| Tests on the latest result source commit | 1,049 passed |
+| Tests on the final GPU runner source commit | 1,178 passed |
 
 The schedules, prompt identities, and token totals matched the earlier preparation. The integrated work remained CPU-only and did not load model weights.
 
@@ -45,7 +47,7 @@ The study reuses the selected adapter's saved results for seven earlier tasks. T
 | Continued practice | 5,322 | 1,163,940 |
 | New practice | 5,322 | 1,287,312 |
 
-Each model pass is one request used in training or scoring. The fixed worker settings specify one A10 per worker, a 900-second limit for the unchanged worker and 3,600 seconds for each training arm, 2 CPUs, 16 GiB of memory, and no retries. These are frozen settings; no worker has launched. No new calibration/test records were read, Torch was not imported, and no new study outputs were created.
+Each model pass is one request used in training or scoring. The fixed worker settings specify one A10 per worker, a 900-second limit for the unchanged worker and 3,600 seconds for each training arm, 2 CPUs, 16 GiB of memory, and no retries. These settings are frozen in the authorized plan. The unchanged-adapter worker passed and reached zero tasks before both training workers started. The local preparation read no new calibration/test records and imported no Torch. Model work runs only in Modal.
 
 ## Fixed pass/fail checks
 
@@ -59,7 +61,7 @@ The CPU package check matched the limits for all **10,808 planned calls** and **
 
 Two checks found issues before delivery. The older number questions use 2, 4, 8, or 16 choices; the package initially described their counts incorrectly. Review also found that duplicate question IDs could cross from an older task into a new task. Both are fixed. The failed check, original code, and review finding remain saved. The independent final review has no unresolved findings.
 
-Completed calls and unfinished calls are recorded separately. A timeout therefore cannot turn unknown GPU work into a claim of zero work. The future runner must update these records at each model-call boundary.
+Completed calls and unfinished calls are recorded separately. A timeout therefore cannot turn unknown GPU work into a claim of zero work. The runner updates these records at each model-call boundary.
 
 ## Result checks
 
@@ -78,6 +80,10 @@ The clean-copy suite passed 1,048 tests before one narrow correction. Review fou
 
 The new development panel has 28 groups: 14 routing and 14 tool-choice groups. It is a small, previously inspected development panel, not a sealed test. Each family has only two questions with more than one missing input. In these questions, all possible values lead to the same answer. The panel does not cover cases where those values lead to different answers. This is a one-seed engineering study, not evidence of broad capability. Token exposure also differs between the two training plans.
 
-The input packages and returned-result checks are now verified. The GPU scorer, training loop, worker entry point, and Modal host remain in development. Before launch, freeze the real worker inputs and code, verify the exact-commit checks, and refresh personal Modal usage against the project budget. No run has started. New calibration and test files remain sealed and unused.
+The input packages, GPU scorer, training loop, result checks, and Modal host are verified. The final plan contains 87 exact source files and three worker inputs. Root checked the saved hashes and all planned call and token totals. All 60 historical source files remain unchanged.
+
+The fresh launch check found no active Modal apps. Recorded workspace usage was $2.31 before credits and $0 billed after credits. The fixed workers have a $3.32 usage estimate and a $10 internal reserve under the roughly $300 project allocation. This is an estimate, not a provider spending cap. Build, storage, network, and tax charges are outside it.
+
+All 10,808 planned model passes completed. A separate recount matched all task scores, all 21 checks, and all 20 uncertainty ranges. Four learning checks failed. All 14 saved files matched their hashes on Modal. Both apps stopped with zero tasks. No adapter is promoted from this study. New calibration and test files remain sealed and unused. The fixed study is complete; any later training needs a new research plan.
 
 Counts, hashes, and check evidence are in [runtime-rule-study-readiness.json](verification/runtime-rule-study-readiness.json). The accepted design is [runtime-rule-study-protocol.md](runtime-rule-study-protocol.md).

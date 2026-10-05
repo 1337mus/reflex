@@ -1,0 +1,15 @@
+{
+  "data_kind": "benchmark",
+  "datasets": [
+    {
+      "dataset_id": "snli-training-v1",
+      "source_id": "stanford-snli-1.0",
+      "task_family": "natural-language-inference-three-way",
+      "split": "train",
+      "source_uri": "https://nlp.stanford.edu/projects/snli/snli_1.0.zip#snli_1.0/snli_1.0_train.jsonl",
+      "source_revision": "SNLI 1.0",
+      "license": "CC BY-SA 4.0"
+    }
+  ],
+  "held_out_families": []
+}

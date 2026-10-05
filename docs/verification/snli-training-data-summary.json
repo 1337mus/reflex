@@ -1,0 +1,200 @@
+{
+  "candidate": {
+    "dataset_id": "snli-training-v1",
+    "disclosure": "SNLI training data makes future SNLI measurements within-source development; base-model pretraining overlap is unknown.",
+    "raw_records_path": "data/processed/snli-training-v1/records.jsonl (local and ignored)",
+    "source_only_metadata": {
+      "byte_identical_to_candidate_manifest_and_recipe": true,
+      "contains_raw_premise_or_hypothesis_text": false,
+      "manifest_path": "data/training/snli-v1-manifest.json",
+      "manifest_sha256": "4be0e00a9588fb7d9077b41c67227ad634737c74910680ad9c24d572c62618b7",
+      "recipe_path": "data/training/snli-v1-recipe.json",
+      "recipe_sha256": "aced7f92bdef65d97fad9fafb2d7f20abef107229bc8e5dea3594969dbd5de0d"
+    }
+  },
+  "counts": {
+    "after_overlap": {
+      "candidate_group_count": 150658,
+      "candidate_pair_count": 548570,
+      "eligible_group_count": 147388,
+      "group_label_counts": {
+        "contradiction": 150033,
+        "entailment": 149664,
+        "neutral": 148982
+      },
+      "source_group_count": 150670
+    },
+    "cross_split": {
+      "exact_normalized_pair_overlap_count": 1,
+      "excluded_candidate_pair_count": 78,
+      "excluded_group_count": 16,
+      "shared_caption_anchor_count": 0,
+      "shared_premise_anchor_count": 16
+    },
+    "development_source": {
+      "conflicting_labeled_row_count": 0,
+      "conflicting_pair_count": 0,
+      "consistent_labeled_pair_count": 9840,
+      "label_row_counts": [
+        [
+          "entailment",
+          3329
+        ],
+        [
+          "neutral",
+          3235
+        ],
+        [
+          "contradiction",
+          3278
+        ]
+      ],
+      "normalized_pair_count": 9998,
+      "raw_row_count": 10000,
+      "source_group_count": 3319,
+      "unlabeled_only_pair_count": 158,
+      "unlabeled_row_count": 158
+    },
+    "selected": {
+      "label_counts": {
+        "contradiction": 166,
+        "entailment": 167,
+        "neutral": 167
+      },
+      "record_count": 500,
+      "source_group_count": 500
+    },
+    "train_source": {
+      "conflicting_labeled_row_count": 151,
+      "conflicting_pair_count": 66,
+      "consistent_labeled_pair_count": 548648,
+      "label_row_counts": [
+        [
+          "entailment",
+          183416
+        ],
+        [
+          "neutral",
+          182764
+        ],
+        [
+          "contradiction",
+          183187
+        ]
+      ],
+      "normalized_pair_count": 549499,
+      "raw_row_count": 550152,
+      "source_group_count": 150686,
+      "unlabeled_only_pair_count": 785,
+      "unlabeled_row_count": 785
+    }
+  },
+  "limits": [
+    "This is a train-only candidate, not a model result, training run, or release approval.",
+    "SNLI-derived measurements are within-source development evidence, not unseen-family transfer evidence.",
+    "Base-model pretraining exposure is unknown.",
+    "The official SNLI test JSONL member was not opened by the builder.",
+    "Review rights and attribution before distributing any trained weights or adapters."
+  ],
+  "output_sha256": {
+    "manifest.json": "4be0e00a9588fb7d9077b41c67227ad634737c74910680ad9c24d572c62618b7",
+    "recipe.json": "aced7f92bdef65d97fad9fafb2d7f20abef107229bc8e5dea3594969dbd5de0d",
+    "records.jsonl": "976a0c06f679b9bd989871580b893d32ed593b0912c191ccba56237f7407f2fc"
+  },
+  "pinned_legacy_source": {
+    "matches_saved_source_file_pins_in": [
+      "docs/verification/broader-baselines-analysis.json",
+      "docs/verification/real-pilot-summary.json",
+      "docs/verification/mixture-training-summary.json"
+    ],
+    "path": "src/reflex_decisions/broader_data.py",
+    "sha256": "a2d8b92d1dbc9f63a5398e1d73a3449eea986183199429cc43ad9cbcf4de15d9"
+  },
+  "schema": "reflex-snli-training-data-summary-v1",
+  "selection": {
+    "eligible_group_requirement": "each selected source group has entailment, neutral, and contradiction candidates",
+    "emit_order": "selected groups in original group-rank order",
+    "group_order": "sha256(seed + ':group:' + group_id), then group_id",
+    "label_order": "sha256(seed + ':label:' + group_id), then group_id",
+    "label_quotas": {
+      "contradiction": 166,
+      "entailment": 167,
+      "neutral": 167
+    },
+    "pair_order": "sha256(seed + ':pair:' + pairID), then pairID",
+    "seed": "20261008"
+  },
+  "source_code_sha256": {
+    "experiments/prepare_snli_training.py": "4e2e407aeb049a7f9433f32ae0ce831e9cdf6ce8b1387d5878721deac95db3bb",
+    "src/reflex_decisions/broader_data.py": "a2d8b92d1dbc9f63a5398e1d73a3449eea986183199429cc43ad9cbcf4de15d9",
+    "src/reflex_decisions/snli_training_data.py": "3106b9ec77bfeb6bbedd2e2768bbc01c4503a6b6f877611b8e9a4c1602b1ae4c",
+    "src/reflex_decisions/snli_training_source.py": "a4be159c6c799bf5215ccf5a337a25e34722be92b3c21a7ba6d9a4b8fb01148a"
+  },
+  "source_pins": {
+    "archive_sha256": "afb3d70a5af5d8de0d9d81e2637e0fb8c22d1235c2749d83125ca43dab0dbd3e",
+    "attribution": "Bowman et al., SNLI (EMNLP 2015); premises derive mostly from Flickr30k captions with a smaller VisualGenome source.",
+    "development_member": "snli_1.0/snli_1.0_dev.jsonl",
+    "development_member_sha256": "9c03faff70182ef086ebfeed2cffbabb5fcc6a84a8b3314decbbb5b01f07f4bf",
+    "license": "CC BY-SA 4.0",
+    "revision": "SNLI 1.0",
+    "source_id": "stanford-snli-1.0",
+    "train_member": "snli_1.0/snli_1.0_train.jsonl",
+    "train_member_sha256": "ee95dfbc57800f7b1f62b7602ad2b176c2b983210435a49238e660324a01e963"
+  },
+  "status": "verified",
+  "test_code_sha256": {
+    "tests/test_broader_data.py": "e1d953d5b034a37736faa1314618103b9c9af11b70fb1a22060d3c7c089d4543",
+    "tests/test_snli_training_data.py": "c01d0bb21db7f994ac2b2529699fc8d449f3f81597c2bfd6f65a081b71056831",
+    "tests/test_snli_training_source.py": "c5b8c8a5dc61a6f4746ca4f706db8f130547621d8e22fb5b36167fd2fb3f3a3f"
+  },
+  "validation": {
+    "full_test_suite": {
+      "candidate_copy_source": "/Users/raj/.codex/worktrees/snli-training-data/reflex",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src /Users/raj/Projects/reflex/.venv/bin/python -m pytest -q -p no:cacheprovider",
+      "import_root": "PYTHONPATH=src resolved reflex_decisions under the candidate copy src directory",
+      "result": "395 passed in 13.44s",
+      "sandbox_note": "The same command in the read-only managed worktree had 394 passes and one OS permission failure creating a cross-path hard link; the writable-copy rerun passed all 395 tests.",
+      "temporary_copy_removed_after_validation": true,
+      "working_directory": "/private/tmp/reflex-validation-snli-20261004"
+    },
+    "mypy": {
+      "command": "/Users/raj/Projects/reflex/.venv/bin/mypy --cache-dir /private/tmp/snli-mypy-cache --no-incremental src",
+      "result": "Success: no issues found in 19 source files"
+    },
+    "real_source_plan": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src /Users/raj/Projects/reflex/.venv/bin/python -m experiments.prepare_snli_training --archive /Users/raj/Projects/reflex/data/raw/snli_1.0.zip",
+      "elapsed_seconds": 7.884,
+      "official_test_member_opened": false,
+      "result": "500 records planned; no files written; candidate hashes match the saved artifacts"
+    },
+    "root_integration": {
+      "evidence": [
+        {
+          "path": ".context/snli-training-root-regeneration.json",
+          "sha256": "7f639470c084fd6d20bd71f4c2042a954e3871ef013203d01c75297b297348a9"
+        },
+        {
+          "path": ".context/snli-training-root-baseline-check.json",
+          "sha256": "d6840e0ce8c0292aa53498695df1f31e1d49ae793af3adfde2db772a5d8478a8"
+        },
+        {
+          "path": ".context/snli-training-final-review.md",
+          "sha256": "1c921322dc9ee68469446e7abaab575c5b5c2128eb08c624b8df806206ac0747"
+        }
+      ],
+      "focused_tests": "28 passed",
+      "full_source_regeneration": "All three output files byte-identical",
+      "historical_receipts": "Real-pilot and balanced-SNLI receipts pass unchanged validators"
+    },
+    "ruff_check": {
+      "command": "/Users/raj/Projects/reflex/.venv/bin/ruff check --no-cache .",
+      "result": "All checks passed"
+    },
+    "ruff_format": {
+      "command": "RUFF_CACHE_DIR=/private/tmp/snli-ruff-cache /Users/raj/Projects/reflex/.venv/bin/ruff format --check .",
+      "result": "142 files already formatted"
+    }
+  },
+  "verified_date": "2026-10-04",
+  "workspace": "/Users/raj/.codex/worktrees/snli-training-data/reflex"
+}

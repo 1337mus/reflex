@@ -1,6 +1,6 @@
 # Next practice data: routing and tool choice
 
-**Status: the CPU-only deterministic support-routing answer program is implemented and checked.** Tool-choice support, new-family generators, the prompt parser, data generation, and training remain pending. No teacher model was used; the proposed counts remain provisional.
+**Status: the support-routing answer program and prompt checks are implemented and tested.** The checks read the exact model prompt and verify its rules, facts, and answer choices. Data generation, tool-choice support, and training remain pending. No teacher model was used; the proposed counts remain provisional.
 
 The current generator covers atomic fact labels and numeric minimum/maximum choices. It has no populated test split. The request schema accepts 2–16 options; this proposal uses fixed menus of 4–8 options. It tests whether a model can follow rules and capabilities stated in each request. It does not test arbitrary typed schemas or prove transfer to real work.
 
@@ -29,6 +29,6 @@ The 28 test cases per family can expose basic failures. They are too few for a r
 
 ## Implementation and later evaluation
 
-Implement support routing first, in a code slice of at most 500 production lines. Verify its generator, parser, solver, and split audits before adding tool choice. Tool choice follows as a separate slice.
+Next, add the support-routing data generator in a code slice of at most 500 production lines. Verify its answers, prompt text, and split checks before adding tool choice. Tool choice follows as a separate slice.
 
 A no-update adapter is only a mechanical save, reload, and scoring check. To study the data effect later, use equal presentations and updates: replace repeated existing practice with new-family examples in the treatment, while the continued-training control keeps existing practice. Include retention results. The proposed counts are not a run plan, and success on these synthetic cases would not establish broad reasoning ability.

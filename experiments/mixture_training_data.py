@@ -18,7 +18,7 @@ TrainingExample = training_rehearsal_core.TrainingExample
 
 ARM_NAMES = ("real_only", "synthetic_mix")
 SCHEDULE_SEED = 20261007
-INIT_SEED = 20261005
+INIT_SEED = 20261006
 SHARED_REAL_COUNT = 504
 SYNTHETIC_COUNT = 500
 TRAINING_PRESENTATIONS = 1008

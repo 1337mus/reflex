@@ -17,6 +17,7 @@ from typing import Any
 
 from experiments import mixture_training_core as core
 from experiments import mixture_training_runtime_helpers as helpers
+from experiments.mixture_training_contracts import ORIGINAL_PROTOCOL_PATH
 
 VOLUME_ROOT = Path("/artifacts")
 VOLUME_NAME = "reflex-rehearsal-artifacts"
@@ -44,7 +45,7 @@ def _measure_remote_source_fingerprints() -> dict[str, str]:
     root = _project_root()
     measured: dict[str, str] = {}
     for relative in core.SOURCE_FINGERPRINT_PATHS:
-        if relative == core.PROTOCOL_PATH:
+        if relative in (core.PROTOCOL_PATH, ORIGINAL_PROTOCOL_PATH):
             path = root / relative
         else:
             module_name, uploaded_relative = _module_name(relative)

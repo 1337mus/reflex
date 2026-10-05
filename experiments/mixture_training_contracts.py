@@ -13,8 +13,10 @@ from typing import Any
 from experiments import training_rehearsal_core
 
 SCHEMA_VERSION = 1
-PROTOCOL_PATH = "docs/mixture-training-protocol.md"
-EXPECTED_PROTOCOL_SHA256 = "06d3014a45ebeb19500ba2ab002f0595c42b44e561fbb9efc329af0d02a1030c"
+ORIGINAL_PROTOCOL_PATH = "docs/mixture-training-protocol.md"
+ORIGINAL_PROTOCOL_SHA256 = "06d3014a45ebeb19500ba2ab002f0595c42b44e561fbb9efc329af0d02a1030c"
+PROTOCOL_PATH = "docs/mixture-training-seed2-protocol.md"
+EXPECTED_PROTOCOL_SHA256 = "2cf62fa31f3e52a41ebd632e4883fc6c2f082194a7fa9750b455eb78735c12c8"
 MODEL_ID = training_rehearsal_core.MODEL_ID
 MODEL_REVISION = training_rehearsal_core.MODEL_REVISION
 PROFILE = "reflex-personal"
@@ -139,6 +141,7 @@ SOURCE_FINGERPRINT_PATHS = (
     "src/reflex_decisions/smoke.py",
     "src/reflex_decisions/snli_diagnostic.py",
     "src/reflex_decisions/synthetic_data.py",
+    ORIGINAL_PROTOCOL_PATH,
     PROTOCOL_PATH,
 )
 
@@ -225,7 +228,7 @@ def validate_uuid(value: object, label: str) -> str:
 
 
 def source_fingerprints(root: str | Path | None = None) -> dict[str, str]:
-    """Hash only allowlisted local Python files and the frozen protocol."""
+    """Hash allowlisted local Python files and both frozen protocol documents."""
 
     project_root = Path(root) if root is not None else Path(__file__).resolve().parents[1]
     try:
@@ -251,12 +254,20 @@ def source_fingerprints(root: str | Path | None = None) -> dict[str, str]:
 def verify_protocol(path: str | Path = PROTOCOL_PATH) -> str:
     """Verify and return the frozen protocol digest."""
 
+    protocol_path = Path(path)
     try:
-        digest = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        digest = hashlib.sha256(protocol_path.read_bytes()).hexdigest()
     except OSError as exc:
         raise ValueError("mixture training protocol is unavailable") from exc
     if digest != EXPECTED_PROTOCOL_SHA256:
         raise ValueError("mixture training protocol SHA-256 mismatch")
+    original_path = protocol_path.with_name(Path(ORIGINAL_PROTOCOL_PATH).name)
+    try:
+        original_digest = hashlib.sha256(original_path.read_bytes()).hexdigest()
+    except OSError as exc:
+        raise ValueError("incorporated original protocol is unavailable") from exc
+    if original_digest != ORIGINAL_PROTOCOL_SHA256:
+        raise ValueError("incorporated original protocol SHA-256 mismatch")
     return digest
 
 
@@ -286,6 +297,8 @@ def validate_pins(value: object) -> dict[str, object]:
         raise ValueError("source fingerprints do not match the exact allowlist")
     for path, digest in source_hashes.items():
         validate_sha256(digest, f"source fingerprint for {path}")
+    if source_hashes.get(ORIGINAL_PROTOCOL_PATH) != ORIGINAL_PROTOCOL_SHA256:
+        raise ValueError("source fingerprint for incorporated original protocol differs")
     if source_hashes.get(PROTOCOL_PATH) != protocol_hash:
         raise ValueError("protocol and source fingerprints do not match")
     return pins

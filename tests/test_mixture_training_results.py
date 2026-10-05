@@ -10,6 +10,8 @@ from experiments.mixture_training_contracts import (
     EXPECTED_PROTOCOL_SHA256,
     MODEL_ID,
     MODEL_REVISION,
+    ORIGINAL_PROTOCOL_PATH,
+    ORIGINAL_PROTOCOL_SHA256,
     PROTOCOL_PATH,
     RUNTIME_VERSION_PINS,
     SCHEMA_VERSION,
@@ -35,10 +37,19 @@ from reflex_decisions.rendering import render_prompt
 from reflex_decisions.schema import DecisionRequest, Option
 
 
-def _initialization_provenance() -> dict[str, object]:
-    from experiments.mixture_training_contracts import SOURCE_FINGERPRINT_PATHS
+def _source_fingerprints() -> dict[str, str]:
+    return {
+        path: EXPECTED_PROTOCOL_SHA256
+        if path == PROTOCOL_PATH
+        else ORIGINAL_PROTOCOL_SHA256
+        if path == ORIGINAL_PROTOCOL_PATH
+        else "a" * 64
+        for path in SOURCE_FINGERPRINT_PATHS
+    }
 
-    fingerprints = {path: "a" * 64 for path in SOURCE_FINGERPRINT_PATHS}
+
+def _initialization_provenance() -> dict[str, object]:
+    fingerprints = _source_fingerprints()
     return {
         "model_id": MODEL_ID,
         "model_revision": MODEL_REVISION,
@@ -57,9 +68,7 @@ def _initialization_provenance() -> dict[str, object]:
 
 
 def test_passed_initialization_does_not_require_training_optimizer() -> None:
-    from experiments.mixture_training_contracts import SOURCE_FINGERPRINT_PATHS
-
-    fingerprints = {path: "a" * 64 for path in SOURCE_FINGERPRINT_PATHS}
+    fingerprints = _source_fingerprints()
     payload = {"pins": {"source_file_sha256": fingerprints}}
 
     normalized = _validate_provenance(
@@ -70,9 +79,7 @@ def test_passed_initialization_does_not_require_training_optimizer() -> None:
 
 
 def test_initialization_cannot_claim_optimizer_training() -> None:
-    from experiments.mixture_training_contracts import SOURCE_FINGERPRINT_PATHS
-
-    fingerprints = {path: "a" * 64 for path in SOURCE_FINGERPRINT_PATHS}
+    fingerprints = _source_fingerprints()
     payload = {"pins": {"source_file_sha256": fingerprints}}
     provenance = _initialization_provenance()
     provenance["optimizer"] = {
@@ -267,10 +274,7 @@ def test_training_losses_allow_zero_steps_but_require_positive_run_totals() -> N
 def test_passed_initialization_result_is_consumable_without_optimizer_provenance() -> None:
     experiment_id = "init-result-validation"
     run_id = f"{experiment_id}-init"
-    source_hashes = {
-        path: EXPECTED_PROTOCOL_SHA256 if path == PROTOCOL_PATH else "a" * 64
-        for path in SOURCE_FINGERPRINT_PATHS
-    }
+    source_hashes = _source_fingerprints()
     pins = {
         "data_file_sha256": dict(DATA_FILE_SHA256),
         "protocol_sha256": EXPECTED_PROTOCOL_SHA256,

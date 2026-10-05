@@ -112,8 +112,10 @@ search settings, or choose a checkpoint from evaluation scores.
 
 Keep adapter snapshots, logs, logits, progress, receipts, and source-derived artifacts
 private in the existing personal Modal volume. Use unique arm-specific run directories.
-Validate each receipt and every artifact hash locally before analysis. Preserve failures
-and valid partial evidence; do not retry or turn a failed receipt into a passed run.
+Validate each receipt and embedded output hash locally before analysis. Verify adapter
+file hashes on Modal and retain that evidence; do not download model weights to the local
+computer. Preserve failures and valid partial evidence; do not retry or turn a failed
+receipt into a passed run.
 
 ## Forward budget
 

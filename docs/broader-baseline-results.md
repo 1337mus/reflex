@@ -115,7 +115,9 @@ are development measurements, not latency, throughput, or cost benchmarks.
 - All 771 forwards passed: 256 scored presentations per model, plus one Intern and two Kev auxiliary verification forwards. No tasks remained after teardown.
 - Prepared records SHA-256: `5d09ac1c1df2b7c1849e675179cb57306040f473c0ebad60527f54d186ac6845`; manifest SHA-256: `8dbddaec2ceac622ed998cd0c6051472c11bf38d776a895c08ff94ad5968b085`.
 
-The next work is the separate bounded training-mechanics rehearsal, currently
-in progress. It uses its own training fixture; BoolQ, SNLI and COPA remain
-reserved for development. No Reflex adapter or training result has been
-completed.
+The next work is a preregistered small real-data multi-task pilot with held-out
+datasets or task families and separate train, development, calibration, and
+sealed-test pools. The separate self-authored training fixture rehearsal has
+completed; see the [mechanics-only results](training-rehearsal-results.md).
+COPA, BoolQ, and SNLI remain reserved for development, and the rehearsal does
+not establish a Reflex benchmark, generalization result, or advantage.

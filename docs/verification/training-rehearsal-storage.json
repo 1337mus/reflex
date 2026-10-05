@@ -1,0 +1,86 @@
+{
+  "volume": "reflex-rehearsal-artifacts",
+  "run_id": "training-rehearsal-2026-10-04-r1",
+  "attempt_id": "2dd57171-dd60-4a30-a81c-4b9757868580",
+  "persisted_progress_sha256": "72c8889279630a6743266ea4cf0667687ccc7ad12e3347499a724f58559eec80",
+  "persisted_evidence_matches_returned_receipt": true,
+  "adapter_config": {
+    "alora_invocation_tokens": null,
+    "alpha_pattern": {},
+    "arrow_config": null,
+    "auto_mapping": null,
+    "base_model_name_or_path": "Qwen/Qwen3.5-0.8B-Base",
+    "bias": "none",
+    "corda_config": null,
+    "ensure_weight_tying": false,
+    "eva_config": null,
+    "exclude_modules": null,
+    "fan_in_fan_out": false,
+    "inference_mode": true,
+    "init_lora_weights": true,
+    "kasa_config": null,
+    "layer_replication": null,
+    "layers_pattern": null,
+    "layers_to_transform": null,
+    "loftq_config": {},
+    "lora_alpha": 16,
+    "lora_bias": false,
+    "lora_dropout": 0.0,
+    "lora_ga_config": null,
+    "megatron_config": null,
+    "megatron_core": "megatron.core",
+    "modules_to_save": null,
+    "monteclora_config": null,
+    "peft_type": "LORA",
+    "peft_version": "0.21.0",
+    "qalora_group_size": 16,
+    "r": 8,
+    "rank_pattern": {},
+    "revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+    "target_modules": [
+      "v_proj",
+      "q_proj",
+      "in_proj_qkv",
+      "o_proj",
+      "out_proj",
+      "k_proj"
+    ],
+    "target_parameters": null,
+    "task_type": "CAUSAL_LM",
+    "trainable_token_indices": null,
+    "use_bdlora": null,
+    "use_dora": false,
+    "use_qalora": false,
+    "use_rslora": false,
+    "velora_config": null
+  },
+  "adapter_config_sha256": "ca41b120dcbddffa89ee790ff0976212bbe12ccaeb709204525e35e6a5673ae8",
+  "entries": [
+    {
+      "path": "runs/training-rehearsal-2026-10-04-r1/adapter-update-016",
+      "size": 53,
+      "type": "2"
+    },
+    {
+      "path": "runs/training-rehearsal-2026-10-04-r1/progress.json",
+      "size": 104922,
+      "type": "1"
+    },
+    {
+      "path": "runs/training-rehearsal-2026-10-04-r1/adapter-update-016/adapter_model.safetensors",
+      "size": 8077112,
+      "type": "1"
+    },
+    {
+      "path": "runs/training-rehearsal-2026-10-04-r1/adapter-update-016/adapter_config.json",
+      "size": 1201,
+      "type": "1"
+    },
+    {
+      "path": "runs/training-rehearsal-2026-10-04-r1/adapter-update-016/README.md",
+      "size": 5376,
+      "type": "1"
+    }
+  ],
+  "weights_downloaded_locally": false
+}

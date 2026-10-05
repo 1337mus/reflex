@@ -1,0 +1,225 @@
+{
+  "artifacts": {
+    "qwen_r2_analysis": {
+      "path": "artifacts/real-pilot-2026-10-04-r2-analysis.json",
+      "sha256": "f73689f01013ec7edc9f9b0d987a9d8bf587e003585ebdf9a0c5588ca9c338c1"
+    },
+    "reference_analysis": {
+      "path": "artifacts/real-pilot-references-2026-10-04-r1-analysis.json",
+      "sha256": "f890c711144cf7aede1bbb8b76bf1e0bc2148de7a99fceab42a3420941b94115"
+    },
+    "reference_receipt": {
+      "path": "artifacts/real-pilot-references-2026-10-04-r1-receipt.json",
+      "sha256": "47fdf25955741b031594290a4b6205ea4fbda7b5a9bf793abc5c53e9c622a1ea"
+    },
+    "teardown_billing": {
+      "path": "artifacts/real-pilot-references-2026-10-04-r1-teardown-billing.json",
+      "sha256": "38e4aa87ab76aeee660698a5f2f414ac2c3a38703f30d0230ab4fdae0dcc5f21"
+    }
+  },
+  "limitations": [
+    "Small selected development measurements; no significance, unseen-family, or test-set claim.",
+    "Intern and Kev use FP32 paths; Qwen base is BF16 and its saved adapter is FP32. Prompts and tokenizers are model-specific.",
+    "Kev discloses DBpedia-14 training exposure and related MultiNLI exposure; selected-row overlap is unknown. Intern, Qwen, and other pretraining overlap are not established.",
+    "DBpedia redistribution obligations need review; SMS upstream component licensing and message privacy remain unresolved.",
+    "Temperature-fit NLL is an in-sample calibration diagnostic, not held-out performance."
+  ],
+  "operations": {
+    "app_state": "stopped",
+    "billing_interpretation": "Workspace-wide current-month summary; may lag recent activity and does not attribute costs to the reference run.",
+    "billing_summary_captured_at_utc": "2026-10-05 03:55:25 UTC",
+    "billing_summary_scope": "this month",
+    "modal_app_id": "ap-QxSMUfEFt6lJdC1ivZ795w",
+    "stopped_at_local": "2026-10-04 20:53:52-07:00",
+    "tasks_remaining": 0,
+    "workspace_billed_cost": "0E-8",
+    "workspace_metered_cost": "0.67279581"
+  },
+  "original_qwen_gate": {
+    "overall_passed": false,
+    "snli_non_regression_passed": false,
+    "source_analysis_run_id": "real-pilot-2026-10-04-r2",
+    "status": "failed"
+  },
+  "reference_run": {
+    "datasets": [
+      "dbpedia14-pilot-v1-development",
+      "sms-pilot-v1-development",
+      "snli-pilot-v1-development"
+    ],
+    "models": {
+      "intern": "passed",
+      "kev": "passed",
+      "qwen_final": "passed"
+    },
+    "receipt_status": "passed",
+    "run_id": "85b69940-11d3-4085-bfab-737707c51721",
+    "selected_panel": "same saved real-pilot-v1 DBpedia-14, SMS, and SNLI development rows"
+  },
+  "report_date": "2026-10-05",
+  "results": {
+    "models": {
+      "intern": {
+        "per_dataset": {
+          "dbpedia14-pilot-v1-development": {
+            "accuracy": 0.9107142857142857,
+            "original_order_correct_count": 51,
+            "record_count": 56,
+            "semantic_flip_count": 19,
+            "semantic_flip_rate": 0.3392857142857143,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          },
+          "sms-pilot-v1-development": {
+            "accuracy": 0.8666666666666667,
+            "original_order_correct_count": 52,
+            "record_count": 60,
+            "semantic_flip_count": 13,
+            "semantic_flip_rate": 0.21666666666666667,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          },
+          "snli-pilot-v1-development": {
+            "accuracy": 0.0625,
+            "original_order_correct_count": 8,
+            "record_count": 128,
+            "semantic_flip_count": 121,
+            "semantic_flip_rate": 0.9453125,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          }
+        },
+        "state_status": "passed",
+        "temperature_fit": {
+          "boundary_hit": false,
+          "calibration_examples": 116,
+          "fitted_calibration_nll": 0.49892719709845584,
+          "grid_candidates": 82,
+          "raw_calibration_nll": 0.5040357192989533,
+          "temperature": 0.8625288433811724
+        }
+      },
+      "kev": {
+        "per_dataset": {
+          "dbpedia14-pilot-v1-development": {
+            "accuracy": 1.0,
+            "original_order_correct_count": 56,
+            "record_count": 56,
+            "semantic_flip_count": 0,
+            "semantic_flip_rate": 0.0,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          },
+          "sms-pilot-v1-development": {
+            "accuracy": 0.75,
+            "original_order_correct_count": 45,
+            "record_count": 60,
+            "semantic_flip_count": 8,
+            "semantic_flip_rate": 0.13333333333333333,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          },
+          "snli-pilot-v1-development": {
+            "accuracy": 0.453125,
+            "original_order_correct_count": 58,
+            "record_count": 128,
+            "semantic_flip_count": 21,
+            "semantic_flip_rate": 0.1640625,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          }
+        },
+        "state_status": "passed",
+        "temperature_fit": {
+          "boundary_hit": false,
+          "calibration_examples": 116,
+          "fitted_calibration_nll": 0.3029380578530552,
+          "grid_candidates": 82,
+          "raw_calibration_nll": 0.30539249079346475,
+          "temperature": 0.7071067811865478
+        }
+      },
+      "qwen_final": {
+        "per_dataset": {
+          "dbpedia14-pilot-v1-development": {
+            "accuracy": 0.8928571428571429,
+            "original_order_correct_count": 50,
+            "record_count": 56,
+            "semantic_flip_count": 11,
+            "semantic_flip_rate": 0.19642857142857142,
+            "tie_count_all_orders": 1,
+            "tie_count_original_order": 0
+          },
+          "sms-pilot-v1-development": {
+            "accuracy": 0.9666666666666667,
+            "original_order_correct_count": 58,
+            "record_count": 60,
+            "semantic_flip_count": 0,
+            "semantic_flip_rate": 0.0,
+            "tie_count_all_orders": 0,
+            "tie_count_original_order": 0
+          },
+          "snli-pilot-v1-development": {
+            "accuracy": 0.0078125,
+            "original_order_correct_count": 1,
+            "record_count": 128,
+            "semantic_flip_count": 99,
+            "semantic_flip_rate": 0.7734375,
+            "tie_count_all_orders": 16,
+            "tie_count_original_order": 0
+          }
+        },
+        "state_status": "passed",
+        "temperature_fit": {
+          "boundary_hit": false,
+          "calibration_examples": 116,
+          "fitted_calibration_nll": 0.37541923083684536,
+          "grid_candidates": 82,
+          "raw_calibration_nll": 0.5034863912037958,
+          "temperature": 1.6726396073338634
+        }
+      }
+    },
+    "overall_winner": null,
+    "overall_winner_assigned": false,
+    "paired_dbpedia_sms_macro": {
+      "intern": {
+        "dataset_ids": [
+          "dbpedia14-pilot-v1-development",
+          "sms-pilot-v1-development"
+        ],
+        "delta": -0.04107142857142858,
+        "direction": "reference_minus_qwen_final",
+        "percentile_95": [
+          -0.12025297619047617,
+          0.03691964285714277
+        ],
+        "permutations_are_independent_units": false,
+        "qwen_final_accuracy": 0.9297619047619048,
+        "reference_accuracy": 0.8886904761904761,
+        "replicates": 2000,
+        "sampling_unit": "source group",
+        "seed": 20261005
+      },
+      "kev": {
+        "dataset_ids": [
+          "dbpedia14-pilot-v1-development",
+          "sms-pilot-v1-development"
+        ],
+        "delta": -0.05476190476190477,
+        "direction": "reference_minus_qwen_final",
+        "percentile_95": [
+          -0.13037202380952378,
+          0.019657738095238013
+        ],
+        "permutations_are_independent_units": false,
+        "qwen_final_accuracy": 0.9297619047619048,
+        "reference_accuracy": 0.875,
+        "replicates": 2000,
+        "sampling_unit": "source group",
+        "seed": 20261005
+      }
+    }
+  },
+  "schema": "reflex-real-pilot-baselines-results-v1"
+}

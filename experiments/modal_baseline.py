@@ -97,6 +97,7 @@ def _remote_model_run(payload: dict[str, object]) -> dict[str, object]:
             raise RuntimeError("CUDA is unavailable in the Modal worker")
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.allow_tf32 = False
+        torch.cuda.init()
         torch.cuda.reset_peak_memory_stats(0)
 
         stage = "model_load"

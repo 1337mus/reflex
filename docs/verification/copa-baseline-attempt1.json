@@ -1,0 +1,100 @@
+{
+  "failure": {
+    "message": "all three models must return all 64 valid presentations",
+    "stage": "comparison",
+    "type": "IncompleteModelReceipts"
+  },
+  "limits": {
+    "app": "reflex-copa-development-baselines",
+    "buffer_containers": 0,
+    "cpu_physical_cores": [
+      2.0,
+      2.0
+    ],
+    "gpu": "A10",
+    "include_source": false,
+    "max_containers": 3,
+    "memory_mib": [
+      16384,
+      16384
+    ],
+    "min_containers": 0,
+    "retries": 0,
+    "scaledown_window_seconds": 2,
+    "serialized": true,
+    "single_use_containers": true,
+    "startup_timeout_seconds": 300,
+    "timeout_seconds": 900
+  },
+  "manifest_sha256": "4e60e82ea1622d4e069b4244aa596db64cafa03bdb9ec85d3c4d06d2c40e7635",
+  "models": {
+    "intern": {
+      "failure": {
+        "message": "Invalid device argument ",
+        "stage": "runtime_check",
+        "type": "RuntimeError"
+      },
+      "max_gpu_memory_allocated_bytes": 0,
+      "model_name": "intern",
+      "presentations": [],
+      "provenance": {},
+      "status": "failed"
+    },
+    "kev": {
+      "failure": {
+        "message": "Invalid device argument ",
+        "stage": "runtime_check",
+        "type": "RuntimeError"
+      },
+      "max_gpu_memory_allocated_bytes": 0,
+      "model_name": "kev",
+      "presentations": [],
+      "provenance": {},
+      "status": "failed"
+    },
+    "qwen": {
+      "failure": {
+        "message": "Invalid device argument ",
+        "stage": "runtime_check",
+        "type": "RuntimeError"
+      },
+      "max_gpu_memory_allocated_bytes": 0,
+      "model_name": "qwen",
+      "presentations": [],
+      "provenance": {},
+      "status": "failed"
+    }
+  },
+  "provenance": {
+    "baseline_protocol": "docs/baseline-protocol.md",
+    "baseline_protocol_sha256": "bee16b5568551a087aeef4e736d1b16916043f391ed0b519efb319cd1ab284ef",
+    "modal_sdk_version": "1.6.1",
+    "profile": "reflex-personal",
+    "source_file_sha256": {
+      "experiments/__init__.py": "51f383d59030d5529976ee5a1e561573d493c25ba49a60672a0261c9e05683bf",
+      "experiments/analyze_baselines.py": "0626a18743c4b1510c3d86d7658f71e781744bf554d77dc09a2b0f0d71fd718d",
+      "experiments/baseline_intern.py": "c7ee4d6c13869d2b02a6bdd4ea2513a8c6f868261420e67a5efbfef4837fc78f",
+      "experiments/baseline_kev.py": "d4b79afc3cc6843c48817b0614c07ab0d7a2cfa5cffe43348c2b4db2a9e6be6a",
+      "experiments/baseline_qwen.py": "792652b5130c9a2f0edf5a74c98793496e8dda51908c6762b8886404afe3fc49",
+      "experiments/baseline_runner_core.py": "04938a7b81e53e276a7ea40692fdea8345a55dc424e6428388c6d7726f4ee73e",
+      "experiments/modal_baseline.py": "b9415619c1675436b816787c2bbca3a6b1fcfaacca3ae8863b449f9f2b36d0a0",
+      "experiments/modal_smoke.py": "2c7064e7d813c49fdb0f0efead6fc08912600e13da536b8cb83550451836fe26",
+      "experiments/prepare_baseline_data.py": "b5eefeb81313ddace7ff339b99b12b0a2ca5037e05f2fa8a2452cff68cd925db",
+      "src/reflex_decisions/__init__.py": "b74ea771b41d95721dc2b91333436436785300b3b5a649e942d64bf76dd47559",
+      "src/reflex_decisions/__main__.py": "0fa0478a9d7a3c2430b7fee1ef3ba40faf04d067ba047a5170fe001902be2c89",
+      "src/reflex_decisions/baseline_data.py": "1bf9eebf664feb4a88d329eb59f05c3a2826ad71c5894cce39aab944429ad100",
+      "src/reflex_decisions/cli.py": "e13ae51847d8816793b39a93d818ac766c68577e8558b824ec7f2fb9e1fd1aa5",
+      "src/reflex_decisions/data.py": "d01d98a6da6098474bd4dbf1ce1b610a9630eac6e2673f7da6efd89b5e07c713",
+      "src/reflex_decisions/evaluation.py": "4ff17fb2990afabb626e3f9730f2096cb6977e69994c7d14a5884662eb86749c",
+      "src/reflex_decisions/permutation.py": "6fb6ddf7d8ed5b15e56373ed2284b18c91bdd94a1908a52c66b5dfe2e6f11c47",
+      "src/reflex_decisions/rendering.py": "b2cd82742457b6ee5cd354998dc12f0847de3014ce65fe05f77b7978c310a384",
+      "src/reflex_decisions/schema.py": "6263ba9c37532f03fe151226e57003cb4ff2db746186e32c4f7c32b91baa6c0e",
+      "src/reflex_decisions/scoring.py": "a610d04f57af2e7f33030b5eff6367b3e61c744423be17b03ee4cfbf0060594c",
+      "src/reflex_decisions/smoke.py": "d0ba2d49f791daea35859c26832c6a3927dcf603edd0ad01ebe474714bc29612"
+    },
+    "workspace": "rajath-61258"
+  },
+  "records_sha256": "a8daefa5a7300cc6243f3af1208bbd2887d41c306416bb37bf95263748657c5b",
+  "schema_version": 1,
+  "status": "failed"
+}

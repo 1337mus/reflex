@@ -359,9 +359,17 @@ def test_remote_worker_records_forward_counts_only_after_complete_scoring(
 
             return score, provenance
 
+    cuda_calls = []
+
+    def reset_peak_memory_stats(_device):
+        cuda_calls.append("reset")
+        if cuda_calls != ["init", "reset"]:
+            raise RuntimeError("CUDA must be initialized before resetting peak memory stats")
+
     cuda = SimpleNamespace(
         is_available=lambda: True,
-        reset_peak_memory_stats=lambda _device: None,
+        init=lambda: cuda_calls.append("init"),
+        reset_peak_memory_stats=reset_peak_memory_stats,
         max_memory_allocated=lambda _device: 4096,
     )
     torch = SimpleNamespace(
@@ -387,6 +395,7 @@ def test_remote_worker_records_forward_counts_only_after_complete_scoring(
         {"model_name": model_name, "records": launcher._serialize_remote_records(records)}
     )
 
+    assert cuda_calls == ["init", "reset"]
     assert torch.backends.cuda.matmul.allow_tf32 is False
     assert torch.backends.cudnn.allow_tf32 is False
     if fail_on_call is None:

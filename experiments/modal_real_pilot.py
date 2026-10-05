@@ -164,7 +164,22 @@ def _train_records(rows: list[dict[str, object]]) -> tuple[DecisionRecord, ...]:
 
 def _write_outputs(run_dir: Path, name: str, rows: list[dict[str, object]]) -> dict[str, str]:
     path = run_dir / f"{name}.json"
-    digest = modal_train_rehearsal._write_json(path, {"presentations": rows}, replace=False)
+    encoded = (
+        json.dumps(
+            {"presentations": rows},
+            ensure_ascii=False,
+            sort_keys=True,
+            indent=2,
+            allow_nan=False,
+        )
+        + "\n"
+    ).encode("utf-8")
+    digest = hashlib.sha256(encoded).hexdigest()
+    with path.open("xb") as stream:
+        if stream.write(encoded) != len(encoded):
+            raise OSError("evaluation output write was incomplete")
+        stream.flush()
+        os.fsync(stream.fileno())
     if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
         raise RuntimeError("saved evaluation output hash changed after writing")
     return {"path": str(path), "sha256": digest}
@@ -317,14 +332,15 @@ def _remote_train(payload: dict[str, object]) -> dict[str, object]:
         forward_counts["base_evaluation"] = base_counter["count"]
         if forward_counts["base_evaluation"] != core.BASE_EVALUATION_COUNT:
             raise RuntimeError("base scoring did not use all 2,572 presentations")
-        output_artifacts = {"base_outputs": _write_outputs(run_dir, "base_outputs", base_outputs)}
         receipt["evidence"].update(
             {
                 "base_outputs": base_outputs,
-                "output_artifacts": dict(output_artifacts),
                 "forward_counts": dict(forward_counts),
             }
         )
+        stage = "base_outputs_save"
+        output_artifacts = {"base_outputs": _write_outputs(run_dir, "base_outputs", base_outputs)}
+        receipt["evidence"]["output_artifacts"] = dict(output_artifacts)
         receipt["phase"] = "base_outputs_saved"
         _persist_progress(run_dir, receipt)
         modal_train_rehearsal._commit_volume()
@@ -490,14 +506,15 @@ def _remote_train(payload: dict[str, object]) -> dict[str, object]:
         forward_counts["final_evaluation"] = final_counter["count"]
         if forward_counts["final_evaluation"] != core.FINAL_EVALUATION_COUNT:
             raise RuntimeError("final scoring did not use all 2,572 presentations")
-        output_artifacts["final_outputs"] = _write_outputs(run_dir, "final_outputs", final_outputs)
         receipt["evidence"].update(
             {
                 "final_outputs": final_outputs,
-                "output_artifacts": dict(output_artifacts),
                 "forward_counts": dict(forward_counts),
             }
         )
+        stage = "final_outputs_save"
+        output_artifacts["final_outputs"] = _write_outputs(run_dir, "final_outputs", final_outputs)
+        receipt["evidence"]["output_artifacts"] = dict(output_artifacts)
         receipt["phase"] = "final_outputs_saved"
         _persist_progress(run_dir, receipt)
         modal_train_rehearsal._commit_volume()

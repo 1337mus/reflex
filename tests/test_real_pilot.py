@@ -1,3 +1,6 @@
+import errno
+import json
+import os
 import sys
 from collections import Counter, defaultdict
 from copy import deepcopy
@@ -9,6 +12,63 @@ from experiments import real_pilot_core as core
 from reflex_decisions.data import DatasetSpec, DecisionRecord, SplitManifest
 from reflex_decisions.rendering import render_prompt
 from reflex_decisions.schema import DecisionRequest, Option
+
+
+def test_write_outputs_uses_exclusive_json_creation_without_hardlinks(
+    monkeypatch: pytest.MonkeyPatch, tmp_path
+) -> None:
+    from experiments import modal_real_pilot
+
+    rows = [
+        {
+            "presentation_id": "unicode-output",
+            "prompt": "café",
+            "nested": {"z": 2, "a": 1},
+        }
+    ]
+
+    def reject_hard_link(*_args, **_kwargs):
+        raise OSError(errno.EPERM, "hard links are unsupported")
+
+    monkeypatch.setattr(os, "link", reject_hard_link)
+
+    result = modal_real_pilot._write_outputs(tmp_path, "base_outputs", rows)
+
+    expected = (
+        json.dumps(
+            {"presentations": rows},
+            ensure_ascii=False,
+            sort_keys=True,
+            indent=2,
+            allow_nan=False,
+        )
+        + "\n"
+    ).encode("utf-8")
+    path = tmp_path / "base_outputs.json"
+    assert path.read_bytes() == expected
+    assert result == {"path": str(path), "sha256": sha256(expected).hexdigest()}
+
+
+def test_write_outputs_refuses_to_replace_existing_file(tmp_path) -> None:
+    from experiments import modal_real_pilot
+
+    path = tmp_path / "base_outputs.json"
+    sentinel = b"preserve this prior file\n"
+    path.write_bytes(sentinel)
+
+    with pytest.raises(FileExistsError):
+        modal_real_pilot._write_outputs(tmp_path, "base_outputs", [])
+
+    assert path.read_bytes() == sentinel
+
+
+def test_write_outputs_rejects_non_strict_json_before_creating_file(tmp_path) -> None:
+    from experiments import modal_real_pilot
+
+    with pytest.raises(ValueError):
+        modal_real_pilot._write_outputs(tmp_path, "base_outputs", [{"score": float("nan")}])
+
+    assert not (tmp_path / "base_outputs.json").exists()
 
 
 def _training_records() -> tuple[DecisionRecord, ...]:

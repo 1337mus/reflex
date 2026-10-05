@@ -370,7 +370,7 @@ def load_scorer() -> tuple[Callable[[DecisionRequest], dict[str, object]], dict[
             torch.max(torch.abs(expected_probabilities - shipped_probabilities)).item()
         ),
         "runtime": {
-            "torch": torch.__version__,
+            "torch": str(torch.__version__),
             "transformers": importlib.metadata.version("transformers"),
             "peft": importlib.metadata.version("peft"),
             "device": device,

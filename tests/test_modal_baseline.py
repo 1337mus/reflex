@@ -320,6 +320,10 @@ def test_remote_worker_records_forward_counts_only_after_complete_scoring(
     from types import SimpleNamespace
 
     launcher = load_launcher()
+
+    class TorchVersion(str):
+        pass
+
     records_path, _ = write_prepared_inputs(tmp_path, record_count=32)
     records = tuple(
         DecisionRecord.model_validate_json(line)
@@ -330,6 +334,7 @@ def test_remote_worker_records_forward_counts_only_after_complete_scoring(
         "model_revision": "fixture-revision",
         "temperature": temperature,
         "auxiliary_forward_count": 0 if model_name == "intern" else auxiliary_count,
+        "runtime": {"torch": TorchVersion("2.14.1+cu130")},
     }
     if model_name == "intern":
         provenance["calibration_parity_passed"] = False
@@ -400,6 +405,7 @@ def test_remote_worker_records_forward_counts_only_after_complete_scoring(
     assert torch.backends.cudnn.allow_tf32 is False
     if fail_on_call is None:
         assert receipt["status"] == "passed"
+        assert type(receipt["provenance"]["runtime"]["torch"]) is str
         assert score_calls == 64
         assert receipt["scored_presentation_count"] == 64
         assert receipt["auxiliary_forward_count"] == auxiliary_count
@@ -418,6 +424,30 @@ def test_remote_worker_records_forward_counts_only_after_complete_scoring(
             }
             & receipt.keys()
         )
+
+
+@pytest.mark.parametrize("invalid_value", [object(), float("nan")], ids=["non_json", "non_finite"])
+def test_remote_receipt_non_json_metadata_fails_closed_and_preserves_safe_presentations(
+    invalid_value,
+):
+    launcher = load_launcher()
+    presentations = [{"record_id": "copa-dev-pilot-v1-0", "permutation_index": 0}]
+
+    receipt = launcher._normalize_remote_receipt(
+        {
+            "model_name": "kev",
+            "status": "passed",
+            "provenance": {"runtime": {"torch": invalid_value}},
+            "presentations": presentations,
+            "scored_presentation_count": 1,
+        }
+    )
+
+    assert receipt["status"] == "failed"
+    assert receipt["failure"]["stage"] == "receipt_serialization"
+    assert receipt["provenance"] == {}
+    assert receipt["presentations"] == presentations
+    assert receipt["scored_presentation_count"] == 1
 
 
 def test_invalid_record_count_is_written_as_failure_before_auth(tmp_path, monkeypatch):

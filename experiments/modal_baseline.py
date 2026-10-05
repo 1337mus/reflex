@@ -44,6 +44,32 @@ DEFAULT_MANIFEST = "data/baselines/copa-dev-manifest.json"
 EXPECTED_PROTOCOL = "docs/baseline-protocol.md"
 
 
+def _normalize_remote_receipt(receipt: dict[str, object]) -> dict[str, object]:
+    """Return a built-in JSON receipt safe to transport from a Modal worker."""
+
+    try:
+        return json.loads(json.dumps(receipt, allow_nan=False))
+    except (TypeError, ValueError, OverflowError, RecursionError):
+        safe_receipt: dict[str, object] = {}
+        for key, value in receipt.items():
+            if key in {"status", "failure"}:
+                continue
+            try:
+                safe_receipt[key] = json.loads(json.dumps(value, allow_nan=False))
+            except (TypeError, ValueError, OverflowError, RecursionError):
+                continue
+        safe_receipt.setdefault("model_name", "unknown")
+        safe_receipt.setdefault("provenance", {})
+        safe_receipt.setdefault("presentations", [])
+        safe_receipt["status"] = "failed"
+        safe_receipt["failure"] = {
+            "stage": "receipt_serialization",
+            "type": "NonJsonReceipt",
+            "message": "remote receipt contained non-JSON-safe metadata",
+        }
+        return json.loads(json.dumps(safe_receipt, allow_nan=False))
+
+
 def _remote_model_run(payload: dict[str, object]) -> dict[str, object]:
     model_name = payload.get("model_name")
     receipt: dict[str, object] = {
@@ -58,7 +84,7 @@ def _remote_model_run(payload: dict[str, object]) -> dict[str, object]:
             "type": "UnknownModel",
             "message": "only the three pinned model names are accepted",
         }
-        return receipt
+        return _normalize_remote_receipt(receipt)
 
     stage = "payload_validation"
     provenance: dict[str, object] | None = None
@@ -166,7 +192,7 @@ def _remote_model_run(payload: dict[str, object]) -> dict[str, object]:
                 receipt["max_gpu_memory_allocated_bytes"] = int(torch.cuda.max_memory_allocated(0))
             except Exception:
                 pass
-    return receipt
+    return _normalize_remote_receipt(receipt)
 
 
 def _sha256_file(path: str | Path) -> str | None:

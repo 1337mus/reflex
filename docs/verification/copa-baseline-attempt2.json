@@ -1,0 +1,2121 @@
+{
+  "failure": {
+    "message": "all three models must return all 64 valid presentations",
+    "stage": "comparison",
+    "type": "IncompleteModelReceipts"
+  },
+  "limits": {
+    "app": "reflex-copa-development-baselines",
+    "buffer_containers": 0,
+    "cpu_physical_cores": [
+      2.0,
+      2.0
+    ],
+    "gpu": "A10",
+    "include_source": false,
+    "max_containers": 3,
+    "memory_mib": [
+      16384,
+      16384
+    ],
+    "min_containers": 0,
+    "retries": 0,
+    "scaledown_window_seconds": 2,
+    "serialized": true,
+    "single_use_containers": true,
+    "startup_timeout_seconds": 300,
+    "timeout_seconds": 900
+  },
+  "manifest_sha256": "4e60e82ea1622d4e069b4244aa596db64cafa03bdb9ec85d3c4d06d2c40e7635",
+  "models": {
+    "intern": {
+      "auxiliary_forward_count": 1,
+      "max_gpu_memory_allocated_bytes": 3456651264,
+      "model_name": "intern",
+      "presentations": [
+        {
+          "input_tokens": 182,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "1738c07cff4c9b0a12b0945d88c14ccd54a422981f198dfca3809cbfa5c4a0d7",
+          "raw_logits": [
+            29.198427200317383,
+            28.3515625
+          ],
+          "record_id": "copa-dev-pilot-v1-355",
+          "request_hash": "092ea6eda758008fab4df5429787299fcdbc133ae032c545bb8baca670ece9cb"
+        },
+        {
+          "input_tokens": 182,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "d4c46250846dba7472a870edea525a0c915581371cb89c394e7ab5de3bf77000",
+          "raw_logits": [
+            25.636863708496094,
+            29.82695770263672
+          ],
+          "record_id": "copa-dev-pilot-v1-355",
+          "request_hash": "092ea6eda758008fab4df5429787299fcdbc133ae032c545bb8baca670ece9cb"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "b2320afc3a2a420d2ddb0404930cd9923c48df83612255283605defb0b20629f",
+          "raw_logits": [
+            29.60204315185547,
+            26.178943634033203
+          ],
+          "record_id": "copa-dev-pilot-v1-88",
+          "request_hash": "46b848aaf68e9c5434468cc18f6076ba183d3e369524cc0bddb84a88734c944a"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "2563099e137c8fe848201013ec2a815de79e7a34521588f6315f95b2265b3377",
+          "raw_logits": [
+            28.238056182861328,
+            29.7302303314209
+          ],
+          "record_id": "copa-dev-pilot-v1-88",
+          "request_hash": "46b848aaf68e9c5434468cc18f6076ba183d3e369524cc0bddb84a88734c944a"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "9f848cb885b3f764d5344c53f23ac5ffcda9fc97499abb828d2bf63c627ede75",
+          "raw_logits": [
+            28.311037063598633,
+            29.85282325744629
+          ],
+          "record_id": "copa-dev-pilot-v1-53",
+          "request_hash": "b8a0b34c4b90cbc8b6e224a8ed9cdc8d10594322e42f1c26a9238e50d50ab6d1"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "8082ef8d0b679a014397647748dadc87d1bc08ebf56481a241bd027f9d307e10",
+          "raw_logits": [
+            29.332592010498047,
+            27.69024658203125
+          ],
+          "record_id": "copa-dev-pilot-v1-53",
+          "request_hash": "b8a0b34c4b90cbc8b6e224a8ed9cdc8d10594322e42f1c26a9238e50d50ab6d1"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "2f210dbaa853c76a8cecf4812c4848a6410e22d7a2542c1c7ee240db99ed5eeb",
+          "raw_logits": [
+            28.886337280273438,
+            29.229782104492188
+          ],
+          "record_id": "copa-dev-pilot-v1-171",
+          "request_hash": "00125b445297c0680afa490f8d75f62eba91154087cf4c70bdae5ea546056801"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "7d4e64df36936be601f7cc2949742484704173ddd71cd1231688c78e3dfe2299",
+          "raw_logits": [
+            29.54191780090332,
+            26.35649871826172
+          ],
+          "record_id": "copa-dev-pilot-v1-171",
+          "request_hash": "00125b445297c0680afa490f8d75f62eba91154087cf4c70bdae5ea546056801"
+        },
+        {
+          "input_tokens": 181,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "be0de8b35e4280d410675d8b26dd6e53ad719dab834f1ebe406fb1425f2a729a",
+          "raw_logits": [
+            28.986726760864258,
+            29.69095230102539
+          ],
+          "record_id": "copa-dev-pilot-v1-149",
+          "request_hash": "8839652bf5a43281a70d5e1bd5a6bf2484f86709022fcb7f6160d9c5b1a4f75f"
+        },
+        {
+          "input_tokens": 181,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "712e730c5097ce3ef88539d4835883f280bcf429744ecd9fae5e1bb7d16ceb24",
+          "raw_logits": [
+            29.62963104248047,
+            26.575645446777344
+          ],
+          "record_id": "copa-dev-pilot-v1-149",
+          "request_hash": "8839652bf5a43281a70d5e1bd5a6bf2484f86709022fcb7f6160d9c5b1a4f75f"
+        },
+        {
+          "input_tokens": 184,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "b65c2e253d43acb341a2e1dc06f284c00faba069d65f04026393c0793bae6950",
+          "raw_logits": [
+            28.532169342041016,
+            29.864768981933594
+          ],
+          "record_id": "copa-dev-pilot-v1-443",
+          "request_hash": "a440210917b494374492b4c707ba22137911de3d8eae8eab16d4c9c42c798f15"
+        },
+        {
+          "input_tokens": 184,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "20d0154086256aefd84e57fbc4d46788edd42794ec42149f97ed97aabf8727b0",
+          "raw_logits": [
+            29.554048538208008,
+            26.055255889892578
+          ],
+          "record_id": "copa-dev-pilot-v1-443",
+          "request_hash": "a440210917b494374492b4c707ba22137911de3d8eae8eab16d4c9c42c798f15"
+        },
+        {
+          "input_tokens": 177,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "4556eb18a727eaea9c549cb868585c51e91efa8c62f458800773c22e3655e954",
+          "raw_logits": [
+            28.400917053222656,
+            29.386817932128906
+          ],
+          "record_id": "copa-dev-pilot-v1-476",
+          "request_hash": "1ca0c844499556adcf4ba5b46d1f7b66fd30beed492996158cb0ef53fd67188d"
+        },
+        {
+          "input_tokens": 177,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "d0cf41b46e549f98cbabb01761b8cae135ce0e8a017165c9f4a3ec0096966b27",
+          "raw_logits": [
+            29.0220947265625,
+            27.65872573852539
+          ],
+          "record_id": "copa-dev-pilot-v1-476",
+          "request_hash": "1ca0c844499556adcf4ba5b46d1f7b66fd30beed492996158cb0ef53fd67188d"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "a939fcfdc8b4478b9d1e85823c289949ac87901757f3665c14719eb671f3f869",
+          "raw_logits": [
+            26.958213806152344,
+            30.36229705810547
+          ],
+          "record_id": "copa-dev-pilot-v1-206",
+          "request_hash": "fe2b0cb6587df043208b54364dfcb3f78110a6033ee42a13ca0118379211e15b"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "d9d6d85d6fd692d16e665ac125bcc67683f85809548ac8e488eaeacaa5f13ae4",
+          "raw_logits": [
+            29.692337036132812,
+            25.687374114990234
+          ],
+          "record_id": "copa-dev-pilot-v1-206",
+          "request_hash": "fe2b0cb6587df043208b54364dfcb3f78110a6033ee42a13ca0118379211e15b"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "876534573fb488da3e2f0ff7439da9e54a8ec9a5b86b6b291bff3795f6dc3992",
+          "raw_logits": [
+            29.153213500976562,
+            30.229352951049805
+          ],
+          "record_id": "copa-dev-pilot-v1-127",
+          "request_hash": "ed3142d098f0ab338f0ffbeeefe1a0830f9b1b80f1e73db82739d2a3c0bda026"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "23bfadcdd36c646ae34b47d3c9b54ebe2a235235c1be3cf465318b876b33ee0c",
+          "raw_logits": [
+            30.257400512695312,
+            27.670194625854492
+          ],
+          "record_id": "copa-dev-pilot-v1-127",
+          "request_hash": "ed3142d098f0ab338f0ffbeeefe1a0830f9b1b80f1e73db82739d2a3c0bda026"
+        },
+        {
+          "input_tokens": 177,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "21b9f718a3adc9f573f5cbb8c13083d4b97a294aee09d00717d59bc9b72edf9e",
+          "raw_logits": [
+            26.162822723388672,
+            30.253894805908203
+          ],
+          "record_id": "copa-dev-pilot-v1-400",
+          "request_hash": "c0d31813b0110014e930da5fd86780d9acbb259af3823d453eabe472248e967f"
+        },
+        {
+          "input_tokens": 177,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "5866253c2af85a6880a9dfca052b497684c35af643e07420fb53f250996c217d",
+          "raw_logits": [
+            29.581741333007812,
+            25.97449493408203
+          ],
+          "record_id": "copa-dev-pilot-v1-400",
+          "request_hash": "c0d31813b0110014e930da5fd86780d9acbb259af3823d453eabe472248e967f"
+        },
+        {
+          "input_tokens": 172,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "8accd2b983c4f56ab9c1407dc2261cedb988a9031d4dc8df0ffb1c86ddeda081",
+          "raw_logits": [
+            29.708532333374023,
+            28.981258392333984
+          ],
+          "record_id": "copa-dev-pilot-v1-485",
+          "request_hash": "4396135d47ea81511772f6e813512f36180904cbbc14137f4d094fe4256c1ce0"
+        },
+        {
+          "input_tokens": 172,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "de7c2776a9d2f0864adcd2caa5aca86fbee3a3b0b9acab88bfb4f119377d3355",
+          "raw_logits": [
+            29.576814651489258,
+            28.22347640991211
+          ],
+          "record_id": "copa-dev-pilot-v1-485",
+          "request_hash": "4396135d47ea81511772f6e813512f36180904cbbc14137f4d094fe4256c1ce0"
+        },
+        {
+          "input_tokens": 185,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "5be769b10c0fea3fe0bac092fc1cfbd71919fe9c45d94e3178fc645268b92865",
+          "raw_logits": [
+            29.73698616027832,
+            28.581878662109375
+          ],
+          "record_id": "copa-dev-pilot-v1-10",
+          "request_hash": "7258d7f6ba863c84a2fbc20b94a5c7be90fbb865b1380533316f48678aa0a599"
+        },
+        {
+          "input_tokens": 185,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "c2be0ec54676ce2f70d8bba6af62ccc0ffdbbab76ceb8e9bcdf8134ed8c21d14",
+          "raw_logits": [
+            29.572662353515625,
+            28.328876495361328
+          ],
+          "record_id": "copa-dev-pilot-v1-10",
+          "request_hash": "7258d7f6ba863c84a2fbc20b94a5c7be90fbb865b1380533316f48678aa0a599"
+        },
+        {
+          "input_tokens": 176,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "b4cb5d89734af304bbd50c53900abdc25f07bd2dce0e20e767358a84cb19cef0",
+          "raw_logits": [
+            29.489421844482422,
+            26.241561889648438
+          ],
+          "record_id": "copa-dev-pilot-v1-245",
+          "request_hash": "59055db036a867efd010eaecb98e19057c96b3e2ec90b67a63221b26910e722b"
+        },
+        {
+          "input_tokens": 176,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "1561ed8f5dcaffd2805024cabe7d155359bdcbb424fa745fe3b6316f5fd517f4",
+          "raw_logits": [
+            26.845626831054688,
+            30.081493377685547
+          ],
+          "record_id": "copa-dev-pilot-v1-245",
+          "request_hash": "59055db036a867efd010eaecb98e19057c96b3e2ec90b67a63221b26910e722b"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "3c90f5229f4144faded5e5944bd069618c8fe3588d3b4c7dc0de54303b0c6ca0",
+          "raw_logits": [
+            29.275657653808594,
+            28.341651916503906
+          ],
+          "record_id": "copa-dev-pilot-v1-87",
+          "request_hash": "ca0edacc214c42b315986c52744f6da6046387d13fc0bf8f7e75405a0a034e39"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "62d375d0148403da00f9fd212a1f7f60b2632aec21a8a437ff30b274098fcf50",
+          "raw_logits": [
+            29.36720085144043,
+            27.425125122070312
+          ],
+          "record_id": "copa-dev-pilot-v1-87",
+          "request_hash": "ca0edacc214c42b315986c52744f6da6046387d13fc0bf8f7e75405a0a034e39"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "6afaeb7c0edc4ec51d05d998ee5e42f5eb153202a3b152620a4ef9447071c66d",
+          "raw_logits": [
+            29.60934066772461,
+            27.687515258789062
+          ],
+          "record_id": "copa-dev-pilot-v1-62",
+          "request_hash": "1894af6085fa68863df2185df947811b692cd42987215aa4ae4cb587e580b6ec"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "c5eb3353b7e70a0ac8c0eb810f9c8599d261af3ffe80c70f3c7290529d346c88",
+          "raw_logits": [
+            28.40102767944336,
+            29.733291625976562
+          ],
+          "record_id": "copa-dev-pilot-v1-62",
+          "request_hash": "1894af6085fa68863df2185df947811b692cd42987215aa4ae4cb587e580b6ec"
+        },
+        {
+          "input_tokens": 177,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "5e617f4444418596bb266ac152091a22defa08dbdf8045f3fc0690a2aa5aabdb",
+          "raw_logits": [
+            25.024181365966797,
+            29.794818878173828
+          ],
+          "record_id": "copa-dev-pilot-v1-183",
+          "request_hash": "ae087fa375d43a9d5de00c5b028ba66e10ea09c397f42d926461a131edeeb279"
+        },
+        {
+          "input_tokens": 177,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "acd54c7cf22fc4cabdd822805dc8598c30e77e66c3a6e0e398e4f88039795df1",
+          "raw_logits": [
+            29.36928939819336,
+            22.291542053222656
+          ],
+          "record_id": "copa-dev-pilot-v1-183",
+          "request_hash": "ae087fa375d43a9d5de00c5b028ba66e10ea09c397f42d926461a131edeeb279"
+        },
+        {
+          "input_tokens": 186,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "44e98561446419b42a0e1c24ce9062fd96e2ff52a618c5a3025c8d92fa156b96",
+          "raw_logits": [
+            29.002338409423828,
+            28.46929931640625
+          ],
+          "record_id": "copa-dev-pilot-v1-282",
+          "request_hash": "97f31cc800bd247af2ce514e56635eb5b9381f731bc110dc4aa62e5d94f0c47c"
+        },
+        {
+          "input_tokens": 186,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "268096e03a066cb6ea732dc6304b2377e692a03bab2d21863e81ed2e2a1e1e49",
+          "raw_logits": [
+            28.96012306213379,
+            28.89025115966797
+          ],
+          "record_id": "copa-dev-pilot-v1-282",
+          "request_hash": "97f31cc800bd247af2ce514e56635eb5b9381f731bc110dc4aa62e5d94f0c47c"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "17d238556ee8a28a37eecdbfa924f115a728d39b041fff90ea51e417b7c646e0",
+          "raw_logits": [
+            29.621082305908203,
+            27.919370651245117
+          ],
+          "record_id": "copa-dev-pilot-v1-98",
+          "request_hash": "142a38650bedb799183dead18b5320893818aef2edec5e772b41c286d3cb53a1"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "e18dec4e1d7dcb73d6dc49988b937e9ebf1483f1e5bc7c516ddf7b1369216bbc",
+          "raw_logits": [
+            29.575040817260742,
+            27.471342086791992
+          ],
+          "record_id": "copa-dev-pilot-v1-98",
+          "request_hash": "142a38650bedb799183dead18b5320893818aef2edec5e772b41c286d3cb53a1"
+        },
+        {
+          "input_tokens": 182,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "5b2d69d8b36deee1ecff250bc8dc894d7fa22f4819eeb6330a1ee89ed1ec44b9",
+          "raw_logits": [
+            29.0782413482666,
+            27.980453491210938
+          ],
+          "record_id": "copa-dev-pilot-v1-225",
+          "request_hash": "133a4b1721b42147e877b21a8e449174677455b31f16c28e037c3e272bb6092c"
+        },
+        {
+          "input_tokens": 182,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "91606aa8e63fbd997c8b958bbcaac38aee065cb101f518416a6547b00ac5dac3",
+          "raw_logits": [
+            28.72489356994629,
+            28.413166046142578
+          ],
+          "record_id": "copa-dev-pilot-v1-225",
+          "request_hash": "133a4b1721b42147e877b21a8e449174677455b31f16c28e037c3e272bb6092c"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "1ed74d7c1a6fbc4389fae98b8d3e72adf3b4da2272814d035d16778bd02fdbf0",
+          "raw_logits": [
+            27.488506317138672,
+            30.223602294921875
+          ],
+          "record_id": "copa-dev-pilot-v1-315",
+          "request_hash": "24d3135e22c2974a83f9736b00e3a24ecc3ba9a51a611b36101bbfed35df17d2"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "be9dad6653fc778ac6ca8aca43b3020c8512a54f239502c964ed34073ad7952f",
+          "raw_logits": [
+            29.732112884521484,
+            27.383525848388672
+          ],
+          "record_id": "copa-dev-pilot-v1-315",
+          "request_hash": "24d3135e22c2974a83f9736b00e3a24ecc3ba9a51a611b36101bbfed35df17d2"
+        },
+        {
+          "input_tokens": 176,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "44fcbd4f3c5112bbc7a925d07d29f3aeebb208cf16389d8c7f15cfbec9f7ca25",
+          "raw_logits": [
+            29.630775451660156,
+            24.799423217773438
+          ],
+          "record_id": "copa-dev-pilot-v1-191",
+          "request_hash": "c3a869f30dfb9b98da7ed7b54f367930cb81808a80efccade8a26d4fb0647d8a"
+        },
+        {
+          "input_tokens": 176,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "8f11abfe9d80f120f4598eaec34c7e7810b136eefeaf4cdd3cec13ad6f45a25d",
+          "raw_logits": [
+            26.15604019165039,
+            30.379188537597656
+          ],
+          "record_id": "copa-dev-pilot-v1-191",
+          "request_hash": "c3a869f30dfb9b98da7ed7b54f367930cb81808a80efccade8a26d4fb0647d8a"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "376231cd2de7628e1be4e350d88c34ffef5a30641b3d77ac68daf0860f7b61d8",
+          "raw_logits": [
+            29.191699981689453,
+            28.77042007446289
+          ],
+          "record_id": "copa-dev-pilot-v1-331",
+          "request_hash": "7b820134061ba2613d13d6b9c0db8fa8b9fcef2f05de7f3bb0b60c8db008ba43"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "fbc43d579edb493c0f5aef6ab513ced48ab3e60d9c1a44a7f28cb5b021927254",
+          "raw_logits": [
+            29.133220672607422,
+            28.618675231933594
+          ],
+          "record_id": "copa-dev-pilot-v1-331",
+          "request_hash": "7b820134061ba2613d13d6b9c0db8fa8b9fcef2f05de7f3bb0b60c8db008ba43"
+        },
+        {
+          "input_tokens": 183,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "a1fd4429558af3507aeab4db6c4e86d97787fa4d8ff3ec076361352680eaaec0",
+          "raw_logits": [
+            24.96023178100586,
+            30.669055938720703
+          ],
+          "record_id": "copa-dev-pilot-v1-153",
+          "request_hash": "9da5d6efbb39b9ccc02dcdd5870146963670bd7fca5b450787b369cda902b659"
+        },
+        {
+          "input_tokens": 183,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "2aa33bfe779089bdac256dfc0e633b5c898a0d2f2c8b1182c810d89c9028ff33",
+          "raw_logits": [
+            29.71881675720215,
+            23.29131507873535
+          ],
+          "record_id": "copa-dev-pilot-v1-153",
+          "request_hash": "9da5d6efbb39b9ccc02dcdd5870146963670bd7fca5b450787b369cda902b659"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "f1b643a4113308bbcacacebcac197079711bdb2202feb9785fb199fd93761aef",
+          "raw_logits": [
+            29.68397331237793,
+            27.35359001159668
+          ],
+          "record_id": "copa-dev-pilot-v1-94",
+          "request_hash": "eaedbcef4f6b73476bcc24c1053a7974f8a18a8145af37d5a0f53ad18058de2d"
+        },
+        {
+          "input_tokens": 174,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "6bbe6cd9635a564c5206f065f39757b88a292e3ce906e072959073495d1bd414",
+          "raw_logits": [
+            28.538776397705078,
+            29.646385192871094
+          ],
+          "record_id": "copa-dev-pilot-v1-94",
+          "request_hash": "eaedbcef4f6b73476bcc24c1053a7974f8a18a8145af37d5a0f53ad18058de2d"
+        },
+        {
+          "input_tokens": 173,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "174e97753490feadd9caf209a78900a9c43a32dd94d456152cc2d51346331b90",
+          "raw_logits": [
+            29.468578338623047,
+            26.397090911865234
+          ],
+          "record_id": "copa-dev-pilot-v1-93",
+          "request_hash": "2587cb362053128114b9b3a0842fe691d459b2340b4ecb2efa660bfacb65cba0"
+        },
+        {
+          "input_tokens": 173,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "8ac6c93d38c17212501e11deb852f791ab77f251fedfea3dd48e1c38299b499b",
+          "raw_logits": [
+            27.612455368041992,
+            29.78854751586914
+          ],
+          "record_id": "copa-dev-pilot-v1-93",
+          "request_hash": "2587cb362053128114b9b3a0842fe691d459b2340b4ecb2efa660bfacb65cba0"
+        },
+        {
+          "input_tokens": 176,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "44c4fc5b91e8059c0915e1542f42513013566d1b7f38b61f8fb0133437fce745",
+          "raw_logits": [
+            29.345378875732422,
+            27.86898422241211
+          ],
+          "record_id": "copa-dev-pilot-v1-332",
+          "request_hash": "1b711c5c17b612cc900e48de68ba0c4617240b4d8769aa7f3eeb1fc5c5de963d"
+        },
+        {
+          "input_tokens": 176,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "753ad3f0d45f470a5f7da7bd8e6af8e5b307e94e2421655ed64323bde1c063e0",
+          "raw_logits": [
+            28.504085540771484,
+            29.349655151367188
+          ],
+          "record_id": "copa-dev-pilot-v1-332",
+          "request_hash": "1b711c5c17b612cc900e48de68ba0c4617240b4d8769aa7f3eeb1fc5c5de963d"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "da30ac568a406c0359914e3538acf3e93abec35cb5918e70ef503d827ebe349b",
+          "raw_logits": [
+            25.429203033447266,
+            30.000961303710938
+          ],
+          "record_id": "copa-dev-pilot-v1-115",
+          "request_hash": "c474f0304b965fb2caef90ba17413da4322d340556b2c65c5815f870861c9855"
+        },
+        {
+          "input_tokens": 179,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "6947ad7c26031bcda15184b9c3fa9c5905e860cd900a07920b3b9584e490083f",
+          "raw_logits": [
+            29.648452758789062,
+            22.53144073486328
+          ],
+          "record_id": "copa-dev-pilot-v1-115",
+          "request_hash": "c474f0304b965fb2caef90ba17413da4322d340556b2c65c5815f870861c9855"
+        },
+        {
+          "input_tokens": 184,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "6a53ab0e849017d14fe30cd4742bd9b7dc537d7fcc0ae21caf2f5935b56da22d",
+          "raw_logits": [
+            28.63311767578125,
+            29.992015838623047
+          ],
+          "record_id": "copa-dev-pilot-v1-500",
+          "request_hash": "7623ce1e7111b4809896796946a14612bf327b43868d1ac3b621c905b76aa9d8"
+        },
+        {
+          "input_tokens": 184,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "b106b9b937ab47434d414f2298b89ced16dd7dc502f9850f859bee9ed17685e0",
+          "raw_logits": [
+            29.521570205688477,
+            27.783958435058594
+          ],
+          "record_id": "copa-dev-pilot-v1-500",
+          "request_hash": "7623ce1e7111b4809896796946a14612bf327b43868d1ac3b621c905b76aa9d8"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "85cd7c0b08045174b893cc043d44aeb6a54717375a27210f3d06407c3ecd15f4",
+          "raw_logits": [
+            29.633800506591797,
+            26.63751983642578
+          ],
+          "record_id": "copa-dev-pilot-v1-335",
+          "request_hash": "8e145f7a750e5de663994c428a642691f0f01ac563825cbad68a1fe99a8aecf0"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "ebc135f60d2e0c67a10dafff4780ad1dd90e9ea0545563464cb1295bff658896",
+          "raw_logits": [
+            27.818584442138672,
+            30.02018928527832
+          ],
+          "record_id": "copa-dev-pilot-v1-335",
+          "request_hash": "8e145f7a750e5de663994c428a642691f0f01ac563825cbad68a1fe99a8aecf0"
+        },
+        {
+          "input_tokens": 171,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "a1f313e158d89f3ab8103088cc864a4771d4de304c433dba72cb434f403671f2",
+          "raw_logits": [
+            28.8759708404541,
+            29.46951675415039
+          ],
+          "record_id": "copa-dev-pilot-v1-268",
+          "request_hash": "78a7e1bb3df8ab191ab6dd85382171156d4349251f27c3f2080d0024aadc4c3f"
+        },
+        {
+          "input_tokens": 171,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "25a7ef8b0aa8b6dedf88dbf74fa4b574f9f2ce2c0ebd805b08ba7061b61c78c2",
+          "raw_logits": [
+            28.990375518798828,
+            29.222705841064453
+          ],
+          "record_id": "copa-dev-pilot-v1-268",
+          "request_hash": "78a7e1bb3df8ab191ab6dd85382171156d4349251f27c3f2080d0024aadc4c3f"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "87c96532bab4d35135a0152e7aad068d3438d2537a058bf2b95b8ba3e374a022",
+          "raw_logits": [
+            29.58619499206543,
+            27.191232681274414
+          ],
+          "record_id": "copa-dev-pilot-v1-166",
+          "request_hash": "9bce2daba59e31af3549cffa361618e5d4aee898bf8d62dfece5b3439e8e682e"
+        },
+        {
+          "input_tokens": 175,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "ac119488e580c78f6f2eb53fae75924951e6516c50e032ac725c8a2ed7a00d07",
+          "raw_logits": [
+            27.28390121459961,
+            29.977134704589844
+          ],
+          "record_id": "copa-dev-pilot-v1-166",
+          "request_hash": "9bce2daba59e31af3549cffa361618e5d4aee898bf8d62dfece5b3439e8e682e"
+        },
+        {
+          "input_tokens": 173,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "78e3fb25305375dcdb4fb1f42d6fb6f22293a3d1f5e16c8a1d6e62ed29fe04ce",
+          "raw_logits": [
+            28.952457427978516,
+            29.523714065551758
+          ],
+          "record_id": "copa-dev-pilot-v1-327",
+          "request_hash": "f8f7030ab0ee223417a478e1899e67fb0921a8c1772d676debeacbc117ada334"
+        },
+        {
+          "input_tokens": 173,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "a98391ff397e20847820f40cfa69a38467f81fd51caceaae84af66c7dc39786b",
+          "raw_logits": [
+            29.491113662719727,
+            28.597482681274414
+          ],
+          "record_id": "copa-dev-pilot-v1-327",
+          "request_hash": "f8f7030ab0ee223417a478e1899e67fb0921a8c1772d676debeacbc117ada334"
+        }
+      ],
+      "provenance": {
+        "attention_implementation": "eager",
+        "auxiliary_forward_count": 1,
+        "calibration_parity_passed": true,
+        "config_class": "Qwen3_5Config",
+        "device": "cuda:0",
+        "effective_dtype": "torch.float32",
+        "kernel_packages_present": {
+          "causal_conv1d": false,
+          "fla": false,
+          "kernels": false
+        },
+        "load_diagnostics": {
+          "error_msgs": [],
+          "mismatched_keys": [],
+          "missing_keys": [],
+          "unexpected_keys": []
+        },
+        "max_length": 2048,
+        "model_class": "Qwen3_5ForConditionalGeneration",
+        "model_id": "internlm/Intern-Decision-0.8B",
+        "model_revision": "85a0cc5a99d67ea8d56dfe98115689212867171d",
+        "module_sha256": "62664f5bebb593e825370f82b2733edd13b16118b436d09db2f0c36405b9b4ea",
+        "module_source": "https://huggingface.co/internlm/Intern-Decision-0.8B/resolve/85a0cc5a99d67ea8d56dfe98115689212867171d/inference.py",
+        "option_ids_visible_in_prompt": true,
+        "optional_kernel_packages_present": {
+          "causal_conv1d": false,
+          "fla": false,
+          "kernels": false
+        },
+        "parameter_count": 852985920,
+        "parameter_dtypes": {
+          "torch.float32": 852985920
+        },
+        "runtime_versions": {
+          "Pillow": "12.0.0",
+          "huggingface-hub": "1.33.0",
+          "peft": "0.21.0",
+          "pydantic": "2.13.5",
+          "safetensors": "0.8.0",
+          "tokenizers": "0.23.2",
+          "torch": "2.14.1+cu130",
+          "torchvision": "0.29.1+cu130",
+          "transformers": "5.18.0"
+        },
+        "source_commit": "3572c8a68b5df5dafe02d0e093989ba8ec0183bc",
+        "temperature": 2.747760550703,
+        "temperature_note": "Hub default; repository preset is XTuner-bound",
+        "use_hub_kernels": "NO",
+        "versions": {
+          "huggingface_hub": "1.33.0",
+          "torch": "2.14.1+cu130",
+          "transformers": "5.18.0"
+        }
+      },
+      "scored_presentation_count": 64,
+      "status": "passed",
+      "total_forward_count": 65
+    },
+    "kev": {
+      "failure": {
+        "message": "Deserialization failed because the 'torch' module is not available in the local environment.",
+        "stage": "modal_map",
+        "type": "DeserializationError"
+      },
+      "model_name": "kev",
+      "presentations": [],
+      "provenance": {},
+      "status": "failed"
+    },
+    "qwen": {
+      "auxiliary_forward_count": 0,
+      "max_gpu_memory_allocated_bytes": 3038318592,
+      "model_name": "qwen",
+      "presentations": [
+        {
+          "input_tokens": 65,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "1b02e81f963526d5c2cb0acdfcfde5f817f45ba8fe04b30a8945c99a00082118",
+          "raw_logits": [
+            17.196609497070312,
+            17.260038375854492
+          ],
+          "record_id": "copa-dev-pilot-v1-355",
+          "request_hash": "092ea6eda758008fab4df5429787299fcdbc133ae032c545bb8baca670ece9cb"
+        },
+        {
+          "input_tokens": 65,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "c6cea4f441429155a302f065556aa86d8ce4dbb56ec4717dc4fd2349f7e4330b",
+          "raw_logits": [
+            17.207033157348633,
+            17.222240447998047
+          ],
+          "record_id": "copa-dev-pilot-v1-355",
+          "request_hash": "092ea6eda758008fab4df5429787299fcdbc133ae032c545bb8baca670ece9cb"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "daf0a07cab0421a8d308827b5d8656bee7030106490b6591ea0c34aed8b2d659",
+          "raw_logits": [
+            17.640522003173828,
+            17.960033416748047
+          ],
+          "record_id": "copa-dev-pilot-v1-88",
+          "request_hash": "46b848aaf68e9c5434468cc18f6076ba183d3e369524cc0bddb84a88734c944a"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "8742277d5dd4410f26c4d5b21b4eedc4d62d321659533a39b00640795eccf279",
+          "raw_logits": [
+            17.81181526184082,
+            17.996612548828125
+          ],
+          "record_id": "copa-dev-pilot-v1-88",
+          "request_hash": "46b848aaf68e9c5434468cc18f6076ba183d3e369524cc0bddb84a88734c944a"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "8cc5f93a82fcc6253ca1deb4ef694e2388b9634fc8d4a760c4e172b7eec77bba",
+          "raw_logits": [
+            17.18684959411621,
+            17.691051483154297
+          ],
+          "record_id": "copa-dev-pilot-v1-53",
+          "request_hash": "b8a0b34c4b90cbc8b6e224a8ed9cdc8d10594322e42f1c26a9238e50d50ab6d1"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "a5697ef31e96e47b19a5918cba292798795b534279c916cdba851ad504873d3c",
+          "raw_logits": [
+            17.18839454650879,
+            17.713237762451172
+          ],
+          "record_id": "copa-dev-pilot-v1-53",
+          "request_hash": "b8a0b34c4b90cbc8b6e224a8ed9cdc8d10594322e42f1c26a9238e50d50ab6d1"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "07ce186e90c2ea16ed60ca7ac4afa9cc47a68e9d44dde3a8871352d25b07c9fd",
+          "raw_logits": [
+            17.292680740356445,
+            17.77391815185547
+          ],
+          "record_id": "copa-dev-pilot-v1-171",
+          "request_hash": "00125b445297c0680afa490f8d75f62eba91154087cf4c70bdae5ea546056801"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "5a28156a8efd2b161feb32513c4980c163b14be41b52984e2743b5cb9d6e6407",
+          "raw_logits": [
+            17.321744918823242,
+            17.602954864501953
+          ],
+          "record_id": "copa-dev-pilot-v1-171",
+          "request_hash": "00125b445297c0680afa490f8d75f62eba91154087cf4c70bdae5ea546056801"
+        },
+        {
+          "input_tokens": 64,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "e58943b6d36a2b14bde5a8df54a57bb591b20491f987241db46a2cfcb2cd66d5",
+          "raw_logits": [
+            17.164283752441406,
+            18.12311363220215
+          ],
+          "record_id": "copa-dev-pilot-v1-149",
+          "request_hash": "8839652bf5a43281a70d5e1bd5a6bf2484f86709022fcb7f6160d9c5b1a4f75f"
+        },
+        {
+          "input_tokens": 64,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "1bb1f1c01addcb5b8f1207565843ab8e9ec791bb30f6e136df8a7e46b98e2d20",
+          "raw_logits": [
+            17.526264190673828,
+            17.791261672973633
+          ],
+          "record_id": "copa-dev-pilot-v1-149",
+          "request_hash": "8839652bf5a43281a70d5e1bd5a6bf2484f86709022fcb7f6160d9c5b1a4f75f"
+        },
+        {
+          "input_tokens": 67,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "0e4795421bb71ddca77f7ca4cfe6d91382496ede9d4dcd5b8256674ab3d7ec02",
+          "raw_logits": [
+            17.189640045166016,
+            17.937057495117188
+          ],
+          "record_id": "copa-dev-pilot-v1-443",
+          "request_hash": "a440210917b494374492b4c707ba22137911de3d8eae8eab16d4c9c42c798f15"
+        },
+        {
+          "input_tokens": 67,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "e8229a556834a132f09c39d2d7b3b2dbcd825321b5eeab352fd7acda5339632c",
+          "raw_logits": [
+            17.494619369506836,
+            17.702457427978516
+          ],
+          "record_id": "copa-dev-pilot-v1-443",
+          "request_hash": "a440210917b494374492b4c707ba22137911de3d8eae8eab16d4c9c42c798f15"
+        },
+        {
+          "input_tokens": 60,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "bf84896ce2dd5a28642f93e81e9c08a548a1808dd6f769804f3fd0e656059022",
+          "raw_logits": [
+            17.333457946777344,
+            17.882614135742188
+          ],
+          "record_id": "copa-dev-pilot-v1-476",
+          "request_hash": "1ca0c844499556adcf4ba5b46d1f7b66fd30beed492996158cb0ef53fd67188d"
+        },
+        {
+          "input_tokens": 60,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "821720afaaf040f6281d1c8e889103a4c37f94d2c01e0c21d81a2be7fad4eda6",
+          "raw_logits": [
+            17.340862274169922,
+            17.784133911132812
+          ],
+          "record_id": "copa-dev-pilot-v1-476",
+          "request_hash": "1ca0c844499556adcf4ba5b46d1f7b66fd30beed492996158cb0ef53fd67188d"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "30e6ae438394b5965410b449ef6feea9db5a7094fdf7720788c9068791b89c63",
+          "raw_logits": [
+            17.042943954467773,
+            18.216957092285156
+          ],
+          "record_id": "copa-dev-pilot-v1-206",
+          "request_hash": "fe2b0cb6587df043208b54364dfcb3f78110a6033ee42a13ca0118379211e15b"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "1604c41121d62a04c2d3a2961c59dab4ea3d726bfb07a099c44dbf75facc1940",
+          "raw_logits": [
+            17.351194381713867,
+            18.02771759033203
+          ],
+          "record_id": "copa-dev-pilot-v1-206",
+          "request_hash": "fe2b0cb6587df043208b54364dfcb3f78110a6033ee42a13ca0118379211e15b"
+        },
+        {
+          "input_tokens": 61,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "1cf1fe36e6cb58dfda34fdcf35a34df983d6710b09a8fe194793734e6a1c365c",
+          "raw_logits": [
+            17.293079376220703,
+            18.34261703491211
+          ],
+          "record_id": "copa-dev-pilot-v1-127",
+          "request_hash": "ed3142d098f0ab338f0ffbeeefe1a0830f9b1b80f1e73db82739d2a3c0bda026"
+        },
+        {
+          "input_tokens": 61,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "607f4fc8d83d72115f559b89878366db271ca97f148b54cfdf4ee7acf596323c",
+          "raw_logits": [
+            17.51205825805664,
+            18.11754608154297
+          ],
+          "record_id": "copa-dev-pilot-v1-127",
+          "request_hash": "ed3142d098f0ab338f0ffbeeefe1a0830f9b1b80f1e73db82739d2a3c0bda026"
+        },
+        {
+          "input_tokens": 60,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "7c83ce6b73acb05ea622bc15694f7acd7aabdfb3bf1c250d9660b4817c659cbe",
+          "raw_logits": [
+            17.132694244384766,
+            17.868528366088867
+          ],
+          "record_id": "copa-dev-pilot-v1-400",
+          "request_hash": "c0d31813b0110014e930da5fd86780d9acbb259af3823d453eabe472248e967f"
+        },
+        {
+          "input_tokens": 60,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "bec3b73119fe32e363f19219a3efbcef3351b525a1357dc0f2abb3e2b043610c",
+          "raw_logits": [
+            17.292896270751953,
+            17.551849365234375
+          ],
+          "record_id": "copa-dev-pilot-v1-400",
+          "request_hash": "c0d31813b0110014e930da5fd86780d9acbb259af3823d453eabe472248e967f"
+        },
+        {
+          "input_tokens": 55,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "5f8dba4c3115202bf381492114bb1ec61e6c48bcb59b4c93acf752b437f18b67",
+          "raw_logits": [
+            17.22095489501953,
+            17.838544845581055
+          ],
+          "record_id": "copa-dev-pilot-v1-485",
+          "request_hash": "4396135d47ea81511772f6e813512f36180904cbbc14137f4d094fe4256c1ce0"
+        },
+        {
+          "input_tokens": 55,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "c1ddf4d206b36b85ad2f12f7358df2af825e02df770ae6b4dcb1b1361f754b70",
+          "raw_logits": [
+            17.235490798950195,
+            17.89523696899414
+          ],
+          "record_id": "copa-dev-pilot-v1-485",
+          "request_hash": "4396135d47ea81511772f6e813512f36180904cbbc14137f4d094fe4256c1ce0"
+        },
+        {
+          "input_tokens": 68,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "1921caa442792842400d26f462eb534bf1fd769f759030f5503fa660630ed43a",
+          "raw_logits": [
+            17.490947723388672,
+            17.866165161132812
+          ],
+          "record_id": "copa-dev-pilot-v1-10",
+          "request_hash": "7258d7f6ba863c84a2fbc20b94a5c7be90fbb865b1380533316f48678aa0a599"
+        },
+        {
+          "input_tokens": 68,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "dc59df8017d6b6f83a8c0c1e0290dc4a8b952f6ed014312a2f8e48a9d6fb89f5",
+          "raw_logits": [
+            17.429428100585938,
+            17.906570434570312
+          ],
+          "record_id": "copa-dev-pilot-v1-10",
+          "request_hash": "7258d7f6ba863c84a2fbc20b94a5c7be90fbb865b1380533316f48678aa0a599"
+        },
+        {
+          "input_tokens": 59,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "25f428102c751a305915372d28176d60d7f2b9aa8e22ff2a495d4b994bd442b2",
+          "raw_logits": [
+            18.06055450439453,
+            18.131868362426758
+          ],
+          "record_id": "copa-dev-pilot-v1-245",
+          "request_hash": "59055db036a867efd010eaecb98e19057c96b3e2ec90b67a63221b26910e722b"
+        },
+        {
+          "input_tokens": 59,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "eb3291e8df889bcfe56ff6d011613715d2fb59cba58d1b775f66c5cb104b24c0",
+          "raw_logits": [
+            18.006193161010742,
+            18.151838302612305
+          ],
+          "record_id": "copa-dev-pilot-v1-245",
+          "request_hash": "59055db036a867efd010eaecb98e19057c96b3e2ec90b67a63221b26910e722b"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "905be52481122124365227a121f575a0b91972e41e8f9f9eb23ec300a91dd581",
+          "raw_logits": [
+            17.285493850708008,
+            17.357715606689453
+          ],
+          "record_id": "copa-dev-pilot-v1-87",
+          "request_hash": "ca0edacc214c42b315986c52744f6da6046387d13fc0bf8f7e75405a0a034e39"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "27469bcce36d380cae57d7f7b9959cc858e4743141a7296c7f0a78fdfd499553",
+          "raw_logits": [
+            17.3022518157959,
+            17.468570709228516
+          ],
+          "record_id": "copa-dev-pilot-v1-87",
+          "request_hash": "ca0edacc214c42b315986c52744f6da6046387d13fc0bf8f7e75405a0a034e39"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "d58302c8f35fc40304fc6ef6f740c81e3180bcf887927011e57b274bfba0d986",
+          "raw_logits": [
+            17.434188842773438,
+            17.238285064697266
+          ],
+          "record_id": "copa-dev-pilot-v1-62",
+          "request_hash": "1894af6085fa68863df2185df947811b692cd42987215aa4ae4cb587e580b6ec"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "35d3f906df7538a5afbb1862bae36037e3f4a3f4ec6efedd3ee2b4d76e098d37",
+          "raw_logits": [
+            17.26544189453125,
+            17.44208335876465
+          ],
+          "record_id": "copa-dev-pilot-v1-62",
+          "request_hash": "1894af6085fa68863df2185df947811b692cd42987215aa4ae4cb587e580b6ec"
+        },
+        {
+          "input_tokens": 60,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "ac8b69c32e2180cf6302be3b3440150245c05b4c669a5fd112265fa8d5e2026d",
+          "raw_logits": [
+            17.102937698364258,
+            17.822620391845703
+          ],
+          "record_id": "copa-dev-pilot-v1-183",
+          "request_hash": "ae087fa375d43a9d5de00c5b028ba66e10ea09c397f42d926461a131edeeb279"
+        },
+        {
+          "input_tokens": 60,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "6bd9da4a3811bfc3779e4e2ffe7596cec3433fe09b7141cdb60096e54219f747",
+          "raw_logits": [
+            17.52337074279785,
+            17.26385498046875
+          ],
+          "record_id": "copa-dev-pilot-v1-183",
+          "request_hash": "ae087fa375d43a9d5de00c5b028ba66e10ea09c397f42d926461a131edeeb279"
+        },
+        {
+          "input_tokens": 69,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "7d96772c65fc329f613031b12b84319cb74bbb93676df242b7c76c0b09fdf07d",
+          "raw_logits": [
+            17.307525634765625,
+            17.567398071289062
+          ],
+          "record_id": "copa-dev-pilot-v1-282",
+          "request_hash": "97f31cc800bd247af2ce514e56635eb5b9381f731bc110dc4aa62e5d94f0c47c"
+        },
+        {
+          "input_tokens": 69,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "0072253f873dbb25d90efb66cc1cdf8baaddb16453b495ac8967b1e2256ada5a",
+          "raw_logits": [
+            17.268840789794922,
+            17.70002555847168
+          ],
+          "record_id": "copa-dev-pilot-v1-282",
+          "request_hash": "97f31cc800bd247af2ce514e56635eb5b9381f731bc110dc4aa62e5d94f0c47c"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "8139b912797f399c0a1a3720e88ddc32bf45af9d5c5649d08e491caa477cecd4",
+          "raw_logits": [
+            17.0299129486084,
+            17.981767654418945
+          ],
+          "record_id": "copa-dev-pilot-v1-98",
+          "request_hash": "142a38650bedb799183dead18b5320893818aef2edec5e772b41c286d3cb53a1"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "3e0bc1e0b1d3617e83a3015e57a8fc18e327780670cbbd4a002ff9d88acb37ae",
+          "raw_logits": [
+            16.979801177978516,
+            17.968263626098633
+          ],
+          "record_id": "copa-dev-pilot-v1-98",
+          "request_hash": "142a38650bedb799183dead18b5320893818aef2edec5e772b41c286d3cb53a1"
+        },
+        {
+          "input_tokens": 65,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "e75baf5b9f1401823d6c6b874f38ac49af2969bc8a885ef1f378efdc7079f389",
+          "raw_logits": [
+            17.520936965942383,
+            18.116989135742188
+          ],
+          "record_id": "copa-dev-pilot-v1-225",
+          "request_hash": "133a4b1721b42147e877b21a8e449174677455b31f16c28e037c3e272bb6092c"
+        },
+        {
+          "input_tokens": 65,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "0698e5c3157c35c41d6e980faf6d4145a676be512bb0cbc4829ec6813196a426",
+          "raw_logits": [
+            16.845027923583984,
+            18.463077545166016
+          ],
+          "record_id": "copa-dev-pilot-v1-225",
+          "request_hash": "133a4b1721b42147e877b21a8e449174677455b31f16c28e037c3e272bb6092c"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "27d010756a8d9a9d0778d06711bcb53b4a8b07e3b231daec1e453e10aa232895",
+          "raw_logits": [
+            16.863924026489258,
+            17.840436935424805
+          ],
+          "record_id": "copa-dev-pilot-v1-315",
+          "request_hash": "24d3135e22c2974a83f9736b00e3a24ecc3ba9a51a611b36101bbfed35df17d2"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "b9d34f13651f58847dad9f4395c6cd30c50b4ccaa40e963eb9e7f6c9829c01b6",
+          "raw_logits": [
+            17.1700439453125,
+            17.65567398071289
+          ],
+          "record_id": "copa-dev-pilot-v1-315",
+          "request_hash": "24d3135e22c2974a83f9736b00e3a24ecc3ba9a51a611b36101bbfed35df17d2"
+        },
+        {
+          "input_tokens": 59,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "bb1fd7523414287d9b8b776b4ae5629e8eb7a3c0ecb3bfc56855ae1ead9d5fb6",
+          "raw_logits": [
+            17.54800796508789,
+            18.025310516357422
+          ],
+          "record_id": "copa-dev-pilot-v1-191",
+          "request_hash": "c3a869f30dfb9b98da7ed7b54f367930cb81808a80efccade8a26d4fb0647d8a"
+        },
+        {
+          "input_tokens": 59,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "a563a6a701b806b683b4b6b0dd2f3e5a99f3922940aea26ea6a17db6b1d0ac43",
+          "raw_logits": [
+            16.873437881469727,
+            18.472694396972656
+          ],
+          "record_id": "copa-dev-pilot-v1-191",
+          "request_hash": "c3a869f30dfb9b98da7ed7b54f367930cb81808a80efccade8a26d4fb0647d8a"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "8b147bda6219862d0296e43b35586b139334412d18726a5f61023c2949d51ad6",
+          "raw_logits": [
+            17.51226043701172,
+            17.86099624633789
+          ],
+          "record_id": "copa-dev-pilot-v1-331",
+          "request_hash": "7b820134061ba2613d13d6b9c0db8fa8b9fcef2f05de7f3bb0b60c8db008ba43"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "7ec5934cd7ac4155eb3fed4118cf2be78859a9ab93e061c31941e180aee79531",
+          "raw_logits": [
+            17.637706756591797,
+            17.83519744873047
+          ],
+          "record_id": "copa-dev-pilot-v1-331",
+          "request_hash": "7b820134061ba2613d13d6b9c0db8fa8b9fcef2f05de7f3bb0b60c8db008ba43"
+        },
+        {
+          "input_tokens": 66,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "e1c1fb004aacadada24e0dbdadae15b6eb73c16819e50383827bfe2e53138c56",
+          "raw_logits": [
+            16.87093162536621,
+            17.639427185058594
+          ],
+          "record_id": "copa-dev-pilot-v1-153",
+          "request_hash": "9da5d6efbb39b9ccc02dcdd5870146963670bd7fca5b450787b369cda902b659"
+        },
+        {
+          "input_tokens": 66,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "d1b024251497d746f20c1db7219e1852d1caa1c01573c8fccb979c7cfafaa320",
+          "raw_logits": [
+            17.32887077331543,
+            17.21620750427246
+          ],
+          "record_id": "copa-dev-pilot-v1-153",
+          "request_hash": "9da5d6efbb39b9ccc02dcdd5870146963670bd7fca5b450787b369cda902b659"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "51ff4393498518f306aa37f2519b6165d18816411330697ed0b94b84c8a8583a",
+          "raw_logits": [
+            17.447689056396484,
+            17.899227142333984
+          ],
+          "record_id": "copa-dev-pilot-v1-94",
+          "request_hash": "eaedbcef4f6b73476bcc24c1053a7974f8a18a8145af37d5a0f53ad18058de2d"
+        },
+        {
+          "input_tokens": 57,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "8fe9b037843703799b35589f4e9756b984dac842b820c3b6faea93011a1ac0c4",
+          "raw_logits": [
+            17.329669952392578,
+            18.152156829833984
+          ],
+          "record_id": "copa-dev-pilot-v1-94",
+          "request_hash": "eaedbcef4f6b73476bcc24c1053a7974f8a18a8145af37d5a0f53ad18058de2d"
+        },
+        {
+          "input_tokens": 56,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "f2044072a017150be4386f1566100fb1555f346797b22c03b722338f2772ffe8",
+          "raw_logits": [
+            17.18495750427246,
+            17.7741641998291
+          ],
+          "record_id": "copa-dev-pilot-v1-93",
+          "request_hash": "2587cb362053128114b9b3a0842fe691d459b2340b4ecb2efa660bfacb65cba0"
+        },
+        {
+          "input_tokens": 56,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "2a210abfd4ed4f125fdebce10f992eec3379adf2ea0d2d26881a6ed183322c02",
+          "raw_logits": [
+            17.2239990234375,
+            17.709877014160156
+          ],
+          "record_id": "copa-dev-pilot-v1-93",
+          "request_hash": "2587cb362053128114b9b3a0842fe691d459b2340b4ecb2efa660bfacb65cba0"
+        },
+        {
+          "input_tokens": 59,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "ed94ee3e572e20e756f0c1c72644e43328958142b278247607d8cd9c196fdb2e",
+          "raw_logits": [
+            17.172258377075195,
+            17.948482513427734
+          ],
+          "record_id": "copa-dev-pilot-v1-332",
+          "request_hash": "1b711c5c17b612cc900e48de68ba0c4617240b4d8769aa7f3eeb1fc5c5de963d"
+        },
+        {
+          "input_tokens": 59,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "d7d401af1656da53925085f0b4c6602147043e3f7299caa9c28ff473b51e04e0",
+          "raw_logits": [
+            17.200668334960938,
+            17.89260482788086
+          ],
+          "record_id": "copa-dev-pilot-v1-332",
+          "request_hash": "1b711c5c17b612cc900e48de68ba0c4617240b4d8769aa7f3eeb1fc5c5de963d"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "0f51a7034e554f6bd7f53c48aa11b82cf5d67b171c0513e3212b7c46114b6591",
+          "raw_logits": [
+            17.130414962768555,
+            17.86380386352539
+          ],
+          "record_id": "copa-dev-pilot-v1-115",
+          "request_hash": "c474f0304b965fb2caef90ba17413da4322d340556b2c65c5815f870861c9855"
+        },
+        {
+          "input_tokens": 62,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "f67d74b0f995d8d568103ff706fa38f346bcf1ff0623c6d54940454471b73874",
+          "raw_logits": [
+            17.434690475463867,
+            17.74274253845215
+          ],
+          "record_id": "copa-dev-pilot-v1-115",
+          "request_hash": "c474f0304b965fb2caef90ba17413da4322d340556b2c65c5815f870861c9855"
+        },
+        {
+          "input_tokens": 67,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "244f2ac56ea494e04263eaddb8e504b10b707aa2245f7b78cc84add3a16c8b06",
+          "raw_logits": [
+            17.179615020751953,
+            18.0828914642334
+          ],
+          "record_id": "copa-dev-pilot-v1-500",
+          "request_hash": "7623ce1e7111b4809896796946a14612bf327b43868d1ac3b621c905b76aa9d8"
+        },
+        {
+          "input_tokens": 67,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "20b246b0c5f5f9385d8e3d40d5476b37126a1ecb530a16f122a1cdff2c44697c",
+          "raw_logits": [
+            17.297901153564453,
+            17.98102569580078
+          ],
+          "record_id": "copa-dev-pilot-v1-500",
+          "request_hash": "7623ce1e7111b4809896796946a14612bf327b43868d1ac3b621c905b76aa9d8"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "39ae2d9fc9659ea0c66942ff3887c7f8afddff7dc68a8106d4671c67a9a46af7",
+          "raw_logits": [
+            17.46126937866211,
+            17.6195011138916
+          ],
+          "record_id": "copa-dev-pilot-v1-335",
+          "request_hash": "8e145f7a750e5de663994c428a642691f0f01ac563825cbad68a1fe99a8aecf0"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "851a903e56ed8600a95719c829e939a068f4605f5766abecced3c6e6d61b8e5f",
+          "raw_logits": [
+            17.25665283203125,
+            17.73886489868164
+          ],
+          "record_id": "copa-dev-pilot-v1-335",
+          "request_hash": "8e145f7a750e5de663994c428a642691f0f01ac563825cbad68a1fe99a8aecf0"
+        },
+        {
+          "input_tokens": 54,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "d31eacf787ca1496b245be834f014906c31395479b656eee5ed018dd1cce0129",
+          "raw_logits": [
+            17.37548828125,
+            17.91347885131836
+          ],
+          "record_id": "copa-dev-pilot-v1-268",
+          "request_hash": "78a7e1bb3df8ab191ab6dd85382171156d4349251f27c3f2080d0024aadc4c3f"
+        },
+        {
+          "input_tokens": 54,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "3576f7ada1647e12b91b380e15c0e0aff643bd69a3b9ca96052dfa09a03baab6",
+          "raw_logits": [
+            17.254085540771484,
+            17.88631820678711
+          ],
+          "record_id": "copa-dev-pilot-v1-268",
+          "request_hash": "78a7e1bb3df8ab191ab6dd85382171156d4349251f27c3f2080d0024aadc4c3f"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "a603ef3ea4188cd4954af1ea7676ccc18621cfd0d9b6235b99f04d3ac6ce793a",
+          "raw_logits": [
+            17.599327087402344,
+            17.972366333007812
+          ],
+          "record_id": "copa-dev-pilot-v1-166",
+          "request_hash": "9bce2daba59e31af3549cffa361618e5d4aee898bf8d62dfece5b3439e8e682e"
+        },
+        {
+          "input_tokens": 58,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "43ddf87ec433e8d970316b5551f234a2bc426a5af93514e8f8022bdee608a8cd",
+          "raw_logits": [
+            17.381439208984375,
+            18.03165626525879
+          ],
+          "record_id": "copa-dev-pilot-v1-166",
+          "request_hash": "9bce2daba59e31af3549cffa361618e5d4aee898bf8d62dfece5b3439e8e682e"
+        },
+        {
+          "input_tokens": 56,
+          "option_ids": [
+            "choice1",
+            "choice2"
+          ],
+          "permutation_index": 0,
+          "prompt_sha256": "9d5c523c32dd23fa9d7cca59ade507f606012e2034be47cfaccf16488fe7005b",
+          "raw_logits": [
+            17.140443801879883,
+            17.702198028564453
+          ],
+          "record_id": "copa-dev-pilot-v1-327",
+          "request_hash": "f8f7030ab0ee223417a478e1899e67fb0921a8c1772d676debeacbc117ada334"
+        },
+        {
+          "input_tokens": 56,
+          "option_ids": [
+            "choice2",
+            "choice1"
+          ],
+          "permutation_index": 1,
+          "prompt_sha256": "ae4fff07c6b693f316f5ecc2b69d39cd48eb3ae4021cf32ccc45805ff34aecd8",
+          "raw_logits": [
+            17.34210968017578,
+            17.581418991088867
+          ],
+          "record_id": "copa-dev-pilot-v1-327",
+          "request_hash": "f8f7030ab0ee223417a478e1899e67fb0921a8c1772d676debeacbc117ada334"
+        }
+      ],
+      "provenance": {
+        "attention_implementation": "eager",
+        "auxiliary_forward_count": 0,
+        "config_class": "Qwen3_5TextConfig",
+        "device": "cuda:0",
+        "effective_dtype": "torch.float32",
+        "layer_count": 24,
+        "load_diagnostics": {
+          "error_msgs": [],
+          "mismatched_keys": [],
+          "missing_keys": [],
+          "unexpected_keys": []
+        },
+        "logits_to_keep": 1,
+        "max_input_tokens": 2048,
+        "model_class": "Qwen3_5ForCausalLM",
+        "model_id": "Qwen/Qwen3.5-0.8B-Base",
+        "model_revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+        "no_meta_parameters": true,
+        "optional_kernel_packages_present": {
+          "causal_conv1d": false,
+          "fla": false,
+          "kernels": false
+        },
+        "parameter_count": 752393024,
+        "parameter_dtypes": {
+          "torch.float32": 752393024
+        },
+        "runtime_versions": {
+          "Pillow": "12.0.0",
+          "huggingface-hub": "1.33.0",
+          "peft": "0.21.0",
+          "pydantic": "2.13.5",
+          "safetensors": "0.8.0",
+          "tokenizers": "0.23.2",
+          "torch": "2.14.1+cu130",
+          "torchvision": "0.29.1+cu130",
+          "transformers": "5.18.0"
+        },
+        "single_unpadded_request": true,
+        "temperature": 1.0,
+        "temperature_note": "raw logits; no checkpoint calibration applied",
+        "tied_embeddings": true,
+        "use_hub_kernels": "NO",
+        "use_kernels": false,
+        "versions": {
+          "huggingface_hub": "1.33.0",
+          "torch": "2.14.1+cu130",
+          "transformers": "5.18.0"
+        }
+      },
+      "scored_presentation_count": 64,
+      "status": "passed",
+      "total_forward_count": 64
+    }
+  },
+  "provenance": {
+    "baseline_protocol": "docs/baseline-protocol.md",
+    "baseline_protocol_sha256": "bee16b5568551a087aeef4e736d1b16916043f391ed0b519efb319cd1ab284ef",
+    "modal_sdk_version": "1.6.1",
+    "profile": "reflex-personal",
+    "source_file_sha256": {
+      "experiments/__init__.py": "51f383d59030d5529976ee5a1e561573d493c25ba49a60672a0261c9e05683bf",
+      "experiments/analyze_baselines.py": "0626a18743c4b1510c3d86d7658f71e781744bf554d77dc09a2b0f0d71fd718d",
+      "experiments/baseline_intern.py": "c7ee4d6c13869d2b02a6bdd4ea2513a8c6f868261420e67a5efbfef4837fc78f",
+      "experiments/baseline_kev.py": "d4b79afc3cc6843c48817b0614c07ab0d7a2cfa5cffe43348c2b4db2a9e6be6a",
+      "experiments/baseline_qwen.py": "792652b5130c9a2f0edf5a74c98793496e8dda51908c6762b8886404afe3fc49",
+      "experiments/baseline_runner_core.py": "04938a7b81e53e276a7ea40692fdea8345a55dc424e6428388c6d7726f4ee73e",
+      "experiments/modal_baseline.py": "fa73143841f54e88e0b2c382633eb32fed734e8fff01a6d9e92f4c4e58b37493",
+      "experiments/modal_smoke.py": "2c7064e7d813c49fdb0f0efead6fc08912600e13da536b8cb83550451836fe26",
+      "experiments/prepare_baseline_data.py": "b5eefeb81313ddace7ff339b99b12b0a2ca5037e05f2fa8a2452cff68cd925db",
+      "src/reflex_decisions/__init__.py": "b74ea771b41d95721dc2b91333436436785300b3b5a649e942d64bf76dd47559",
+      "src/reflex_decisions/__main__.py": "0fa0478a9d7a3c2430b7fee1ef3ba40faf04d067ba047a5170fe001902be2c89",
+      "src/reflex_decisions/baseline_data.py": "1bf9eebf664feb4a88d329eb59f05c3a2826ad71c5894cce39aab944429ad100",
+      "src/reflex_decisions/cli.py": "e13ae51847d8816793b39a93d818ac766c68577e8558b824ec7f2fb9e1fd1aa5",
+      "src/reflex_decisions/data.py": "d01d98a6da6098474bd4dbf1ce1b610a9630eac6e2673f7da6efd89b5e07c713",
+      "src/reflex_decisions/evaluation.py": "4ff17fb2990afabb626e3f9730f2096cb6977e69994c7d14a5884662eb86749c",
+      "src/reflex_decisions/permutation.py": "6fb6ddf7d8ed5b15e56373ed2284b18c91bdd94a1908a52c66b5dfe2e6f11c47",
+      "src/reflex_decisions/rendering.py": "b2cd82742457b6ee5cd354998dc12f0847de3014ce65fe05f77b7978c310a384",
+      "src/reflex_decisions/schema.py": "6263ba9c37532f03fe151226e57003cb4ff2db746186e32c4f7c32b91baa6c0e",
+      "src/reflex_decisions/scoring.py": "a610d04f57af2e7f33030b5eff6367b3e61c744423be17b03ee4cfbf0060594c",
+      "src/reflex_decisions/smoke.py": "d0ba2d49f791daea35859c26832c6a3927dcf603edd0ad01ebe474714bc29612"
+    },
+    "workspace": "rajath-61258"
+  },
+  "records_sha256": "a8daefa5a7300cc6243f3af1208bbd2887d41c306416bb37bf95263748657c5b",
+  "schema_version": 1,
+  "status": "failed"
+}

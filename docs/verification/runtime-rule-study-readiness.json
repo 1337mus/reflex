@@ -13,7 +13,16 @@
     ".context/runtime-rule-study-analysis-freeze.json": "2c95cae37a64e3e38f6767577963b6b5831141361e2287807320a837a4cfa854",
     ".context/runtime-rule-study-statistics-worker-checks.json": "cb5d084ae9ec258d6b0ea12ebb0a54f4a40df71f5f747cb96cd9115245f7fa9a",
     ".context/runtime-rule-study-analysis-final-review.json": "f06d1a64c67cf78d204a48a2419844748b40e12f1e348beaeb7071df7ad1d166",
-    ".context/runtime-rule-study-analysis-final-review.md": "976438ba7741ee8e059c8421726cb86c4af1c1710775ee24f23a07390122582a"
+    ".context/runtime-rule-study-analysis-final-review.md": "976438ba7741ee8e059c8421726cb86c4af1c1710775ee24f23a07390122582a",
+    ".context/runtime-rule-study-package-freeze.json": "09fa451922e358e6e61c1ff16f0d4e48838713e2421b328b7bfe0bf40944f544",
+    ".context/runtime-rule-study-package-clean-verification.json": "bd0c434af1f94ae79bfbaf064c26fea3b39dbd93d46c6fb66ea42365a7b3bc8c",
+    ".context/runtime-rule-study-package-fix-clean-verification.json": "70b8423950d8876e31661b5afa1c5960d79a82dcba3b77767072647b79670a43",
+    ".context/runtime-rule-study-package-actual.json": "b8e4882effe9b2cdf40fd4db9e2a0781d1ab73dc0ac998d2252c352f22826aa4",
+    ".context/runtime-rule-study-package-actual-failure.json": "a4da82d4e920e52c55674703dcfe35bc89ee4a410114a4371e6f27a5799fa1f5",
+    ".context/runtime-rule-study-package-actual-shape-diagnostic.json": "ca09b3183dd6a289d90d2bf615176d4f2aa6ad9da16decbaf0410b71a9fb1345",
+    ".context/runtime-rule-study-bundle-progress-final-review.json": "c9f75f8bc1da6f93913e3ea975325b9933b89f27f30bc8c64bb5503c18c5281c",
+    ".context/runtime-rule-study-payload-training-final-review.json": "6bbb96c085eaa277c7284bc2cff8fa70cbc03b9a31223ed5feceda7db9040195",
+    ".context/runtime-rule-study-package-source-ci.json": "5e9532cf786e34c34194385f4f1ab85bcc5c52980bb8fc48e4ce3e411a58ed30"
   },
   "final_review": {
     "checks": [
@@ -1193,11 +1202,11 @@
   },
   "preflight_git_head_interpretation": "The aggregate git_head records the checkout HEAD at preflight time. The final signed and pushed source commit is the separately pinned source_commit; source identity is bound by the frozen SHA-256 values.",
   "readiness_limits": [
-    "Input, schedule, prompt, and token preparation are delivered; retained-output cache joins and fixed statistics/worker contracts are verified.",
-    "No new study model training or scoring was run, so no performance gain has been measured.",
-    "The release calibration and test files remained sealed and unused.",
-    "The development panel has only 14 groups per family and the study uses one seed; results will not support broad capability claims.",
-    "Authenticated bundle, payload and result contracts, the GPU runner, and launch checks remain unfinished; the schedules are fixed but the concrete worker payloads are not yet frozen."
+    "Data, schedules, saved answers, analysis rules, worker input packages and partial-work accounting are verified.",
+    "No new study model training or scoring has run.",
+    "New calibration and test content remains sealed and unused.",
+    "There are only 14 development groups per new family and one study seed. The treatment has about 55% more training tokens.",
+    "Returned-result validation, the GPU runtime, launch host and concrete launch checks remain unfinished."
   ],
   "root_checks": {
     "checks": [
@@ -1307,7 +1316,7 @@
     "sha": "c883de9f0053e82554fab332fbb5b86a980a54ea",
     "url": "https://github.com/1337mus/reflex/commit/c883de9f0053e82554fab332fbb5b86a980a54ea"
   },
-  "status": "prelaunch_cpu_cache_statistics_contracts_verified",
+  "status": "prelaunch_cpu_worker_packages_verified",
   "cache_statistics_and_worker_contracts": {
     "status": "verified",
     "source_freeze_sha256": {
@@ -1467,5 +1476,129 @@
         "verified_at_utc": "2026-10-05 11:09 UTC"
       }
     }
+  },
+  "worker_packages": {
+    "source_commit": {
+      "sha": "b7ac35a63d27581ec7f624f71f8e7e5ee65af61a",
+      "branch": "main",
+      "signature": "verified",
+      "exact_commit_ci": {
+        "conclusion": "success",
+        "headSha": "b7ac35a63d27581ec7f624f71f8e7e5ee65af61a",
+        "status": "completed",
+        "url": "https://github.com/1337mus/reflex/actions/runs/37305014205",
+        "test_result": "2026-10-05T11:49:27.6215130Z ======================= 929 passed in 213.66s (0:03:33) ========================",
+        "verified_at_utc": "2026-10-05T11:50:31.697179+00:00"
+      }
+    },
+    "source_sha256": {
+      "experiments/runtime_rule_study_bundle.py": "fb788a83517c1500d95e9a22ea6b8a908db0ac16b8a5fed35cc4d59a87a362b4",
+      "experiments/runtime_rule_study_payload_metadata.py": "9a34be0ea43d66be487804cd6c1c2c1b83c357999d0d6b9ac3f23a9dc5047687",
+      "experiments/runtime_rule_study_payload_rows.py": "4952f6136bbbc9c5857b82eb50c90bd12ab6d001008c14b070857fd0d7d48dac",
+      "experiments/runtime_rule_study_payloads.py": "b023e2a7b33a01d4e47752d5523b972266267581cabecf6a5350a44ccd4de91a",
+      "experiments/runtime_rule_study_progress.py": "10b35dbea0331189e67d4820d760ddf2fb2f0f737ef56f9ab502348324d99a1a",
+      "experiments/runtime_rule_study_training_evidence.py": "a6394068891f201eed8e50f80449d7605ded402243fda11454bc6d07a1404720",
+      "tests/test_runtime_rule_study_bundle.py": "cfa5fa48dcc2949640317b8d5af30017c144dcd91776fc02f75e6fa58a8216de",
+      "tests/test_runtime_rule_study_payloads.py": "3091897f63eda5210aa0453c9e76b8ef045fab83167666306d566ecbc8e64033",
+      "tests/test_runtime_rule_study_progress.py": "8bbc3d9936ce679529a90a9e269e63207434696246d4276a39b4c79e95407b71",
+      "tests/test_runtime_rule_study_training_evidence.py": "e4077ff30829197fc9d58d3d3fa1f71a210e4dc39262850d888add762587effb"
+    },
+    "roles": {
+      "continued_practice": {
+        "cached_outputs_sent": 0,
+        "evaluation_answers_sent": 0,
+        "forward_counts": {
+          "final_evaluation": 3946,
+          "reload_parity": 32,
+          "total": 5322,
+          "training": 1344
+        },
+        "input_token_counts": {
+          "final_evaluation": 921580,
+          "reload_parity": 16436,
+          "total": 1163940,
+          "training": 225924
+        },
+        "payload_sha256": "4eb3536e04cde8a72c76a28d7f7ba2c8fe7a1ba73b0f8bd6920542d3a9acba56",
+        "pending_boundary_checks": 6,
+        "transitions": 5322
+      },
+      "runtime_mix": {
+        "cached_outputs_sent": 0,
+        "evaluation_answers_sent": 0,
+        "forward_counts": {
+          "final_evaluation": 3946,
+          "reload_parity": 32,
+          "total": 5322,
+          "training": 1344
+        },
+        "input_token_counts": {
+          "final_evaluation": 921580,
+          "reload_parity": 16436,
+          "total": 1287312,
+          "training": 349296
+        },
+        "payload_sha256": "43e604aa6767e0391782634c4dd9c489a7cc4a415a587f345aa2c77c10e46a56",
+        "pending_boundary_checks": 6,
+        "transitions": 5322
+      },
+      "unchanged": {
+        "cached_outputs_sent": 0,
+        "evaluation_answers_sent": 0,
+        "forward_counts": {
+          "final_evaluation": 164,
+          "reload_parity": 0,
+          "total": 164,
+          "training": 0
+        },
+        "input_token_counts": {
+          "final_evaluation": 92958,
+          "reload_parity": 0,
+          "total": 92958,
+          "training": 0
+        },
+        "payload_sha256": "2a189e67b77790f7604a878f92321ed62af80e9cc1ea34fc2d6d58386b5cbd3f",
+        "pending_boundary_checks": 2,
+        "transitions": 164
+      }
+    },
+    "input_file_count": 87,
+    "allowed_new_read_counts": {
+      "data/processed/routing-data-v1/development.jsonl": 2,
+      "data/processed/routing-data-v1/train.jsonl": 2,
+      "data/processed/tool-data-v1/development.jsonl": 2,
+      "data/processed/tool-data-v1/train.jsonl": 2
+    },
+    "historical_sources_unchanged": 60,
+    "all_planned_cpu_ledger_transitions": 10808,
+    "all_planned_input_tokens": 2544210,
+    "calibration_test_read": false,
+    "model_execution": false,
+    "integration_is_launch_authority": false,
+    "integration_parent_commit": "e21425959aff0a0e5df6d425e43f750a2be75737",
+    "integration_note": "CPU fixture only. Actual study IDs, payloads, signed source and exact upload list must be authenticated again by the launch host.",
+    "clean_full_suite_before_narrow_corrections": "926 passed",
+    "clean_focused_after_corrections": "36 passed; Ruff lint/format, source mypy and six-module strict mypy passed",
+    "independent_final_review": "Approved. One P2 resolved; no unresolved findings. Previous bundle/progress approval remains valid.",
+    "preserved_pre_delivery_failures": [
+      "The first actual CPU integration rejected the historical numeric menu histogram. Corrected to 14 records with 2 choices and 12 each with 4, 8 and 16 choices.",
+      "Independent review found duplicate identifiers could cross the retained/new panel boundary. Both presentation and record overlaps now reject."
+    ],
+    "evidence_files_sha256": {
+      ".context/runtime-rule-study-package-freeze.json": "09fa451922e358e6e61c1ff16f0d4e48838713e2421b328b7bfe0bf40944f544",
+      ".context/runtime-rule-study-package-clean-verification.json": "bd0c434af1f94ae79bfbaf064c26fea3b39dbd93d46c6fb66ea42365a7b3bc8c",
+      ".context/runtime-rule-study-package-fix-clean-verification.json": "70b8423950d8876e31661b5afa1c5960d79a82dcba3b77767072647b79670a43",
+      ".context/runtime-rule-study-package-actual.json": "b8e4882effe9b2cdf40fd4db9e2a0781d1ab73dc0ac998d2252c352f22826aa4",
+      ".context/runtime-rule-study-package-actual-failure.json": "a4da82d4e920e52c55674703dcfe35bc89ee4a410114a4371e6f27a5799fa1f5",
+      ".context/runtime-rule-study-package-actual-shape-diagnostic.json": "ca09b3183dd6a289d90d2bf615176d4f2aa6ad9da16decbaf0410b71a9fb1345",
+      ".context/runtime-rule-study-bundle-progress-final-review.json": "c9f75f8bc1da6f93913e3ea975325b9933b89f27f30bc8c64bb5503c18c5281c",
+      ".context/runtime-rule-study-payload-training-final-review.json": "6bbb96c085eaa277c7284bc2cff8fa70cbc03b9a31223ed5feceda7db9040195",
+      ".context/runtime-rule-study-package-source-ci.json": "5e9532cf786e34c34194385f4f1ab85bcc5c52980bb8fc48e4ce3e411a58ed30"
+    },
+    "remaining_work": [
+      "Finish and review returned-result validation.",
+      "Build and verify the bounded GPU runtime and host.",
+      "Freeze real launch inputs and refresh exact CI, source/data pins and personal Modal usage before compute."
+    ]
   }
 }

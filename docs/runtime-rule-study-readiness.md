@@ -1,6 +1,6 @@
 # Runtime-rule study readiness
 
-The CPU-side input preparation, saved-result reuse, analysis rules, and worker settings are verified. The independent review of the six cache, statistics, and contracts files approved them with no findings. No new study model was trained or scored, so there is no performance result yet.
+The data preparation, analysis rules, and worker input packages are verified. The package code is signed and pushed in [b7ac35a](https://github.com/1337mus/reflex/commit/b7ac35a63d27581ec7f624f71f8e7e5ee65af61a); [its exact-commit checks passed](https://github.com/1337mus/reflex/actions/runs/37305014205). No model has trained or scored in this new study. There is no new performance result yet.
 
 The input and schedule slice was delivered in [c883de9](https://github.com/1337mus/reflex/commit/c883de9f0053e82554fab332fbb5b86a980a54ea), with [passing GitHub checks](https://github.com/1337mus/reflex/actions/runs/37296034094). The reviewed cache, statistics, and worker-contract files are signed and pushed in [074e483](https://github.com/1337mus/reflex/commit/074e4836c75c59a40373ef0dba06a4bd9307d8d6); [its exact-commit CI passed](https://github.com/1337mus/reflex/actions/runs/37300810702).
 
@@ -15,7 +15,7 @@ The loader checks pinned file hashes. The prompt compiler records token counts a
 | Total planned input tokens | 2,544,210 |
 | Longest prompt / limit | 695 / 2,048 tokens |
 | New calibration or test files opened | 0 |
-| Clean-checkout full suite | 785 passed |
+| Tests on the final source commit | 929 passed |
 
 The schedules, prompt identities, and token totals matched the earlier preparation. The integrated work remained CPU-only and did not load model weights.
 
@@ -51,12 +51,18 @@ There are 21 pass/fail checks, all fixed in advance. Against continued practice,
 
 Point comparisons use exact fractions. An exact zero stays zero, so rounding cannot make it pass a check that requires a positive value. An independent 3,946-row toy check matched all 20 reported uncertainty ranges and all 21 pass/fail results, including checks designed to fail.
 
-The validation checkpoint includes 68 focused tests, 36 additional rejection probes, the clean 785-test suite, Ruff lint and format checks, `mypy src`, strict mypy for the three study modules, and both CLI fixture checks. All passed. The independent final review approved the frozen six-file slice with no findings.
+The earlier saved-answer and analysis checks included 68 focused tests, 36 additional rejection probes, the clean 785-test suite, Ruff lint and format checks, `mypy src`, strict mypy for the three study modules, and both CLI fixture checks. All passed. The independent final review approved those six files with no findings.
+
+The CPU package check matched the limits for all **10,808 planned calls** and **2,544,210 input tokens**. All three worker packages passed. Evaluation answers and cached model answers stay on the host. Only training workers receive training answers. The four new training/development files were each read twice to recheck their contents; no new calibration or test file was opened. This checked the input handling, without running a model.
+
+Two checks found issues before delivery. The older number questions use 2, 4, 8, or 16 choices; the package initially described their counts incorrectly. Review also found that duplicate question IDs could cross from an older task into a new task. Both are fixed. The failed check, original code, and review finding remain saved. The independent final review has no unresolved findings.
+
+Completed calls and unfinished calls are recorded separately. A timeout therefore cannot turn unknown GPU work into a claim of zero work. The future runner must update these records at each model-call boundary.
 
 ## Limits and remaining work
 
 The new development panel has 28 groups: 14 routing and 14 tool-choice groups. It is a small, previously inspected development panel, not a sealed test. Each family has only two questions with more than one missing input. In these questions, all possible values lead to the same answer. The panel does not cover cases where those values lead to different answers. This is a one-seed engineering study, not evidence of broad capability. Token exposure also differs between the two training plans.
 
-The authenticated worker bundle, payload contract, result contract, and GPU runner still need implementation and review. Exact-commit CI passed for 074e483. The schedules are fixed. Before launch, freeze the concrete worker payloads and pass the launch checks. No run has started and no performance gain has been measured. New calibration and test files remain sealed and unused.
+The worker input packages and partial-work records are now verified. The returned-result checks and GPU runner remain. Before launch, freeze the real worker inputs and code, verify the exact-commit checks, and refresh personal Modal usage against the project budget. No run has started. New calibration and test files remain sealed and unused.
 
 Counts, hashes, and check evidence are in [runtime-rule-study-readiness.json](verification/runtime-rule-study-readiness.json). The accepted design is [runtime-rule-study-protocol.md](runtime-rule-study-protocol.md).

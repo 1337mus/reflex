@@ -1,0 +1,42 @@
+[
+  {
+    "app_id": "ap-UeKFVEhlNZWTDuvSThqzsE",
+    "description": "reflex-broader-development-baselines",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-10-04 18:35:48-07:00",
+    "stopped_at": "2026-10-04 18:37:40-07:00"
+  },
+  {
+    "app_id": "ap-ghprXHjOxD1ol0QlqbuWWG",
+    "description": "reflex-copa-development-baselines",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-10-04 17:59:12-07:00",
+    "stopped_at": "2026-10-04 17:59:56-07:00"
+  },
+  {
+    "app_id": "ap-9uDb89h6fln5bAaBDmpYi9",
+    "description": "reflex-copa-development-baselines",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-10-04 17:54:01-07:00",
+    "stopped_at": "2026-10-04 17:55:12-07:00"
+  },
+  {
+    "app_id": "ap-EQMJOBI60CW75eVdfgNJpA",
+    "description": "reflex-copa-development-baselines",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-10-04 17:47:14-07:00",
+    "stopped_at": "2026-10-04 17:49:22-07:00"
+  },
+  {
+    "app_id": "ap-UukTIzTSwqsKUsvSKlCahR",
+    "description": "reflex-qwen-first-inference-smoke",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-10-04 16:45:04-07:00",
+    "stopped_at": "2026-10-04 16:47:00-07:00"
+  }
+]

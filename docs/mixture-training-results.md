@@ -45,4 +45,4 @@ Each arm completed 252 updates. Input tokens (text units processed by the model)
 
 Local evidence paths: `artifacts/mixture-2026-10-04-r1-receipt.json`, `artifacts/mixture-2026-10-04-r1-analysis.json`, `artifacts/mixture-2026-10-04-r1-storage-verification.json`, and `artifacts/mixture-2026-10-04-r1-teardown-billing.json`. These private files are not GitHub links; the tracked [verification summary](verification/mixture-training-summary.json) provides hashes and independent checks. See the frozen [protocol](mixture-training-protocol.md).
 
-R1 reproduction requires source commit `2e46d664dc970cd3d6bced19b4f5524fc68d01ae` because the analyzer checks exact source bytes. Next, repeat the same data, schedule, and checks with initialization seed `20261006` to test repeatability.
+R1 reproduction requires source commit `2e46d664dc970cd3d6bced19b4f5524fc68d01ae` because the analyzer checks exact source bytes. The separate initialization-seed repeat is reported in [R2 results](mixture-training-seed2-results.md); keep its counts and intervals separate from R1.

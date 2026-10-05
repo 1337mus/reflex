@@ -34,6 +34,13 @@ The R2 real-data LoRA pilot completed, but its preregistered learning gate faile
 
 The separately balanced SNLI diagnostic panel is committed in signed commit `9844a25` with 192 records across 64 source groups ([data](docs/snli-diagnostic-data.md), [protocol](docs/snli-diagnostic-protocol.md)). Its completed R1 run scored 1,152 all-permutation presentations per model: Qwen base 38.80%, the R2 adapter 36.28%, Intern 58.16%, and Kev 76.13%. The paired adapter-minus-base difference was -2.52 percentage points (95% source-group bootstrap interval -4.25 to -0.87). On original-order inputs, the adapter predicted entailment for every record (64/192 correct), so a lower flip count alone is not evidence of useful stability. These are conditional development results; they do not reverse R2's failed gate or establish broad superiority. See the [diagnostic report](docs/snli-diagnostic-results.md). The reviewed synthetic candidate has now been used in the controlled training comparison below.
 
-The first controlled comparison passed all preset checks. Replacing half the training presentations with checked synthetic reasoning examples raised balanced SNLI accuracy from **617/1,152 (53.56%)** to **781/1,152 (67.80%)**. Topic and spam scores met their retention limits. Kev remains ahead on reasoning at 76.13%. This is one initialization seed on development data; the next step is a repeat with a different initialization. See the [results](docs/mixture-training-results.md) and [verification summary](docs/verification/mixture-training-summary.json).
+Both controlled-mixture runs passed all seven checks on the balanced SNLI development panel. Keep their seed results separate:
+
+| Run | Real-only | Synthetic mix | Gain |
+| --- | ---: | ---: | ---: |
+| R1 | 617/1,152 (53.56%) | 781/1,152 (67.80%) | +14.24 pp |
+| R2 | 493/1,152 (42.80%) | 748/1,152 (64.93%) | +22.14 pp |
+
+These two runs do not measure seed uncertainty. Kev remains ahead on this panel at 877/1,152 (76.13%). See the separate [R1 results](docs/mixture-training-results.md) and [R2 results](docs/mixture-training-seed2-results.md), with their [R1 verification summary](docs/verification/mixture-training-summary.json) and [R2 verification summary](docs/verification/mixture-training-seed2-summary.json).
 
 No account is needed for CPU work; the existing Modal profile is configured. Start with the [research plan](docs/research-plan.md) and [runtime decisions ADR](docs/adr/0001-runtime-decisions.md). Published results for other systems belong to their authors and are not Reflex measurements.

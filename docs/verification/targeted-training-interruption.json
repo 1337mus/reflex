@@ -1,0 +1,73 @@
+{
+  "app_id": "ap-Q9siCr2a9ZGz62AD4uHdjQ",
+  "automatic_retry": false,
+  "billing": {
+    "billed_workspace_usd": "0E-8",
+    "checked_at_utc": "2026-10-05T20:29:11.081093+00:00",
+    "metered_workspace_usd": "3.04811942",
+    "note": "Delayed and revisable workspace total; not a per-study invoice."
+  },
+  "continuation_schedule": "paused_after_terminal_interruption",
+  "control_started": false,
+  "evidence_sha256": {
+    ".context/targeted-launch-clearance.json": "130147b2e0e8425a4309e346e24c7796c15387336adaabfb80d308b75a554384",
+    ".context/targeted-r1-interruption-account.json": "11d1a681738013722d8dc6f787a14f25da87ad41530cb808791dd8b10c9480f7",
+    ".context/targeted-reasoning-2026-10-05-r1-launch.log": "3848a22a7087a181f2ff35a1e96803ef89b2334eb5ebb7e5d93080f2efccf382",
+    ".context/targeted-recovered-reference-validation.json": "46e29ac06e7b9586598e988b0f86674765961441aa641cd1dbc4ab2abc6ac26e",
+    "artifacts/targeted-reasoning-2026-10-05-r1-run/events.jsonl": "64d07a9affa84e3e29d5fb4934fd5c1882dab675369ec19df146941b7ac05c90",
+    "artifacts/targeted-reasoning-2026-10-05-r1-run/recovered-reference-raw.json": "4f8cb4acf0c517a543f40b5efb32fbb5c26a6bb60f14f5830a4af1d778a0aaba"
+  },
+  "exact_process_exit_cause": "not established",
+  "host_observations": [
+    "Original tool session unavailable; no matching local launcher process found.",
+    "Launch log records TimeoutError: Deadline exceeded in Modal connection code, followed by modal.exception.ConnectionError in its heartbeat.",
+    "No final host receipt was written. Existing reference result was retrieved without new compute."
+  ],
+  "learning_assessed": false,
+  "new_trained_adapter": false,
+  "observed_at_utc": "2026-10-05T20:32:00.721499+00:00",
+  "plan_sha256": "d23d23c8c5b9be49b592630cb606e85081a7dc9af76ff7b3e2af178313146c44",
+  "provider_state": {
+    "app_id": "ap-Q9siCr2a9ZGz62AD4uHdjQ",
+    "n_running_tasks": 0,
+    "state": "APP_STATE_STOPPED"
+  },
+  "reference_call_id": "fc-01M46V6DJ1EP9B25S3A4SHYWHV",
+  "reference_execution": {
+    "attempted_unknown": {
+      "final_evaluation": 0,
+      "reload_parity": 0,
+      "training": 0
+    },
+    "completed": {
+      "final_evaluation": 6182,
+      "reload_parity": 0,
+      "total": 6182,
+      "training": 0
+    },
+    "input_token_counts": {
+      "final_evaluation": 1009878,
+      "reload_parity": 0,
+      "total": 1009878,
+      "training": 0
+    },
+    "not_started": {
+      "final_evaluation": 0,
+      "reload_parity": 0,
+      "training": 0
+    }
+  },
+  "reference_execution_validated": true,
+  "reserved_results_opened": false,
+  "run_id": "targeted-reasoning-2026-10-05-r1",
+  "schema_version": 1,
+  "source_ci": {
+    "attempt": 2,
+    "conclusion": "success",
+    "run_id": 37362676336
+  },
+  "source_commit": "7cddf37db13faeaffd6ef280756089bd85ddffa5",
+  "source_pins_sha256": "931be3ef66b4093bf0c7548406672521a2e10cba4c1f7d71ebf225550f4630bd",
+  "study_execution_status": "interrupted",
+  "treatment_started": false
+}

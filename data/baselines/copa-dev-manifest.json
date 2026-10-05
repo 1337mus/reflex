@@ -1,0 +1,15 @@
+{
+  "data_kind": "benchmark",
+  "datasets": [
+    {
+      "dataset_id": "copa-dev-pilot-v1",
+      "source_id": "asgordon-copa-2011",
+      "task_family": "commonsense-causal-choice",
+      "split": "development",
+      "source_uri": "https://raw.githubusercontent.com/asgordon/asgordon.github.io/14496936a3bed7b386aa8f517656d6f91e3fa77a/downloads/COPA-resources.tgz#COPA-resources/datasets/copa-dev.xml",
+      "source_revision": "14496936a3bed7b386aa8f517656d6f91e3fa77a",
+      "license": "BSD-2-Clause"
+    }
+  ],
+  "held_out_families": []
+}

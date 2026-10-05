@@ -41,16 +41,8 @@ def _encode(tokenizer: Tokenizer, text: str) -> list[int]:
     return token_ids
 
 
-def compile_request(
-    request: DecisionRequest,
-    tokenizer: Tokenizer,
-    *,
-    max_tokens: int = 2048,
-) -> CompiledRequest:
-    """Render a request and verify every answer symbol is one boundary-safe token."""
-
-    if isinstance(max_tokens, bool) or not isinstance(max_tokens, int) or max_tokens < 1:
-        raise ValueError("max_tokens must be a positive integer")
+def render_prompt(request: DecisionRequest) -> str:
+    """Render the exact model prompt without requiring a tokenizer."""
 
     symbol_to_option_id = tuple(
         zip(_SYMBOLS, (option.id for option in request.options), strict=False)
@@ -67,7 +59,24 @@ def compile_request(
             for (symbol, _), option in zip(symbol_to_option_id, request.options, strict=True)
         ],
     }
-    prompt = json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + _ANSWER_SUFFIX
+    return json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + _ANSWER_SUFFIX
+
+
+def compile_request(
+    request: DecisionRequest,
+    tokenizer: Tokenizer,
+    *,
+    max_tokens: int = 2048,
+) -> CompiledRequest:
+    """Render a request and verify every answer symbol is one boundary-safe token."""
+
+    if isinstance(max_tokens, bool) or not isinstance(max_tokens, int) or max_tokens < 1:
+        raise ValueError("max_tokens must be a positive integer")
+
+    symbol_to_option_id = tuple(
+        zip(_SYMBOLS, (option.id for option in request.options), strict=False)
+    )
+    prompt = render_prompt(request)
     input_ids = _encode(tokenizer, prompt)
     if len(input_ids) > max_tokens:
         raise ValueError(f"rendered prompt is {len(input_ids)} tokens; limit is {max_tokens}")

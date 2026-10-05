@@ -1,0 +1,73 @@
+{
+  "data_kind": "benchmark",
+  "datasets": [
+    {
+      "dataset_id": "dbpedia14-pilot-v1-train",
+      "source_id": "fancyzhx/dbpedia_14",
+      "task_family": "topic-classification",
+      "split": "train",
+      "source_uri": "https://huggingface.co/datasets/fancyzhx/dbpedia_14/tree/9abd46cf7fc8b4c64290f26993c540b92aa145ac",
+      "source_revision": "9abd46cf7fc8b4c64290f26993c540b92aa145ac",
+      "license": "CC BY-SA 3.0 / GNU Free Documentation License (version unspecified)"
+    },
+    {
+      "dataset_id": "dbpedia14-pilot-v1-development",
+      "source_id": "fancyzhx/dbpedia_14",
+      "task_family": "topic-classification",
+      "split": "development",
+      "source_uri": "https://huggingface.co/datasets/fancyzhx/dbpedia_14/tree/9abd46cf7fc8b4c64290f26993c540b92aa145ac",
+      "source_revision": "9abd46cf7fc8b4c64290f26993c540b92aa145ac",
+      "license": "CC BY-SA 3.0 / GNU Free Documentation License (version unspecified)"
+    },
+    {
+      "dataset_id": "dbpedia14-pilot-v1-calibration",
+      "source_id": "fancyzhx/dbpedia_14",
+      "task_family": "topic-classification",
+      "split": "calibration",
+      "source_uri": "https://huggingface.co/datasets/fancyzhx/dbpedia_14/tree/9abd46cf7fc8b4c64290f26993c540b92aa145ac",
+      "source_revision": "9abd46cf7fc8b4c64290f26993c540b92aa145ac",
+      "license": "CC BY-SA 3.0 / GNU Free Documentation License (version unspecified)"
+    },
+    {
+      "dataset_id": "sms-pilot-v1-train",
+      "source_id": "uci-sms-spam-collection-228",
+      "task_family": "spam-detection",
+      "split": "train",
+      "source_uri": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+      "source_revision": "UCI dataset 228 / DOI 10.24432/C5CC84; reviewed 2026-10-04",
+      "license": "CC BY 4.0 (UCI dataset page; legacy source notice retained)"
+    },
+    {
+      "dataset_id": "sms-pilot-v1-development",
+      "source_id": "uci-sms-spam-collection-228",
+      "task_family": "spam-detection",
+      "split": "development",
+      "source_uri": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+      "source_revision": "UCI dataset 228 / DOI 10.24432/C5CC84; reviewed 2026-10-04",
+      "license": "CC BY 4.0 (UCI dataset page; legacy source notice retained)"
+    },
+    {
+      "dataset_id": "sms-pilot-v1-calibration",
+      "source_id": "uci-sms-spam-collection-228",
+      "task_family": "spam-detection",
+      "split": "calibration",
+      "source_uri": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+      "source_revision": "UCI dataset 228 / DOI 10.24432/C5CC84; reviewed 2026-10-04",
+      "license": "CC BY 4.0 (UCI dataset page; legacy source notice retained)"
+    },
+    {
+      "dataset_id": "snli-pilot-v1-development",
+      "source_id": "stanford-snli-1.0",
+      "task_family": "natural-language-inference-three-way",
+      "split": "development",
+      "source_uri": "https://nlp.stanford.edu/projects/snli/snli_1.0.zip#snli_1.0/snli_1.0_dev.jsonl",
+      "source_revision": "SNLI 1.0",
+      "license": "CC BY-SA 4.0"
+    }
+  ],
+  "held_out_families": [],
+  "group_partitioned_sources": [
+    "fancyzhx/dbpedia_14",
+    "uci-sms-spam-collection-228"
+  ]
+}

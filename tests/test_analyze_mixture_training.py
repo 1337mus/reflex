@@ -38,10 +38,16 @@ def test_cli_reserves_output_loads_inputs_and_reports_gate_separately(
 ):
     root = tmp_path / "project"
     receipt_path, output = _inputs(root)
-    records = (("real-record",), ("balanced-record",), ("synthetic-record",), {"pin": "x"})
+    records = (
+        ("real-record",),
+        ("balanced-record",),
+        ("synthetic-record",),
+        ("snli-training-record",),
+        {"pin": "x"},
+    )
     events: list[str] = []
 
-    def load_local_data(given_root):
+    def load_natural_reasoning_data(given_root):
         assert Path(given_root) == root.resolve()
         assert (output.parent / f".{output.name}.reflex-smoke.lock").is_file()
         events.append("load")
@@ -52,13 +58,19 @@ def test_cli_reserves_output_loads_inputs_and_reports_gate_separately(
         real_records,
         balanced_records,
         synthetic_records,
+        snli_training_records,
         real_receipt,
         balanced_receipt,
         *,
         root,
     ):
         assert receipt == {"experiment_id": "cli-check"}
-        assert (real_records, balanced_records, synthetic_records) == records[:3]
+        assert (
+            real_records,
+            balanced_records,
+            synthetic_records,
+            snli_training_records,
+        ) == records[:4]
         assert real_receipt == {"kind": "real"}
         assert balanced_receipt == {"kind": "balanced"}
         assert Path(root) == tmp_path / "project"
@@ -66,7 +78,7 @@ def test_cli_reserves_output_loads_inputs_and_reports_gate_separately(
         events.append("analyze")
         return {"status": "passed", "engineering_gate": {"overall_passed": False}}
 
-    monkeypatch.setattr(core, "load_local_data", load_local_data)
+    monkeypatch.setattr(core, "load_natural_reasoning_data", load_natural_reasoning_data)
     monkeypatch.setattr(analysis, "analyze_experiment", analyze)
 
     status = cli.main(_arguments(root, receipt_path, output))
@@ -87,7 +99,7 @@ def test_cli_reserves_output_loads_inputs_and_reports_gate_separately(
 def test_cli_persists_failed_pair_without_evaluating_gates(tmp_path, monkeypatch):
     root = tmp_path / "project"
     receipt_path, output = _inputs(root)
-    monkeypatch.setattr(core, "load_local_data", lambda _root: ((), (), (), {}))
+    monkeypatch.setattr(core, "load_natural_reasoning_data", lambda _root: ((), (), (), (), {}))
     monkeypatch.setattr(
         analysis,
         "analyze_experiment",
@@ -110,7 +122,9 @@ def test_cli_rejects_existing_output_before_analysis(tmp_path, monkeypatch, caps
     root = tmp_path / "project"
     receipt_path, output = _inputs(root)
     output.write_text("keep existing evidence\n", encoding="utf-8")
-    monkeypatch.setattr(core, "load_local_data", lambda _root: pytest.fail("analysis started"))
+    monkeypatch.setattr(
+        core, "load_natural_reasoning_data", lambda _root: pytest.fail("analysis started")
+    )
 
     status = cli.main(_arguments(root, receipt_path, output))
 
@@ -124,7 +138,9 @@ def test_cli_rejects_duplicate_json_keys_without_starting_analysis(tmp_path, mon
     receipt_path, output = _inputs(
         root, receipt='{"experiment_id":"first","experiment_id":"second"}'
     )
-    monkeypatch.setattr(core, "load_local_data", lambda _root: pytest.fail("analysis started"))
+    monkeypatch.setattr(
+        core, "load_natural_reasoning_data", lambda _root: pytest.fail("analysis started")
+    )
 
     status = cli.main(_arguments(root, receipt_path, output))
 

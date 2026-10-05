@@ -10,11 +10,10 @@ from experiments.mixture_training_contracts import (
     EXPECTED_PROTOCOL_SHA256,
     MODEL_ID,
     MODEL_REVISION,
-    ORIGINAL_PROTOCOL_PATH,
-    ORIGINAL_PROTOCOL_SHA256,
     PROTOCOL_PATH,
     RUNTIME_VERSION_PINS,
     SCHEMA_VERSION,
+    SNLI_SOURCE_FILE_SHA256,
     SOURCE_FINGERPRINT_PATHS,
     canonical_json,
     json_sha256,
@@ -24,6 +23,7 @@ from experiments.mixture_training_evidence import (
     _validate_adapter_update,
     _validate_provenance,
     _validate_training_losses,
+    _validate_training_snapshots,
 )
 from experiments.mixture_training_outputs import (
     _validate_artifact,
@@ -41,8 +41,8 @@ def _source_fingerprints() -> dict[str, str]:
     return {
         path: EXPECTED_PROTOCOL_SHA256
         if path == PROTOCOL_PATH
-        else ORIGINAL_PROTOCOL_SHA256
-        if path == ORIGINAL_PROTOCOL_PATH
+        else SNLI_SOURCE_FILE_SHA256[path]
+        if path in SNLI_SOURCE_FILE_SHA256
         else "a" * 64
         for path in SOURCE_FINGERPRINT_PATHS
     }
@@ -182,6 +182,25 @@ def test_forward_counts_match_frozen_initialization_plan() -> None:
         _validate_counts(invalid, tokens, passed_phase="initialize")
 
 
+def test_forward_counts_match_frozen_natural_reasoning_training_plan() -> None:
+    counts = {
+        "base_evaluation": 0,
+        "training": 1512,
+        "final_evaluation": 4023,
+        "reload_parity": 32,
+        "total": 5567,
+    }
+    tokens = {key: value for key, value in counts.items()}
+
+    normalized, _ = _validate_counts(counts, tokens, passed_phase="train")
+
+    assert normalized == counts
+    legacy = dict(counts, training=1008, total=5063)
+    legacy_tokens = dict(tokens, training=1008, total=5063)
+    with pytest.raises(ValueError, match="frozen plan"):
+        _validate_counts(legacy, legacy_tokens, passed_phase="train")
+
+
 def test_training_and_evaluation_record_ids_must_be_disjoint() -> None:
     request = DecisionRequest(
         context="A neutral context.",
@@ -251,7 +270,7 @@ def test_training_losses_allow_zero_steps_but_require_positive_run_totals() -> N
             "lo_ra_b_gradient_l1": 0.0 if update == 1 else 1.0,
             "gradient_norm": 0.0 if update == 1 else 0.5,
         }
-        for update in range(1, 253)
+        for update in range(1, 379)
     ]
 
     normalized = _validate_training_losses(losses)
@@ -265,10 +284,35 @@ def test_training_losses_allow_zero_steps_but_require_positive_run_totals() -> N
             "lo_ra_b_gradient_l1": 0.0,
             "gradient_norm": 0.0,
         }
-        for update in range(1, 253)
+        for update in range(1, 379)
     ]
     with pytest.raises(ValueError, match="nonzero aggregate gradient evidence"):
         _validate_training_losses(all_zero)
+
+
+def test_training_snapshots_use_unscored_and_final_updates_only() -> None:
+    run_id = "natural-reasoning-syn"
+    snapshots = {
+        str(update): {
+            "update": update,
+            "path": f"/artifacts/runs/{run_id}/adapter-update-{update:03d}",
+            "files_sha256": {
+                "adapter_config.json": "a" * 64,
+                "adapter_model.safetensors": "b" * 64,
+            },
+        }
+        for update in (189, 378)
+    }
+
+    normalized = _validate_training_snapshots(snapshots, run_id)
+
+    assert tuple(normalized) == ("189", "378")
+    old_snapshots = {
+        str(update): dict(snapshot, update=update)
+        for update, snapshot in ((126, snapshots["189"]), (252, snapshots["378"]))
+    }
+    with pytest.raises(ValueError, match="frozen unscored and final updates"):
+        _validate_training_snapshots(old_snapshots, run_id)
 
 
 def test_passed_initialization_result_is_consumable_without_optimizer_provenance() -> None:

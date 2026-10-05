@@ -12,18 +12,25 @@ from typing import Any
 
 from experiments import training_rehearsal_core
 
-SCHEMA_VERSION = 1
-ORIGINAL_PROTOCOL_PATH = "docs/mixture-training-protocol.md"
-ORIGINAL_PROTOCOL_SHA256 = "06d3014a45ebeb19500ba2ab002f0595c42b44e561fbb9efc329af0d02a1030c"
-PROTOCOL_PATH = "docs/mixture-training-seed2-protocol.md"
-EXPECTED_PROTOCOL_SHA256 = "2cf62fa31f3e52a41ebd632e4883fc6c2f082194a7fa9750b455eb78735c12c8"
+SCHEMA_VERSION = 2
+HISTORICAL_PROTOCOL_SHA256 = {
+    "docs/mixture-training-protocol.md": (
+        "06d3014a45ebeb19500ba2ab002f0595c42b44e561fbb9efc329af0d02a1030c"
+    ),
+    "docs/mixture-training-seed2-protocol.md": (
+        "2cf62fa31f3e52a41ebd632e4883fc6c2f082194a7fa9750b455eb78735c12c8"
+    ),
+}
+PROTOCOL_PATH = "docs/natural-reasoning-protocol.md"
+EXPECTED_PROTOCOL_SHA256 = "872cade19b7383722af28503a91c458d3fbe04838c8963e7da9644f1302379ec"
 MODEL_ID = training_rehearsal_core.MODEL_ID
 MODEL_REVISION = training_rehearsal_core.MODEL_REVISION
 PROFILE = "reflex-personal"
 WORKSPACE = "rajath-61258"
 MAX_INPUT_TOKENS = 2048
 RELOAD_PARITY_COUNT = 32
-MAX_TOTAL_FORWARDS = 11065
+MAX_TOTAL_FORWARDS = 12073
+MAX_TOTAL_INPUT_TOKENS = MAX_TOTAL_FORWARDS * MAX_INPUT_TOKENS
 LEARNING_RATE = 1e-4
 LORA_RANK = 8
 LORA_ALPHA = 16
@@ -89,8 +96,36 @@ DATA_FILE_SHA256 = dict(
             "data/processed/synthetic-seed-v1-r2/audit.json",
             "19f6b90426517bc50734a48f26e35d22ebc0aef794cac73e0adb29db9df666d1",
         ),
+        (
+            "data/raw/snli_1.0.zip",
+            "afb3d70a5af5d8de0d9d81e2637e0fb8c22d1235c2749d83125ca43dab0dbd3e",
+        ),
+        (
+            "data/processed/snli-training-v1/records.jsonl",
+            "976a0c06f679b9bd989871580b893d32ed593b0912c191ccba56237f7407f2fc",
+        ),
+        (
+            "data/processed/snli-training-v1/manifest.json",
+            "4be0e00a9588fb7d9077b41c67227ad634737c74910680ad9c24d572c62618b7",
+        ),
+        (
+            "data/processed/snli-training-v1/recipe.json",
+            "aced7f92bdef65d97fad9fafb2d7f20abef107229bc8e5dea3594969dbd5de0d",
+        ),
     ]
 )
+
+SNLI_SOURCE_FILE_SHA256 = {
+    "src/reflex_decisions/snli_training_source.py": (
+        "a4be159c6c799bf5215ccf5a337a25e34722be92b3c21a7ba6d9a4b8fb01148a"
+    ),
+    "src/reflex_decisions/snli_training_data.py": (
+        "3106b9ec77bfeb6bbedd2e2768bbc01c4503a6b6f877611b8e9a4c1602b1ae4c"
+    ),
+    "experiments/prepare_snli_training.py": (
+        "4e2e407aeb049a7f9433f32ae0ce831e9cdf6ce8b1387d5878721deac95db3bb"
+    ),
+}
 
 # The analysis entrypoint is part of the signed source bundle once it is added.
 SOURCE_FINGERPRINT_PATHS = (
@@ -140,8 +175,10 @@ SOURCE_FINGERPRINT_PATHS = (
     "src/reflex_decisions/scoring.py",
     "src/reflex_decisions/smoke.py",
     "src/reflex_decisions/snli_diagnostic.py",
+    "src/reflex_decisions/snli_training_data.py",
+    "src/reflex_decisions/snli_training_source.py",
     "src/reflex_decisions/synthetic_data.py",
-    ORIGINAL_PROTOCOL_PATH,
+    "experiments/prepare_snli_training.py",
     PROTOCOL_PATH,
 )
 
@@ -228,7 +265,7 @@ def validate_uuid(value: object, label: str) -> str:
 
 
 def source_fingerprints(root: str | Path | None = None) -> dict[str, str]:
-    """Hash allowlisted local Python files and both frozen protocol documents."""
+    """Hash allowlisted local Python files and the frozen active protocol."""
 
     project_root = Path(root) if root is not None else Path(__file__).resolve().parents[1]
     try:
@@ -248,11 +285,14 @@ def source_fingerprints(root: str | Path | None = None) -> dict[str, str]:
             raise ValueError(
                 f"required source fingerprint file is unavailable: {relative}"
             ) from exc
+    for relative, expected in SNLI_SOURCE_FILE_SHA256.items():
+        if hashes.get(relative) != expected:
+            raise ValueError(f"SNLI candidate source SHA-256 mismatch: {relative}")
     return hashes
 
 
 def verify_protocol(path: str | Path = PROTOCOL_PATH) -> str:
-    """Verify and return the frozen protocol digest."""
+    """Verify and return the frozen natural-reasoning protocol digest."""
 
     protocol_path = Path(path)
     try:
@@ -261,13 +301,6 @@ def verify_protocol(path: str | Path = PROTOCOL_PATH) -> str:
         raise ValueError("mixture training protocol is unavailable") from exc
     if digest != EXPECTED_PROTOCOL_SHA256:
         raise ValueError("mixture training protocol SHA-256 mismatch")
-    original_path = protocol_path.with_name(Path(ORIGINAL_PROTOCOL_PATH).name)
-    try:
-        original_digest = hashlib.sha256(original_path.read_bytes()).hexdigest()
-    except OSError as exc:
-        raise ValueError("incorporated original protocol is unavailable") from exc
-    if original_digest != ORIGINAL_PROTOCOL_SHA256:
-        raise ValueError("incorporated original protocol SHA-256 mismatch")
     return digest
 
 
@@ -297,8 +330,9 @@ def validate_pins(value: object) -> dict[str, object]:
         raise ValueError("source fingerprints do not match the exact allowlist")
     for path, digest in source_hashes.items():
         validate_sha256(digest, f"source fingerprint for {path}")
-    if source_hashes.get(ORIGINAL_PROTOCOL_PATH) != ORIGINAL_PROTOCOL_SHA256:
-        raise ValueError("source fingerprint for incorporated original protocol differs")
+    for path, expected in SNLI_SOURCE_FILE_SHA256.items():
+        if source_hashes.get(path) != expected:
+            raise ValueError(f"SNLI candidate source fingerprint differs: {path}")
     if source_hashes.get(PROTOCOL_PATH) != protocol_hash:
         raise ValueError("protocol and source fingerprints do not match")
     return pins

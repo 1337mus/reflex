@@ -31,8 +31,8 @@ from reflex_decisions.data import DecisionRecord
 __all__ = ["analyze_experiment", "paired_group_delta", "passes_minimum"]
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
-_BASE_STATES = ("base", "real_only", "synthetic_mix")
-_RESULT_NAMES = ("initialize", "real_only", "synthetic_mix")
+_BASE_STATES = ("base", "synthetic_repeat", "snli_mix")
+_RESULT_NAMES = ("initialize", "synthetic_repeat", "snli_mix")
 _OUTPUT_IDENTITY = (
     "presentation_id",
     "record_id",
@@ -43,9 +43,11 @@ _OUTPUT_IDENTITY = (
     "order_ids",
 )
 _DATA_DISCLOSURE = (
-    "Synthetic atomic-fact inference is related to SNLI reasoning. The balanced SNLI panel is "
-    "development data, not a sealed test. Results describe one training seed and do not show "
-    "training-seed uncertainty or broad generalization."
+    "SNLI appears in both training and the original and balanced evaluation panels, so these "
+    "SNLI scores are within-source development evidence, not an independent-source transfer "
+    "test or a sealed test. Synthetic atomic-fact inference is related to SNLI reasoning. "
+    "Results describe one training seed and do not show training-seed uncertainty or broad "
+    "generalization."
 )
 
 
@@ -77,6 +79,7 @@ def _payloads_and_results(
     real_records: Sequence[DecisionRecord],
     balanced_records: Sequence[DecisionRecord],
     synthetic_records: Sequence[DecisionRecord],
+    snli_training_records: Sequence[DecisionRecord],
     pins: Mapping[str, object],
     panel: Sequence[Mapping[str, object]],
 ) -> tuple[dict[str, Any], dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
@@ -107,12 +110,20 @@ def _payloads_and_results(
 
     evaluation_panel = tuple(dict(row) for row in panel)
     initialization_panel = mixture_data.build_synthetic_evaluation_presentations(synthetic_records)
-    train_records = tuple(
-        row for row in real_records if row.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
-    ) + tuple(
-        row
-        for row in synthetic_records
-        if row.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
+    train_records = (
+        tuple(
+            row for row in real_records if row.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
+        )
+        + tuple(
+            row
+            for row in synthetic_records
+            if row.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
+        )
+        + tuple(
+            row
+            for row in snli_training_records
+            if row.dataset_id in mixture_data.SNLI_TRAIN_DATASET_COUNTS
+        )
     )
     payloads: dict[str, dict[str, Any]] = {}
     results: dict[str, dict[str, Any]] = {}
@@ -231,12 +242,12 @@ def _failed_analysis(
     reasons: Sequence[str],
 ) -> dict[str, object]:
     return {
-        "analysis_protocol": "reflex-mixture-training-analysis-v1",
+        "analysis_protocol": "natural-reasoning-v1",
         "status": "failed",
         "run_identity": {"experiment_id": envelope.get("experiment_id")},
         "failure": {"reasons": list(reasons)},
         "partial_evidence": _partial_evidence(envelope, payloads, results),
-        "primary_transfer_contrast": {
+        "primary_reasoning_contrast": {
             "status": "not_evaluated",
             "reason": "both arms and shared initialization did not pass",
         },
@@ -340,6 +351,7 @@ def analyze_experiment(
     real_records: Sequence[DecisionRecord],
     balanced_records: Sequence[DecisionRecord],
     synthetic_records: Sequence[DecisionRecord],
+    snli_training_records: Sequence[DecisionRecord],
     real_receipt: object,
     balanced_receipt: object,
     *,
@@ -348,19 +360,28 @@ def analyze_experiment(
     """Validate a paired mixture receipt, then report frozen metrics and gates."""
 
     project_root = Path(root or DEFAULT_ROOT).resolve(strict=True)
-    local_real, local_balanced, local_synthetic, pins = core.load_local_data(project_root)
-    if (tuple(real_records), tuple(balanced_records), tuple(synthetic_records)) != (
+    local_real, local_balanced, local_synthetic, local_snli_training, pins = (
+        core.load_natural_reasoning_data(project_root)
+    )
+    if (
+        tuple(real_records),
+        tuple(balanced_records),
+        tuple(synthetic_records),
+        tuple(snli_training_records),
+    ) != (
         local_real,
         local_balanced,
         local_synthetic,
+        local_snli_training,
     ):
-        raise ValueError("analysis records differ from the eleven pinned local data files")
+        raise ValueError("analysis records differ from the pinned natural-reasoning data files")
     panel = mixture_data.build_evaluation_presentations(local_real, local_balanced, local_synthetic)
     envelope, payloads, results = _payloads_and_results(
         receipt,
         local_real,
         local_balanced,
         local_synthetic,
+        local_snli_training,
         pins,
         panel,
     )
@@ -372,17 +393,18 @@ def analyze_experiment(
     if not passed:
         reasons = []
         if envelope["failure"] is not None:
-            failure = cast(Mapping[str, object], envelope["failure"])
+            failure_detail = cast(Mapping[str, object], envelope["failure"])
             reasons.append(
-                f"lifecycle failure at {failure['stage']}: {failure['type']}: {failure['message']}"
+                f"lifecycle failure at {failure_detail['stage']}: {failure_detail['type']}: "
+                f"{failure_detail['message']}"
             )
         for name in _RESULT_NAMES:
             result = results.get(name)
             if result is None:
                 reasons.append(f"{name} result is missing")
             elif result.get("status") != "passed":
-                failure = result.get("failure")
-                reasons.append(f"{name} result failed: {failure}")
+                failed_result = result.get("failure")
+                reasons.append(f"{name} result failed: {failed_result}")
         return _failed_analysis(
             envelope, payloads, results, reasons or ["mixture pair did not pass"]
         )
@@ -392,7 +414,7 @@ def analyze_experiment(
     init_provenance = cast(Mapping[str, object], initialization["provenance"])
     init_identity = baselines._base_identity(init_provenance, "mixture initialization")
     init_versions = baselines._runtime_versions(init_provenance, "mixture initialization")
-    for name in ("real_only", "synthetic_mix"):
+    for name in ("synthetic_repeat", "snli_mix"):
         arm_provenance = cast(Mapping[str, object], results[name]["provenance"])
         arm_identity = baselines._base_identity(arm_provenance, f"{name} training arm")
         arm_versions = baselines._runtime_versions(arm_provenance, f"{name} training arm")
@@ -453,24 +475,27 @@ def analyze_experiment(
     historical_reference = _historical_reference_rates(reuse_metadata, local_real)
     gate_report, bootstrap = _gate_report(selected, original, historical_reference)
     delta = paired_group_delta(
-        selected["snli-balanced-v1-development"]["synthetic_mix"],
-        selected["snli-balanced-v1-development"]["real_only"],
+        selected["snli-balanced-v1-development"]["snli_mix"],
+        selected["snli-balanced-v1-development"]["synthetic_repeat"],
     )
-    transfer = sum(delta.values(), Fraction()) / len(delta)
+    reasoning_delta = sum(delta.values(), Fraction()) / len(delta)
     total_forward_count = sum(
-        int(
+        cast(
+            int,
             cast(
                 Mapping[str, object],
                 cast(Mapping[str, object], results[name]["evidence"])["forward_counts"],
-            )["total"]
+            )["total"],
         )
         for name in _RESULT_NAMES
     )
     if total_forward_count != core.MAX_TOTAL_FORWARDS:
-        raise ValueError("passed mixture pair does not account for exactly 11,065 forwards")
+        raise ValueError(
+            "passed mixture pair does not account for the frozen maximum forward count"
+        )
     result_pins = {name: payloads[name]["pins"] for name in _RESULT_NAMES}
     return {
-        "analysis_protocol": "reflex-mixture-training-analysis-v1",
+        "analysis_protocol": "natural-reasoning-v1",
         "status": "passed",
         "run_identity": {"experiment_id": envelope["experiment_id"]},
         "artifacts": {
@@ -483,15 +508,15 @@ def analyze_experiment(
         },
         "base_reuse": reuse_metadata,
         "states": state_metrics,
-        "primary_transfer_contrast": {
+        "primary_reasoning_contrast": {
             "status": "evaluated",
             "dataset_id": "snli-balanced-v1-development",
-            "direction": "synthetic_mix - real_only",
-            "group_mean_delta": _exact(transfer),
+            "direction": "snli_mix - synthetic_repeat",
+            "group_mean_delta": _exact(reasoning_delta),
             "paired_bootstrap_95": cast(
                 Mapping[str, object],
                 cast(Mapping[str, object], bootstrap["intervals"])[
-                    "balanced_snli_mix_minus_real_only"
+                    "balanced_snli_mix_minus_synthetic_repeat"
                 ],
             ),
         },
@@ -499,12 +524,12 @@ def analyze_experiment(
         "engineering_gate": gate_report,
         "provenance": {
             "payload_pins_identical": result_pins["initialize"]
-            == result_pins["real_only"]
-            == result_pins["synthetic_mix"],
+            == result_pins["synthetic_repeat"]
+            == result_pins["snli_mix"],
             "base_and_arm_initialization_identical": all(
                 cast(Mapping[str, object], results[name]["evidence"])["initialization"]
                 == init_evidence["initialization"]
-                for name in ("real_only", "synthetic_mix")
+                for name in ("synthetic_repeat", "snli_mix")
             ),
             "base_and_arm_model_tokenizer_identity_identical": True,
             "evaluation_presentations": len(panel),

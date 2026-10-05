@@ -13,8 +13,10 @@ from experiments.mixture_training_contracts import (
     make_pins,
     verify_protocol,
 )
-from reflex_decisions import pilot_data, snli_diagnostic, synthetic_data
+from reflex_decisions import pilot_data, snli_diagnostic, snli_training_data, synthetic_data
 from reflex_decisions.data import DecisionRecord
+
+PINNED_DATA_FILE_SHA256 = DATA_FILE_SHA256
 
 
 def _canonical_data_file_bytes(root: Path, relative: str) -> bytes:
@@ -28,6 +30,8 @@ def _canonical_data_file_bytes(root: Path, relative: str) -> bytes:
 
 
 def _verify_data_file_pins(root: Path) -> None:
+    if DATA_FILE_SHA256 != PINNED_DATA_FILE_SHA256:
+        raise ValueError("local data file fingerprint allowlist differs from the frozen pins")
     for relative, expected in DATA_FILE_SHA256.items():
         actual = hashlib.sha256(_canonical_data_file_bytes(root, relative)).hexdigest()
         if actual != expected:
@@ -83,15 +87,48 @@ def _verify_synthetic_candidate(root: Path) -> tuple[DecisionRecord, ...]:
     return candidate.records
 
 
-def load_local_data(
+def _verify_snli_training_candidate(root: Path) -> tuple[DecisionRecord, ...]:
+    """Rebuild and byte-verify the private SNLI training-only candidate."""
+
+    candidate = snli_training_data.build_snli_training_candidate(
+        root / snli_training_data.DEFAULT_ARCHIVE_PATH
+    )
+    files = {
+        "records.jsonl": candidate.records_bytes,
+        "manifest.json": candidate.manifest_bytes,
+        "recipe.json": candidate.recipe_bytes,
+    }
+    base = "data/processed/snli-training-v1/"
+    for filename, content in files.items():
+        relative = base + filename
+        expected = DATA_FILE_SHA256.get(relative)
+        if expected is None:
+            raise ValueError(f"SNLI training data file is missing its frozen pin: {relative}")
+        if content != _canonical_data_file_bytes(root, relative):
+            raise ValueError(f"SNLI training candidate differs from frozen bytes: {filename}")
+        if hashlib.sha256(content).hexdigest() != expected:
+            raise ValueError(f"SNLI training candidate pin mismatch: {filename}")
+    if len(candidate.records) != mixture_data.SNLI_TRAIN_COUNT:
+        raise ValueError("SNLI training candidate has an invalid record count")
+    if any(
+        record.dataset_id != snli_training_data.TRAIN_DATASET_ID for record in candidate.records
+    ):
+        raise ValueError("SNLI training candidate contains a record outside its train dataset")
+    if len({record.source_group_id for record in candidate.records}) != len(candidate.records):
+        raise ValueError("SNLI training candidate must contain one row per source group")
+    return candidate.records
+
+
+def _load_all_data(
     root: str | Path,
 ) -> tuple[
     tuple[DecisionRecord, ...],
     tuple[DecisionRecord, ...],
     tuple[DecisionRecord, ...],
+    tuple[DecisionRecord, ...],
     dict[str, object],
 ]:
-    """Verify all pinned data and return real, balanced-SNLI, synthetic bundles and pins."""
+    """Verify every pinned bundle and return all records plus the complete pin set."""
 
     project_root = Path(root).resolve(strict=True)
     verify_protocol(project_root / PROTOCOL_PATH)
@@ -104,6 +141,7 @@ def load_local_data(
     real_pilot_core.validate_pilot_data(real_manifest, real_records)
     balanced_records = _verify_balanced_candidate(project_root)
     synthetic_records = _verify_synthetic_candidate(project_root)
+    snli_training_records = _verify_snli_training_candidate(project_root)
 
     real_train = tuple(
         row for row in real_records if row.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
@@ -113,14 +151,37 @@ def load_local_data(
         for row in synthetic_records
         if row.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
     )
-    mixture_data.build_training_schedule_audit(real_train, synthetic_train)
+    mixture_data.build_training_schedule_audit(real_train, synthetic_train, snli_training_records)
     presentations = mixture_data.build_evaluation_presentations(
         real_records, balanced_records, synthetic_records
+    )
+    mixture_data._validate_disjoint_pools(
+        (real_records, balanced_records, synthetic_records, snli_training_records)
     )
     mixture_data.build_evaluation_panel_audit(
         presentations, (*real_records, *balanced_records, *synthetic_records)
     )
-    return real_records, balanced_records, synthetic_records, make_pins(project_root)
+    return (
+        real_records,
+        balanced_records,
+        synthetic_records,
+        snli_training_records,
+        make_pins(project_root),
+    )
 
 
-__all__ = ["load_local_data"]
+def load_natural_reasoning_data(
+    root: str | Path,
+) -> tuple[
+    tuple[DecisionRecord, ...],
+    tuple[DecisionRecord, ...],
+    tuple[DecisionRecord, ...],
+    tuple[DecisionRecord, ...],
+    dict[str, object],
+]:
+    """Return all four pinned bundles for the natural-reasoning schedule."""
+
+    return _load_all_data(root)
+
+
+__all__ = ["load_natural_reasoning_data"]

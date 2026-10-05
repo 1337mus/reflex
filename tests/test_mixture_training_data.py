@@ -50,6 +50,25 @@ def _synthetic_train() -> tuple[DecisionRecord, ...]:
 
 
 @lru_cache(maxsize=1)
+def _snli_train() -> tuple[DecisionRecord, ...]:
+    options = tuple(Option(id=label, label=label) for label in SNLI_LABELS)
+    return tuple(
+        DecisionRecord(
+            record_id=f"snli-training-v1-fixture-{index}",
+            dataset_id="snli-training-v1",
+            source_group_id=f"snli-training-group-{index}",
+            request=DecisionRequest(
+                context=f"Self-authored SNLI training fixture context {index}.",
+                question="Which relation follows?",
+                options=options,
+            ),
+            answer_id=SNLI_LABELS[index % len(SNLI_LABELS)],
+        )
+        for index in range(500)
+    )
+
+
+@lru_cache(maxsize=1)
 def _real_bundle() -> tuple[DecisionRecord, ...]:
     rows = []
     for dataset_id, count in real_pilot_core.DATASET_RECORD_COUNTS.items():
@@ -97,45 +116,118 @@ def _balanced_snli() -> tuple[DecisionRecord, ...]:
     )
 
 
-def test_shared_real_presentations_match_at_even_slots_and_preserve_gold_semantics() -> None:
-    from experiments import mixture_training_data
+def test_three_stream_schedule_aligns_shared_rows_and_uses_twelve_slot_pattern() -> None:
+    from experiments import mixture_training_data, training_rehearsal_core
 
-    schedules = mixture_training_data.build_training_schedules(_real_train(), _synthetic_train())
-    control = schedules["real_only"]
-    mixture = schedules["synthetic_mix"]
+    real, synthetic, snli = _real_train(), _synthetic_train(), _snli_train()
+    schedules = mixture_training_data.build_training_schedules(real, synthetic, snli)
+    control = schedules["synthetic_repeat"]
+    mixture = schedules["snli_mix"]
 
-    assert len(control) == len(mixture) == 1008
-    assert all(control[index] == mixture[index] for index in range(0, 1008, 2))
+    assert mixture_training_data.ARM_NAMES == ("synthetic_repeat", "snli_mix")
+    assert mixture_training_data.TRAINING_PRESENTATIONS == 1512
+    assert mixture_training_data.MICROBATCHES_PER_UPDATE == 4
+    assert mixture_training_data.MAX_UPDATES == 378
+    assert len(control) == len(mixture) == 1512
+    assert all(
+        control[index : index + 2] == mixture[index : index + 2] for index in range(0, 1512, 3)
+    )
     assert all(
         example.gold_option_id == example.request.options[example.gold_index].id
         for schedule in schedules.values()
         for example in schedule
     )
     for schedule in schedules.values():
-        for start in range(0, len(schedule), 4):
-            microbatch = schedule[start : start + 4]
-            assert sum(index % 2 == 0 for index in range(start, start + len(microbatch))) == 2
+        for start in range(0, len(schedule), mixture_training_data.MICROBATCHES_PER_UPDATE):
+            update = schedule[start : start + mixture_training_data.MICROBATCHES_PER_UPDATE]
+            assert len(update) == 4
+    record_by_id = {record.record_id: record for record in (*real, *synthetic, *snli)}
+    for schedule in schedules.values():
+        for start in range(0, len(schedule), 12):
+            twelve_slots = schedule[start : start + 12]
+            assert len(twelve_slots) == 12
+            datasets = [record_by_id[example.record_id].dataset_id for example in twelve_slots]
+            assert all(dataset.endswith("-train") for dataset in datasets[::3])
+            assert all(dataset.startswith("synthetic-") for dataset in datasets[1::3])
+            assert all(
+                dataset.startswith("synthetic-")
+                if schedule is control
+                else dataset == "snli-training-v1"
+                for dataset in datasets[2::3]
+            )
+
+    expected_streams = {
+        "real": training_rehearsal_core.epoch_examples(real, seed=20261007, epoch=0),
+        "shared_synthetic": (
+            training_rehearsal_core.epoch_examples(synthetic, seed=20262007, epoch=0)
+            + training_rehearsal_core.epoch_examples(synthetic, seed=20262007, epoch=1)[:4]
+        ),
+        "control_extra": (
+            training_rehearsal_core.epoch_examples(synthetic, seed=20262007, epoch=1)
+            + training_rehearsal_core.epoch_examples(synthetic, seed=20262007, epoch=2)[:4]
+        ),
+        "snli_extra": (
+            training_rehearsal_core.epoch_examples(snli, seed=20263007, epoch=0)
+            + training_rehearsal_core.epoch_examples(snli, seed=20263007, epoch=1)[:4]
+        ),
+    }
+    assert control[0::3] == mixture[0::3] == expected_streams["real"]
+    assert control[1::3] == mixture[1::3] == expected_streams["shared_synthetic"]
+    assert control[2::3] == expected_streams["control_extra"]
+    assert mixture[2::3] == expected_streams["snli_extra"]
 
 
 def test_schedule_audit_is_deterministic_and_counts_deliberate_repeats() -> None:
     from experiments import mixture_training_data
 
-    real, synthetic = _real_train(), _synthetic_train()
-    schedules = mixture_training_data.build_training_schedules(real, synthetic)
-    audit = mixture_training_data.build_training_schedule_audit(real, synthetic, schedules)
-    repeated = Counter(example.record_id for example in schedules["synthetic_mix"][1::2])
+    real, synthetic, snli = _real_train(), _synthetic_train(), _snli_train()
+    schedules = mixture_training_data.build_training_schedules(real, synthetic, snli)
+    audit = mixture_training_data.build_training_schedule_audit(real, synthetic, snli, schedules)
 
     assert audit == mixture_training_data.build_training_schedule_audit(
-        real, synthetic, mixture_training_data.build_training_schedules(real, synthetic)
+        real,
+        synthetic,
+        snli,
+        mixture_training_data.build_training_schedules(real, synthetic, snli),
     )
-    assert len(repeated) == 500
-    assert sum(count == 2 for count in repeated.values()) == 4
-    assert sum(repeated.values()) == 504
-    assert audit["exposure"]["real_only"]["by_record"] == {record.record_id: 2 for record in real}
-    assert audit["exposure"]["synthetic_mix"]["by_record"] == {
-        **{record.record_id: 1 for record in real},
-        **{record.record_id: repeated[record.record_id] for record in synthetic},
+    assert audit["presentation_count"] == 1512
+    assert set(audit["schedule_sha256"]) == {"synthetic_repeat", "snli_mix"}
+    assert len(set(record.record_id for record in (*real, *synthetic, *snli))) == 1504
+    assert audit["exposure"]["synthetic_repeat"]["by_dataset"] == {
+        "dbpedia14-pilot-v1-train": 252,
+        "sms-pilot-v1-train": 252,
+        "synthetic-atomic-fact-inference-v1-train": 604,
+        "synthetic-numeric-selection-v1-train": 404,
     }
+    assert audit["exposure"]["snli_mix"]["by_dataset"] == {
+        "dbpedia14-pilot-v1-train": 252,
+        "sms-pilot-v1-train": 252,
+        "snli-training-v1": 504,
+        "synthetic-atomic-fact-inference-v1-train": 301,
+        "synthetic-numeric-selection-v1-train": 203,
+    }
+    control_synthetic_exposures = Counter(
+        audit["exposure"]["synthetic_repeat"]["by_record"][record.record_id] for record in synthetic
+    )
+    assert control_synthetic_exposures == {2: 492, 3: 8}
+    candidate_synthetic_exposures = Counter(
+        audit["exposure"]["snli_mix"]["by_record"][record.record_id] for record in synthetic
+    )
+    assert candidate_synthetic_exposures == {1: 496, 2: 4}
+    assert all(
+        audit["exposure"]["snli_mix"]["by_record"][record.record_id] in (1, 2) for record in snli
+    )
+    assert (
+        sum(
+            count == 2
+            for record in snli
+            if (count := audit["exposure"]["snli_mix"]["by_record"][record.record_id])
+        )
+        == 4
+    )
+    assert not any(
+        record.record_id.startswith("snli-training-v1") for record in schedules["synthetic_repeat"]
+    )
 
 
 def test_training_rejects_unknown_or_suffixed_dataset_ids() -> None:
@@ -145,14 +237,33 @@ def test_training_rejects_unknown_or_suffixed_dataset_ids() -> None:
     real[0] = real[0].model_copy(update={"dataset_id": "dbpedia14-pilot-v1-train-extra"})
 
     with pytest.raises(ValueError, match="dataset IDs"):
-        mixture_training_data.build_training_schedules(real, _synthetic_train())
+        mixture_training_data.build_training_schedules(real, _synthetic_train(), _snli_train())
 
     synthetic = list(_synthetic_train())
     synthetic[0] = synthetic[0].model_copy(
         update={"dataset_id": "synthetic-atomic-fact-inference-v1-train-extra"}
     )
     with pytest.raises(ValueError, match="dataset IDs"):
-        mixture_training_data.build_training_schedules(_real_train(), synthetic)
+        mixture_training_data.build_training_schedules(_real_train(), synthetic, _snli_train())
+
+
+def test_schedule_contract_rejects_missing_or_wrong_snli_stream() -> None:
+    from experiments import mixture_training_data
+
+    with pytest.raises(TypeError):
+        mixture_training_data.build_training_schedules(_real_train(), _synthetic_train())
+
+    schedules = mixture_training_data.build_training_schedules(
+        _real_train(), _synthetic_train(), _snli_train()
+    )
+    altered_candidate = list(schedules["snli_mix"])
+    altered_candidate[2] = schedules["synthetic_repeat"][2]
+    altered = dict(schedules)
+    altered["snli_mix"] = tuple(altered_candidate)
+    with pytest.raises(ValueError, match="fixed stream"):
+        mixture_training_data.build_training_schedule_audit(
+            _real_train(), _synthetic_train(), _snli_train(), altered
+        )
 
 
 def test_synthetic_evaluation_panel_has_exact_orders_and_label_free_rows() -> None:

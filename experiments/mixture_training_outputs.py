@@ -7,6 +7,7 @@ import math
 from collections.abc import Mapping, Sequence
 from pathlib import PurePosixPath
 
+from experiments import mixture_training_data as data
 from experiments.mixture_training_contracts import (
     MAX_INPUT_TOKENS,
     MAX_TOTAL_FORWARDS,
@@ -212,10 +213,10 @@ def _validate_counts(
     elif passed_phase == "train":
         expected = {
             "base_evaluation": 0,
-            "training": 1008,
-            "final_evaluation": 4023,
+            "training": data.TRAINING_PRESENTATIONS,
+            "final_evaluation": data.EXPECTED_EVALUATION_PRESENTATIONS,
             "reload_parity": 32,
-            "total": 5063,
+            "total": data.TRAINING_PRESENTATIONS + data.EXPECTED_EVALUATION_PRESENTATIONS + 32,
         }
         if normalized_counts != expected:
             raise ValueError("passed training forward counts differ from the frozen plan")

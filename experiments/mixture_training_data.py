@@ -16,14 +16,22 @@ from reflex_decisions.schema import Option
 
 TrainingExample = training_rehearsal_core.TrainingExample
 
-ARM_NAMES = ("real_only", "synthetic_mix")
+ARM_NAMES = ("synthetic_repeat", "snli_mix")
+RUN_SUFFIXES = {"synthetic_repeat": "-syn", "snli_mix": "-snli"}
 SCHEDULE_SEED = 20261007
 INIT_SEED = 20261006
+SHARED_SYNTHETIC_SEED = 20262007
+SNLI_PRESENTATION_SEED = 20263007
 SHARED_REAL_COUNT = 504
 SYNTHETIC_COUNT = 500
-TRAINING_PRESENTATIONS = 1008
+SNLI_TRAIN_COUNT = 500
+TRAINING_STREAM_COUNT = 3
+TRAINING_PRESENTATIONS = 1512
 MICROBATCHES_PER_UPDATE = 4
-MAX_UPDATES = 252
+MAX_UPDATES = 378
+UNSCORED_CHECKPOINT_UPDATE = 189
+FINAL_CHECKPOINT_UPDATE = 378
+UNIQUE_TRAINING_RECORD_COUNT = 1504
 
 REAL_TRAIN_DATASET_COUNTS = {
     real_pilot_core.TRAIN_DATASET_IDS[0]: 252,
@@ -33,6 +41,7 @@ SYNTHETIC_TRAIN_DATASET_COUNTS = {
     f"synthetic-{family}-v1-train": 300 if family == synthetic_data.FACT else 200
     for family in synthetic_data.SOURCE
 }
+SNLI_TRAIN_DATASET_COUNTS = {"snli-training-v1": SNLI_TRAIN_COUNT}
 _SYNTHETIC_SPLIT_COUNTS = {
     synthetic_data.FACT: (300, 75, 75),
     synthetic_data.NUMERIC: (200, 50, 50),
@@ -130,49 +139,93 @@ def _validate_disjoint_pools(bundles: Sequence[Sequence[DecisionRecord]]) -> Non
 
 
 def _validate_training_bundles(
-    real_train: Sequence[DecisionRecord], synthetic_train: Sequence[DecisionRecord]
+    real_train: Sequence[DecisionRecord],
+    synthetic_train: Sequence[DecisionRecord],
+    snli_train: Sequence[DecisionRecord],
 ) -> None:
     _validate_record_bundle(real_train, REAL_TRAIN_DATASET_COUNTS, "real training data")
     _validate_record_bundle(
         synthetic_train, SYNTHETIC_TRAIN_DATASET_COUNTS, "synthetic training data"
     )
-    _validate_disjoint_pools((real_train, synthetic_train))
+    _validate_record_bundle(snli_train, SNLI_TRAIN_DATASET_COUNTS, "SNLI training data")
+    if len({record.source_group_id for record in snli_train}) != SNLI_TRAIN_COUNT:
+        raise ValueError("SNLI training data must contain one record per source group")
+    _validate_disjoint_pools((real_train, synthetic_train, snli_train))
 
 
-def _interleave(
-    shared: Sequence[TrainingExample], replacement: Sequence[TrainingExample]
+def _training_streams(
+    real_train: Sequence[DecisionRecord],
+    synthetic_train: Sequence[DecisionRecord],
+    snli_train: Sequence[DecisionRecord],
+) -> tuple[
+    tuple[TrainingExample, ...],
+    tuple[TrainingExample, ...],
+    tuple[TrainingExample, ...],
+    tuple[TrainingExample, ...],
+]:
+    """Create the fixed shared and arm-specific 504-example streams."""
+
+    shared_real = training_rehearsal_core.epoch_examples(real_train, seed=SCHEDULE_SEED, epoch=0)
+    shared_synthetic = (
+        training_rehearsal_core.epoch_examples(synthetic_train, seed=SHARED_SYNTHETIC_SEED, epoch=0)
+        + training_rehearsal_core.epoch_examples(
+            synthetic_train, seed=SHARED_SYNTHETIC_SEED, epoch=1
+        )[:4]
+    )
+    synthetic_extra = (
+        training_rehearsal_core.epoch_examples(synthetic_train, seed=SHARED_SYNTHETIC_SEED, epoch=1)
+        + training_rehearsal_core.epoch_examples(
+            synthetic_train, seed=SHARED_SYNTHETIC_SEED, epoch=2
+        )[:4]
+    )
+    snli_extra = (
+        training_rehearsal_core.epoch_examples(snli_train, seed=SNLI_PRESENTATION_SEED, epoch=0)
+        + training_rehearsal_core.epoch_examples(snli_train, seed=SNLI_PRESENTATION_SEED, epoch=1)[
+            :4
+        ]
+    )
+    return shared_real, shared_synthetic, synthetic_extra, snli_extra
+
+
+def _flatten_triples(
+    real_stream: Sequence[TrainingExample],
+    synthetic_stream: Sequence[TrainingExample],
+    extra_stream: Sequence[TrainingExample],
 ) -> tuple[TrainingExample, ...]:
-    if len(shared) != SHARED_REAL_COUNT or len(replacement) != SHARED_REAL_COUNT:
-        raise ValueError("each arm must interleave exactly 504 shared and replacement rows")
-    return tuple(example for pair in zip(shared, replacement, strict=True) for example in pair)
+    if any(
+        len(stream) != SHARED_REAL_COUNT for stream in (real_stream, synthetic_stream, extra_stream)
+    ):
+        raise ValueError("each training stream must contain exactly 504 examples")
+    return tuple(
+        example
+        for triple in zip(real_stream, synthetic_stream, extra_stream, strict=True)
+        for example in triple
+    )
+
+
+def _fixed_training_schedules(
+    real_train: Sequence[DecisionRecord],
+    synthetic_train: Sequence[DecisionRecord],
+    snli_train: Sequence[DecisionRecord],
+) -> dict[str, tuple[TrainingExample, ...]]:
+    shared_real, shared_synthetic, synthetic_extra, snli_extra = _training_streams(
+        real_train, synthetic_train, snli_train
+    )
+    return {
+        "synthetic_repeat": _flatten_triples(shared_real, shared_synthetic, synthetic_extra),
+        "snli_mix": _flatten_triples(shared_real, shared_synthetic, snli_extra),
+    }
 
 
 def build_training_schedules(
-    real_train: Sequence[DecisionRecord], synthetic_train: Sequence[DecisionRecord]
+    real_train: Sequence[DecisionRecord],
+    synthetic_train: Sequence[DecisionRecord],
+    snli_train: Sequence[DecisionRecord],
 ) -> dict[str, tuple[TrainingExample, ...]]:
-    """Build the paired, deterministic 1,008-presentation training arms."""
+    """Build the paired, deterministic 1,512-presentation training arms."""
 
-    _validate_training_bundles(real_train, synthetic_train)
-    shared = training_rehearsal_core.epoch_examples(real_train, seed=SCHEDULE_SEED, epoch=0)
-    real_replacement = training_rehearsal_core.epoch_examples(
-        real_train, seed=SCHEDULE_SEED, epoch=1
-    )
-    synthetic_replacement = (
-        training_rehearsal_core.epoch_examples(synthetic_train, seed=SCHEDULE_SEED + 1000, epoch=0)
-        + training_rehearsal_core.epoch_examples(
-            synthetic_train, seed=SCHEDULE_SEED + 1000, epoch=1
-        )[:MICROBATCHES_PER_UPDATE]
-    )
-    schedules = {
-        ARM_NAMES[0]: _interleave(shared, real_replacement),
-        ARM_NAMES[1]: _interleave(shared, synthetic_replacement),
-    }
-    if any(
-        schedules[ARM_NAMES[0]][index] != schedules[ARM_NAMES[1]][index]
-        for index in range(0, TRAINING_PRESENTATIONS, 2)
-    ):
-        raise ValueError("paired arms must share identical real rows at every even slot")
-    return schedules
+    _validate_training_bundles(real_train, synthetic_train, snli_train)
+    return _fixed_training_schedules(real_train, synthetic_train, snli_train)
 
 
 def _training_examples_exposure(
@@ -207,6 +260,7 @@ def _validate_schedule_pair(
     schedules: Mapping[str, Sequence[TrainingExample]],
     real_train: Sequence[DecisionRecord],
     synthetic_train: Sequence[DecisionRecord],
+    snli_train: Sequence[DecisionRecord],
 ) -> None:
     real_ids = {record.record_id for record in real_train}
     synthetic_ids = {record.record_id for record in synthetic_train}
@@ -215,40 +269,19 @@ def _validate_schedule_pair(
     normalized = {arm: tuple(schedules[arm]) for arm in ARM_NAMES}
     if any(len(schedule) != TRAINING_PRESENTATIONS for schedule in normalized.values()):
         raise ValueError("training schedule has the wrong presentation count")
-    if any(
-        normalized[ARM_NAMES[0]][index] != normalized[ARM_NAMES[1]][index]
-        for index in range(0, TRAINING_PRESENTATIONS, 2)
+    expected = _fixed_training_schedules(real_train, synthetic_train, snli_train)
+    if normalized != expected:
+        raise ValueError("training schedule does not match the fixed stream order")
+    if len(real_ids | synthetic_ids | {record.record_id for record in snli_train}) != (
+        UNIQUE_TRAINING_RECORD_COUNT
     ):
-        raise ValueError("paired arms must share identical real rows at every even slot")
-    for arm, schedule in normalized.items():
-        expected_replacement_ids = real_ids if arm == ARM_NAMES[0] else synthetic_ids
-        if any(
-            schedule[index].record_id not in real_ids
-            for index in range(0, TRAINING_PRESENTATIONS, 2)
-        ):
-            raise ValueError("shared schedule slots must contain real training rows")
-        if any(
-            schedule[index].record_id not in expected_replacement_ids
-            for index in range(1, TRAINING_PRESENTATIONS, 2)
-        ):
-            raise ValueError("replacement schedule slots do not match their arm")
-
-    control_counts = Counter(example.record_id for example in normalized[ARM_NAMES[0]])
-    if control_counts != Counter({record_id: 2 for record_id in real_ids}):
-        raise ValueError("real-only arm must expose each real row exactly twice")
-    mixture_counts = Counter(example.record_id for example in normalized[ARM_NAMES[1]])
-    if any(mixture_counts[record_id] != 1 for record_id in real_ids):
-        raise ValueError("synthetic-mixture arm must expose each real row once")
-    synthetic_exposures = Counter(mixture_counts[record_id] for record_id in synthetic_ids)
-    if len(synthetic_ids) != SYNTHETIC_COUNT or synthetic_exposures != Counter(
-        {1: SYNTHETIC_COUNT - 4, 2: 4}
-    ):
-        raise ValueError("synthetic-mixture arm must expose 500 rows with exactly four repeats")
+        raise ValueError("training source union must contain exactly 1,504 unique records")
 
 
 def build_training_schedule_audit(
     real_train: Sequence[DecisionRecord],
     synthetic_train: Sequence[DecisionRecord],
+    snli_train: Sequence[DecisionRecord],
     schedules: Mapping[str, Sequence[TrainingExample]] | None = None,
 ) -> dict[str, object]:
     """Return deterministic arm digests and aggregate exposure counts."""
@@ -256,11 +289,13 @@ def build_training_schedule_audit(
     planned = (
         schedules
         if schedules is not None
-        else build_training_schedules(real_train, synthetic_train)
+        else build_training_schedules(real_train, synthetic_train, snli_train)
     )
-    _validate_training_bundles(real_train, synthetic_train)
-    _validate_schedule_pair(planned, real_train, synthetic_train)
-    record_by_id = {record.record_id: record for record in (*real_train, *synthetic_train)}
+    _validate_training_bundles(real_train, synthetic_train, snli_train)
+    _validate_schedule_pair(planned, real_train, synthetic_train, snli_train)
+    record_by_id = {
+        record.record_id: record for record in (*real_train, *synthetic_train, *snli_train)
+    }
     schedule_digests: dict[str, str] = {}
     exposures: dict[str, dict[str, object]] = {}
     for arm in ARM_NAMES:
@@ -280,6 +315,8 @@ def build_training_schedule_audit(
         exposures[arm] = _training_examples_exposure(examples, record_by_id)
     return {
         "presentation_count": TRAINING_PRESENTATIONS,
+        "optimizer_update_count": MAX_UPDATES,
+        "microbatches_per_update": MICROBATCHES_PER_UPDATE,
         "schedule_sha256": schedule_digests,
         "exposure": exposures,
     }

@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping
 
+from experiments import mixture_training_data as data
 from experiments.mixture_training_contracts import (
     LEARNING_RATE,
     MAX_GRADIENT_NORM,
@@ -180,6 +181,17 @@ def _validate_snapshot(value: object, run_id: str, update: int) -> dict[str, obj
     return snapshot
 
 
+def _validate_training_snapshots(value: object, run_id: str) -> dict[str, dict[str, object]]:
+    paths_value = normalize_json_object(value, "adapter_paths")
+    checkpoint_updates = (data.UNSCORED_CHECKPOINT_UPDATE, data.FINAL_CHECKPOINT_UPDATE)
+    checkpoint_names = tuple(str(update) for update in checkpoint_updates)
+    if set(paths_value) != set(checkpoint_names):
+        raise ValueError(
+            "training snapshots must be saved at the frozen unscored and final updates"
+        )
+    return {key: _validate_snapshot(paths_value[key], run_id, int(key)) for key in checkpoint_names}
+
+
 def _validate_inventory(value: object) -> dict[str, object]:
     inventory = normalize_json_object(value, "adapter_inventory")
     if set(inventory) != _INVENTORY_FIELDS:
@@ -271,8 +283,10 @@ def _validate_adapter_update(value: object, inventory: Mapping[str, object]) -> 
 
 
 def _validate_training_losses(value: object) -> list[dict[str, object]]:
-    if not isinstance(value, list) or len(value) != 252:
-        raise ValueError("training evidence must include 252 per-update loss records")
+    if not isinstance(value, list) or len(value) != data.MAX_UPDATES:
+        raise ValueError(
+            f"training evidence must include {data.MAX_UPDATES} per-update loss records"
+        )
     losses: list[dict[str, object]] = []
     b_gradient_total = 0.0
     gradient_norm_total = 0.0
@@ -281,7 +295,9 @@ def _validate_training_losses(value: object) -> list[dict[str, object]]:
         if set(row) != {"update", "mean_loss", "lo_ra_b_gradient_l1", "gradient_norm"}:
             raise ValueError("training step loss has an unexpected schema")
         if _integer(row["update"], "training loss update", minimum=1) != update:
-            raise ValueError("training step losses must cover updates 1 through 252 in order")
+            raise ValueError(
+                f"training step losses must cover updates 1 through {data.MAX_UPDATES} in order"
+            )
         _finite_number(row["mean_loss"], "training mean loss", minimum=0.0)
         b_gradient_total += _finite_number(
             row["lo_ra_b_gradient_l1"], "LoRA-B gradient L1", minimum=0.0
@@ -297,18 +313,18 @@ def _validate_training_evidence(
     evidence: dict[str, object], payload: Mapping[str, object], outputs: list[dict[str, object]]
 ) -> None:
     run_id = str(payload["run_id"])
-    if _integer(evidence.get("optimizer_updates_completed"), "optimizer_updates_completed") != 252:
-        raise ValueError("passed training result must complete exactly 252 optimizer updates")
+    if (
+        _integer(evidence.get("optimizer_updates_completed"), "optimizer_updates_completed")
+        != data.MAX_UPDATES
+    ):
+        raise ValueError(
+            f"passed training result must complete exactly {data.MAX_UPDATES} optimizer updates"
+        )
     losses = _validate_training_losses(evidence.get("training_step_losses"))
     evidence["training_step_losses"] = losses
     inventory = _validate_inventory(evidence.get("adapter_inventory"))
     evidence["adapter_inventory"] = inventory
-    paths_value = normalize_json_object(evidence.get("adapter_paths"), "adapter_paths")
-    if set(paths_value) != {"126", "252"}:
-        raise ValueError("training snapshots must be saved at updates 126 and 252")
-    snapshots = {
-        key: _validate_snapshot(paths_value[key], run_id, int(key)) for key in ("126", "252")
-    }
+    snapshots = _validate_training_snapshots(evidence.get("adapter_paths"), run_id)
     update = _validate_adapter_update(evidence.get("adapter_update"), inventory)
     evidence["adapter_paths"] = snapshots
     evidence["adapter_update"] = update

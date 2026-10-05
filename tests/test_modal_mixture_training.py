@@ -12,6 +12,60 @@ from experiments import modal_mixture_training as runner
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_preflight_loads_and_transmits_exact_three_source_training_union(
+    monkeypatch, tmp_path
+) -> None:
+    from types import SimpleNamespace
+
+    from experiments import mixture_training_data as data
+
+    real_id = next(iter(data.REAL_TRAIN_DATASET_COUNTS))
+    synthetic_id = next(iter(data.SYNTHETIC_TRAIN_DATASET_COUNTS))
+    snli_id = next(iter(data.SNLI_TRAIN_DATASET_COUNTS))
+    records = (
+        SimpleNamespace(record_id="real", dataset_id=real_id),
+        SimpleNamespace(record_id="synthetic", dataset_id=synthetic_id),
+        SimpleNamespace(record_id="snli", dataset_id=snli_id),
+    )
+    loaded = (records[:1], (), records[1:2], records[2:], {"pins": True})
+    monkeypatch.setattr(runner.core, "load_natural_reasoning_data", lambda _root: loaded)
+    monkeypatch.setattr(data, "build_synthetic_evaluation_presentations", lambda _rows: ())
+    monkeypatch.setattr(data, "build_evaluation_presentations", lambda *_rows: ())
+    built: list[dict[str, object]] = []
+
+    def build_payload(**kwargs: object) -> dict[str, object]:
+        built.append(kwargs)
+        return {"phase": kwargs["phase"]}
+
+    monkeypatch.setattr(runner.core, "build_payload", build_payload)
+
+    _init, training_records, _evaluations, pins = runner._make_payloads("reasoning-run", tmp_path)
+
+    assert tuple(record.record_id for record in training_records) == ("real", "synthetic", "snli")
+    assert built[0]["train_records"] == ()
+    assert pins == {"pins": True}
+
+
+def test_arm_payloads_use_canonical_names_and_run_suffixes(monkeypatch) -> None:
+    from experiments import mixture_training_data as data
+
+    calls: list[dict[str, object]] = []
+
+    def build_payload(**kwargs: object) -> dict[str, object]:
+        calls.append(kwargs)
+        return {"arm": kwargs["arm"], "run_id": kwargs["run_id"]}
+
+    monkeypatch.setattr(runner.core, "build_payload", build_payload)
+
+    payloads = runner._make_arm_payloads("reasoning-run", (), (), {}, {"init": True})
+
+    assert tuple(payloads) == data.ARM_NAMES
+    assert [payload["run_id"] for payload in payloads.values()] == [
+        f"reasoning-run{data.RUN_SUFFIXES[arm]}" for arm in data.ARM_NAMES
+    ]
+    assert [call["train_records"] for call in calls] == [(), ()]
+
+
 def test_lifecycle_validates_init_before_running_both_arms_concurrently() -> None:
     init_payload = {"nonce": "init-nonce", "phase": "initialize"}
     calls: list[str] = []
@@ -35,11 +89,15 @@ def test_lifecycle_validates_init_before_running_both_arms_concurrently() -> Non
     def make_arm_payloads(initialization: object) -> dict[str, dict[str, object]]:
         assert initialization == {"snapshot": "update-000", "tensor_sha256": "a"}
         return {
-            "real_only": {"nonce": "real-nonce", "phase": "train", "arm": "real_only"},
-            "synthetic_mix": {
+            "synthetic_repeat": {
+                "nonce": "synthetic-nonce",
+                "phase": "train",
+                "arm": "synthetic_repeat",
+            },
+            "snli_mix": {
                 "nonce": "mix-nonce",
                 "phase": "train",
-                "arm": "synthetic_mix",
+                "arm": "snli_mix",
             },
         }
 
@@ -59,10 +117,10 @@ def test_lifecycle_validates_init_before_running_both_arms_concurrently() -> Non
     )
 
     assert calls[0] == "initialize"
-    assert set(calls[1:]) == {"real_only", "synthetic_mix"}
+    assert set(calls[1:]) == {"synthetic_repeat", "snli_mix"}
     assert outcome["results"]["initialize"]["status"] == "passed"
-    assert outcome["results"]["real_only"]["evidence"] == {"arm": "real_only"}
-    assert outcome["results"]["synthetic_mix"]["evidence"] == {"arm": "synthetic_mix"}
+    assert outcome["results"]["synthetic_repeat"]["evidence"] == {"arm": "synthetic_repeat"}
+    assert outcome["results"]["snli_mix"]["evidence"] == {"arm": "snli_mix"}
 
 
 def test_failed_initialization_prevents_both_training_arms() -> None:
@@ -117,11 +175,15 @@ def test_initialization_exception_prevents_arms_and_keeps_unknown_counts() -> No
 def test_one_arm_exception_does_not_discard_sibling_result() -> None:
     init_payload = {"nonce": "init-nonce", "phase": "initialize"}
     arm_payloads = {
-        "real_only": {"nonce": "real-nonce", "phase": "train", "arm": "real_only"},
-        "synthetic_mix": {
+        "synthetic_repeat": {
+            "nonce": "synthetic-nonce",
+            "phase": "train",
+            "arm": "synthetic_repeat",
+        },
+        "snli_mix": {
             "nonce": "mix-nonce",
             "phase": "train",
-            "arm": "synthetic_mix",
+            "arm": "snli_mix",
         },
     }
 
@@ -131,8 +193,8 @@ def test_one_arm_exception_does_not_discard_sibling_result() -> None:
         return raw
 
     def invoke_arm(arm: str, payload: dict[str, object]) -> dict[str, object]:
-        if arm == "real_only":
-            raise TimeoutError("real worker timed out")
+        if arm == "synthetic_repeat":
+            raise TimeoutError("synthetic repeat worker timed out")
         return {"status": "passed", "nonce": payload["nonce"], "evidence": {"done": True}}
 
     outcome = runner._execute_lifecycle(
@@ -147,9 +209,9 @@ def test_one_arm_exception_does_not_discard_sibling_result() -> None:
         validate_result=validate,
     )
 
-    assert outcome["results"]["real_only"]["status"] == "failed"
-    assert outcome["results"]["synthetic_mix"]["status"] == "passed"
-    assert outcome["results"]["synthetic_mix"]["evidence"] == {"done": True}
+    assert outcome["results"]["synthetic_repeat"]["status"] == "failed"
+    assert outcome["results"]["snli_mix"]["status"] == "passed"
+    assert outcome["results"]["snli_mix"]["evidence"] == {"done": True}
 
 
 def test_bad_recovery_nonce_falls_back_to_original_error_and_unknown_counts() -> None:
@@ -218,17 +280,18 @@ def test_modal_workers_have_distinct_names_and_independent_limits(monkeypatch, t
 
     monkeypatch.setattr(modal_host.core, "SOURCE_FINGERPRINT_PATHS", ())
 
-    app, initialize, real_only, synthetic_mix = modal_host._register_functions(
-        FakeModal, tmp_path, object()
-    )
+    app, initialize, arm_functions = modal_host._register_functions(FakeModal, tmp_path, object())
 
-    assert (initialize, real_only, synthetic_mix) == (
-        modal_host.importlib.import_module("experiments.mixture_training_runtime").remote_worker,
-    ) * 3
+    assert (
+        initialize
+        is modal_host.importlib.import_module("experiments.mixture_training_runtime").remote_worker
+    )
+    assert set(arm_functions) == {"synthetic_repeat", "snli_mix"}
+    assert all(function is initialize for function in arm_functions.values())
     assert [options["name"] for options in app.options] == [
         "initialize",
-        "real_only",
-        "synthetic_mix",
+        "synthetic_repeat",
+        "snli_mix",
     ]
     assert [options["timeout"] for options in app.options] == [900, 3600, 3600]
     assert all(options["max_containers"] == 1 for options in app.options)
@@ -311,21 +374,21 @@ def _run_main_with_fake_modal(
         "payload_sha256": "init-hash",
     }
     arm_payloads = {
-        "real_only": {
+        "synthetic_repeat": {
             "experiment_id": "exit-check",
-            "run_id": "exit-check-real",
+            "run_id": "exit-check-syn",
             "nonce": "real",
             "phase": "train",
-            "arm": "real_only",
+            "arm": "synthetic_repeat",
             "pins": {},
             "payload_sha256": "real-hash",
         },
-        "synthetic_mix": {
+        "snli_mix": {
             "experiment_id": "exit-check",
-            "run_id": "exit-check-mix",
+            "run_id": "exit-check-snli",
             "nonce": "mix",
             "phase": "train",
-            "arm": "synthetic_mix",
+            "arm": "snli_mix",
             "pins": {},
             "payload_sha256": "mix-hash",
         },
@@ -398,7 +461,11 @@ def _run_main_with_fake_modal(
     monkeypatch.setattr(
         modal_host,
         "_register_functions",
-        lambda *_args: (app, RemoteFunction(), RemoteFunction(), RemoteFunction()),
+        lambda *_args: (
+            app,
+            RemoteFunction(),
+            {arm: RemoteFunction() for arm in ("synthetic_repeat", "snli_mix")},
+        ),
     )
 
     status = runner.main(
@@ -423,8 +490,8 @@ def test_main_preserves_worker_results_when_modal_app_exit_fails(tmp_path, monke
     assert status == 1
     assert receipt["status"] == "failed"
     assert receipt["modal"]["app_id"] == "ap-exit-check"
-    assert set(receipt["payloads"]) == {"initialize", "real_only", "synthetic_mix"}
-    assert set(receipt["results"]) == {"initialize", "real_only", "synthetic_mix"}
+    assert set(receipt["payloads"]) == {"initialize", "synthetic_repeat", "snli_mix"}
+    assert set(receipt["results"]) == {"initialize", "synthetic_repeat", "snli_mix"}
     assert all(result["status"] == "passed" for result in receipt["results"].values())
     assert receipt["failure"]["stage"] == "modal_context_exit"
 

@@ -11,6 +11,7 @@ from threading import Lock
 from typing import Any
 
 from experiments import mixture_training_core as core
+from experiments import mixture_training_data as data
 from experiments import mixture_training_runtime_helpers as helpers
 
 VOLUME_NAME = "reflex-rehearsal-artifacts"
@@ -88,7 +89,7 @@ def _image(modal: Any, root: Path) -> Any:
     return image
 
 
-def _register_functions(modal: Any, root: Path, volume: Any) -> tuple[Any, Any, Any, Any]:
+def _register_functions(modal: Any, root: Path, volume: Any) -> tuple[Any, Any, dict[str, Any]]:
     runtime = importlib.import_module("experiments.mixture_training_runtime")
     app = modal.App(APP_NAME, image=_image(modal, root))
 
@@ -111,12 +112,7 @@ def _register_functions(modal: Any, root: Path, volume: Any) -> tuple[Any, Any, 
             volumes={"/artifacts": volume},
         )(runtime.remote_worker)
 
-    return (
-        app,
-        register("initialize", 900),
-        register("real_only", 3600),
-        register("synthetic_mix", 3600),
-    )
+    return app, register("initialize", 900), {arm: register(arm, 3600) for arm in data.ARM_NAMES}
 
 
 def launch_modal(
@@ -134,7 +130,7 @@ def launch_modal(
     invalid_responses: dict[str, object],
     response_lock: Lock,
 ) -> dict[str, object]:
-    """Launch one init worker, then two separately bounded concurrent arm workers."""
+    """Launch one init worker, then separately bounded concurrent arm workers."""
 
     if profile != core.PROFILE or workspace != core.WORKSPACE:
         raise ValueError("only the pinned personal Modal profile and workspace are allowed")
@@ -148,7 +144,7 @@ def launch_modal(
         raise RuntimeError("Modal token info did not match the expected workspace")
     modal = importlib.import_module("modal")
     volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
-    app, init_function, real_function, mix_function = _register_functions(modal, root, volume)
+    app, init_function, arm_functions = _register_functions(modal, root, volume)
 
     def invoke(function: Any, payload: dict[str, object]) -> object:
         try:
@@ -212,9 +208,7 @@ def launch_modal(
                     init_payload=init_payload,
                     invoke_init=lambda payload: invoke(init_function, payload),
                     make_arm_payloads=make_recorded_arm_payloads,
-                    invoke_arm=lambda arm, payload: invoke(
-                        real_function if arm == "real_only" else mix_function, payload
-                    ),
+                    invoke_arm=lambda arm, payload: invoke(arm_functions[arm], payload),
                     validate_result=checked,
                     make_failed_result=make_recorded_failed_result,
                 )

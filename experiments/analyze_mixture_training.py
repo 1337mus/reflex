@@ -7,6 +7,7 @@ import json
 import sys
 from collections.abc import Mapping
 from pathlib import Path
+from typing import cast
 
 from experiments import mixture_training_analysis as analysis
 from experiments import mixture_training_baselines as baselines
@@ -36,7 +37,7 @@ def _overall_gate_passed(result: Mapping[str, object]) -> bool:
     gate = result.get("engineering_gate")
     if not isinstance(gate, Mapping) or type(gate.get("overall_passed")) is not bool:
         raise ValueError("analysis engineering-gate summary is malformed")
-    return gate["overall_passed"]
+    return cast(bool, gate["overall_passed"])
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -60,12 +61,19 @@ def main(argv: list[str] | None = None) -> int:
             receipt = _read_json(receipt_path, "mixture receipt")
             real_receipt = _read_json(real_receipt_path, "saved real-pilot receipt")
             balanced_receipt = _read_json(balanced_receipt_path, "saved balanced-SNLI receipt")
-            real_records, balanced_records, synthetic_records, _pins = core.load_local_data(root)
+            (
+                real_records,
+                balanced_records,
+                synthetic_records,
+                snli_training_records,
+                _pins,
+            ) = core.load_natural_reasoning_data(root)
             result = analysis.analyze_experiment(
                 receipt,
                 real_records,
                 balanced_records,
                 synthetic_records,
+                snli_training_records,
                 real_receipt,
                 balanced_receipt,
                 root=root,

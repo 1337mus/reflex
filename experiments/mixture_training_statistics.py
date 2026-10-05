@@ -23,6 +23,14 @@ _DEV_DATASET_IDS = (
     "synthetic-atomic-fact-inference-v1-development",
     "synthetic-numeric-selection-v1-development",
 )
+_BOOTSTRAP_DATASET_ORDER = (
+    "dbpedia14-pilot-v1-development",
+    "sms-pilot-v1-development",
+    "snli-balanced-v1-development",
+    "snli-pilot-v1-development",
+    "synthetic-atomic-fact-inference-v1-development",
+    "synthetic-numeric-selection-v1-development",
+)
 _CALIBRATION_COUNTS = {
     "dbpedia14-pilot-v1-calibration": 56,
     "sms-pilot-v1-calibration": 60,
@@ -128,15 +136,21 @@ def _observed_rows(
 
 
 def _fraction_by_group(rows: Sequence[_Observed]) -> dict[str, Fraction]:
-    correct: dict[str, int] = defaultdict(int)
-    total: dict[str, int] = defaultdict(int)
+    by_group_and_record: dict[str, dict[str, list[bool]]] = defaultdict(lambda: defaultdict(list))
     for observed in rows:
-        group = observed.record.source_group_id
-        total[group] += 1
-        correct[group] += observed.correct
-    if not total:
+        by_group_and_record[observed.record.source_group_id][observed.record.record_id].append(
+            observed.correct
+        )
+    if not by_group_and_record:
         raise ValueError("cannot calculate group accuracy for an empty dataset")
-    return {group: _fraction(correct[group], total[group]) for group in sorted(total)}
+    return {
+        group_id: sum(
+            (Fraction(sum(orders), len(orders)) for orders in records.values()),
+            Fraction(),
+        )
+        / len(records)
+        for group_id, records in sorted(by_group_and_record.items())
+    }
 
 
 def _accuracy_summary(rows: Sequence[_Observed]) -> dict[str, object]:
@@ -262,7 +276,7 @@ def _gate(
 ) -> dict[str, object]:
     passed = passes_minimum(value, threshold)
     if require_positive_lower:
-        passed = passed and interval is not None and interval["lower"] > 0.0
+        passed = passed and interval is not None and interval["lower"] > Fraction()
     return {
         "comparison": comparison,
         "value": _exact(value),
@@ -279,31 +293,43 @@ def _gate_report(
 ) -> tuple[dict[str, object], dict[str, object]]:
     rng = random.Random(BOOTSTRAP_SEED)
     samples: dict[str, tuple[tuple[int, ...], ...]] = {}
-    expected_states = {"base", "real_only", "synthetic_mix"}
-    for dataset_id in sorted(selected):
-        states = selected[dataset_id]
-        if set(states) != expected_states:
-            raise ValueError(f"paired model states are incomplete for {dataset_id}")
-        group_ids = set(states["base"])
-        if not group_ids or any(set(values) != group_ids for values in states.values()):
+    expected_states = {"base", "synthetic_repeat", "snli_mix"}
+    expected_datasets = set(_DEV_DATASET_IDS)
+    if set(selected) != expected_datasets:
+        raise ValueError("all six development datasets are required for the engineering gates")
+    if set(original) != expected_datasets:
+        raise ValueError("all six development datasets are required for original-order gates")
+    for dataset_id in _DEV_DATASET_IDS:
+        for label, grouped_states in (("selected-order", selected), ("original-order", original)):
+            states = grouped_states[dataset_id]
+            if set(states) != expected_states:
+                raise ValueError(f"{label} model states are incomplete for {dataset_id}")
+            group_ids = set(states["base"])
+            if not group_ids or any(set(values) != group_ids for values in states.values()):
+                raise ValueError(
+                    f"paired model states must contain the same source groups for {dataset_id}"
+                )
+        if set(selected[dataset_id]["base"]) != set(original[dataset_id]["base"]):
             raise ValueError(
-                f"paired model states must contain the same source groups for {dataset_id}"
+                "selected and original-order states must contain the same source groups "
+                f"for {dataset_id}"
             )
-        samples[dataset_id] = _bootstrap_samples(len(group_ids), rng)
+    for dataset_id in _BOOTSTRAP_DATASET_ORDER:
+        samples[dataset_id] = _bootstrap_samples(len(selected[dataset_id]["base"]), rng)
 
     historical = (
-        ("dbpedia_original_anchor", "dbpedia14-pilot-v1-development", Fraction(50, 56)),
-        ("sms_original_anchor", "sms-pilot-v1-development", Fraction(58, 60)),
-        ("original_snli_anchor", "snli-pilot-v1-development", Fraction(57, 128)),
+        ("dbpedia_original_r2_anchor", "dbpedia14-pilot-v1-development", Fraction(50, 56)),
+        ("sms_original_r2_anchor", "sms-pilot-v1-development", Fraction(58, 60)),
+        ("original_snli_qwen_base_anchor", "snli-pilot-v1-development", Fraction(57, 128)),
     )
     for _name, dataset_id, _anchor in historical:
-        states = original.get(dataset_id)
-        if dataset_id not in samples or not isinstance(states, Mapping):
+        original_states = original.get(dataset_id)
+        if dataset_id not in samples or not isinstance(original_states, Mapping):
             raise ValueError(f"historical anchor is missing original-order groups: {dataset_id}")
-        if set(states) != expected_states:
+        if set(original_states) != expected_states:
             raise ValueError(f"historical anchor model states are incomplete for {dataset_id}")
         selected_groups = set(selected[dataset_id]["base"])
-        if any(set(values) != selected_groups for values in states.values()):
+        if any(set(values) != selected_groups for values in original_states.values()):
             raise ValueError(
                 "selected and original-order states must contain the same source groups "
                 f"for {dataset_id}"
@@ -319,54 +345,71 @@ def _gate_report(
     intervals: dict[str, dict[str, Fraction]] = {}
     comparisons = (
         (
-            "balanced_snli_mix_minus_real_only",
+            "balanced_snli_mix_minus_synthetic_repeat",
             "snli-balanced-v1-development",
             selected,
-            "synthetic_mix",
-            "real_only",
+            "snli_mix",
+            "synthetic_repeat",
         ),
         (
             "balanced_snli_mix_minus_base",
             "snli-balanced-v1-development",
             selected,
-            "synthetic_mix",
+            "snli_mix",
             "base",
         ),
         (
-            "dbpedia_selected_mix_minus_real_only",
+            "dbpedia_selected_snli_mix_minus_synthetic_repeat",
             "dbpedia14-pilot-v1-development",
             selected,
-            "synthetic_mix",
-            "real_only",
+            "snli_mix",
+            "synthetic_repeat",
         ),
         (
-            "sms_selected_mix_minus_real_only",
+            "sms_selected_snli_mix_minus_synthetic_repeat",
             "sms-pilot-v1-development",
             selected,
-            "synthetic_mix",
-            "real_only",
+            "snli_mix",
+            "synthetic_repeat",
+        ),
+        (
+            "atomic_fact_snli_mix_minus_synthetic_repeat",
+            "synthetic-atomic-fact-inference-v1-development",
+            selected,
+            "snli_mix",
+            "synthetic_repeat",
+        ),
+        (
+            "numeric_selection_snli_mix_minus_synthetic_repeat",
+            "synthetic-numeric-selection-v1-development",
+            selected,
+            "snli_mix",
+            "synthetic_repeat",
         ),
     )
-    for name, dataset_id, states, final_name, comparison_name in comparisons:
+    for name, dataset_id, comparison_states, final_name, comparison_name in comparisons:
         delta = paired_group_delta(
-            states[dataset_id][final_name], states[dataset_id][comparison_name]
+            comparison_states[dataset_id][final_name],
+            comparison_states[dataset_id][comparison_name],
         )
         interval = _bootstrap_interval(delta, samples[dataset_id])
         intervals[name] = interval
         value = sum(delta.values(), Fraction()) / len(delta)
         threshold = (
-            Fraction(1, 20) if name == "balanced_snli_mix_minus_real_only" else Fraction(-1, 20)
+            Fraction(1, 20)
+            if name == "balanced_snli_mix_minus_synthetic_repeat"
+            else Fraction(-1, 20)
         )
         components[name] = _gate(
             value=value,
             threshold=threshold,
             comparison=f"{final_name} - {comparison_name}",
             interval=interval,
-            require_positive_lower=name == "balanced_snli_mix_minus_real_only",
+            require_positive_lower=name == "balanced_snli_mix_minus_synthetic_repeat",
         )
 
     for name, dataset_id, anchor in historical:
-        final_groups = original[dataset_id]["synthetic_mix"]
+        final_groups = original[dataset_id]["snli_mix"]
         reference_groups = historical_reference[dataset_id]
         paired_delta = paired_group_delta(final_groups, reference_groups)
         interval = _bootstrap_interval(paired_delta, samples[dataset_id])
@@ -375,7 +418,7 @@ def _gate_report(
         components[name] = _gate(
             value=value,
             threshold=Fraction(-1, 20),
-            comparison=f"synthetic_mix original-order accuracy - historical anchor {anchor}",
+            comparison=f"snli_mix original-order accuracy - frozen anchor {anchor}",
             interval=interval,
         )
     all_passed = all(

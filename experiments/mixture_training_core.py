@@ -30,7 +30,7 @@ from experiments.mixture_training_contracts import (
     verify_protocol,
 )
 from experiments.mixture_training_evaluations import _validate_evaluation_rows
-from experiments.mixture_training_inputs import load_local_data
+from experiments.mixture_training_inputs import load_natural_reasoning_data
 from reflex_decisions.data import DecisionRecord
 
 _PAYLOAD_FIELDS = {
@@ -110,20 +110,43 @@ def _validate_initialization(value: object, experiment_id: str) -> dict[str, obj
 def _validate_training_rows(
     value: object,
 ) -> tuple[list[dict[str, object]], tuple[DecisionRecord, ...]]:
-    if not isinstance(value, list) or len(value) != 1004:
-        raise ValueError("training payload must contain exactly 1,004 approved rows")
+    if not isinstance(value, list) or len(value) != mixture_data.UNIQUE_TRAINING_RECORD_COUNT:
+        raise ValueError(
+            "training payload must contain exactly "
+            f"{mixture_data.UNIQUE_TRAINING_RECORD_COUNT:,} approved rows"
+        )
     rows = [_train_record_dict(item) for item in value]
     records = tuple(_record_from_row(row) for row in rows)
+    real_records, synthetic_records, snli_records = _partition_training_records(records)
+    if len(real_records) + len(synthetic_records) + len(snli_records) != len(records):
+        raise ValueError("training records contain a dataset outside the exact allowlist")
+    mixture_data.build_training_schedules(real_records, synthetic_records, snli_records)
+    return rows, records
+
+
+def _partition_training_records(
+    records: Sequence[DecisionRecord],
+) -> tuple[
+    tuple[DecisionRecord, ...],
+    tuple[DecisionRecord, ...],
+    tuple[DecisionRecord, ...],
+]:
+    """Split the unique training union into its three pinned data sources."""
+
     real_records = tuple(
-        row for row in records if row.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
+        record for record in records if record.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
     )
     synthetic_records = tuple(
-        row for row in records if row.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
+        record
+        for record in records
+        if record.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
     )
-    if len(real_records) + len(synthetic_records) != len(records):
+    snli_records = tuple(
+        record for record in records if record.dataset_id in mixture_data.SNLI_TRAIN_DATASET_COUNTS
+    )
+    if len(real_records) + len(synthetic_records) + len(snli_records) != len(records):
         raise ValueError("training records contain a dataset outside the exact allowlist")
-    mixture_data.build_training_schedules(real_records, synthetic_records)
-    return rows, records
+    return real_records, synthetic_records, snli_records
 
 
 def _validate_group_separation(
@@ -160,7 +183,7 @@ def _normalize_identity(
         if arm not in mixture_data.ARM_NAMES:
             raise ValueError("training arm is outside the exact allowlist")
         normalized_arm = str(arm)
-        suffix = "-real" if arm == "real_only" else "-mix"
+        suffix = mixture_data.RUN_SUFFIXES[normalized_arm]
     expected_run = experiment + suffix
     if validate_safe_run_id(run_id) != expected_run:
         raise ValueError("run_id does not match experiment phase and arm")
@@ -205,17 +228,10 @@ def build_payload(
             [_train_record_dict(row) for row in train_records]
         )
         normalized_initialization = _validate_initialization(initialization, experiment)
-        real_records = tuple(
-            record
-            for record in parsed_train
-            if record.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
+        real_records, synthetic_records, snli_records = _partition_training_records(parsed_train)
+        audit = mixture_data.build_training_schedule_audit(
+            real_records, synthetic_records, snli_records
         )
-        synthetic_records = tuple(
-            record
-            for record in parsed_train
-            if record.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
-        )
-        audit = mixture_data.build_training_schedule_audit(real_records, synthetic_records)
         schedule_sha256 = audit["schedule_sha256"][normalized_arm]
     normalized_eval = [
         normalize_json_object(row, "evaluation presentation") for row in evaluation_presentations
@@ -271,17 +287,10 @@ def validate_payload(value: object) -> dict[str, object]:
         initialization = _validate_initialization(payload["initialization"], experiment)
         if initialization != payload["initialization"]:
             raise ValueError("initialization descriptor is not normalized JSON")
-        real_records = tuple(
-            record
-            for record in train_records
-            if record.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
+        real_records, synthetic_records, snli_records = _partition_training_records(train_records)
+        audit = mixture_data.build_training_schedule_audit(
+            real_records, synthetic_records, snli_records
         )
-        synthetic_records = tuple(
-            record
-            for record in train_records
-            if record.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
-        )
-        audit = mixture_data.build_training_schedule_audit(real_records, synthetic_records)
         schedule = audit["schedule_sha256"][arm]
         if validate_sha256(payload["schedule_sha256"], "schedule_sha256") != schedule:
             raise ValueError("training schedule digest differs from regenerated approved schedule")
@@ -300,15 +309,8 @@ def training_examples(payload: object) -> tuple[training_rehearsal_core.Training
     if normalized["phase"] != "train":
         return ()
     records = tuple(_record_from_row(row) for row in normalized["train_records"])
-    real_records = tuple(
-        record for record in records if record.dataset_id in mixture_data.REAL_TRAIN_DATASET_COUNTS
-    )
-    synthetic_records = tuple(
-        record
-        for record in records
-        if record.dataset_id in mixture_data.SYNTHETIC_TRAIN_DATASET_COUNTS
-    )
-    schedules = mixture_data.build_training_schedules(real_records, synthetic_records)
+    real_records, synthetic_records, snli_records = _partition_training_records(records)
+    schedules = mixture_data.build_training_schedules(real_records, synthetic_records, snli_records)
     return tuple(schedules[str(normalized["arm"])])
 
 
@@ -329,7 +331,7 @@ __all__ = [
     "SOURCE_FINGERPRINT_PATHS",
     "WORKSPACE",
     "build_payload",
-    "load_local_data",
+    "load_natural_reasoning_data",
     "source_fingerprints",
     "training_examples",
     "validate_payload",

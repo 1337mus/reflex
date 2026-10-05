@@ -156,7 +156,9 @@ def run_training(
 
     for update in range(1, data.MAX_UPDATES + 1):
         optimizer.zero_grad(set_to_none=True)
-        update_examples = examples[(update - 1) * 4 : update * 4]
+        batch_start = (update - 1) * data.MICROBATCHES_PER_UPDATE
+        batch_end = batch_start + data.MICROBATCHES_PER_UPDATE
+        update_examples = examples[batch_start:batch_end]
         if len(update_examples) != data.MICROBATCHES_PER_UPDATE:
             raise RuntimeError("optimizer update did not receive exactly four examples")
         microbatch_losses: list[float] = []
@@ -210,17 +212,17 @@ def run_training(
             }
         )
         result["evidence"]["optimizer_updates_completed"] = update
-        if update in (126, 252):
+        if update in (data.UNSCORED_CHECKPOINT_UPDATE, data.FINAL_CHECKPOINT_UPDATE):
             adapted.eval()
             snapshot_result = training_helpers._save_adapter_snapshot(adapted, run_dir, update)
             result["evidence"]["adapter_paths"][str(update)] = snapshot_result
             write_progress(result, run_dir)
-            if update == 126:
+            if update == data.UNSCORED_CHECKPOINT_UPDATE:
                 adapted.train()
         elif update % 16 == 0:
             write_progress(result, run_dir)
 
-    final_snapshot = result["evidence"]["adapter_paths"]["252"]
+    final_snapshot = result["evidence"]["adapter_paths"][str(data.FINAL_CHECKPOINT_UPDATE)]
     final_state = scoring._state_dict(adapted, peft_module)
     update_evidence = training_helpers._adapter_state_changes(initial_state, final_state, torch)
     if update_evidence["changed_tensor_count"] == 0:

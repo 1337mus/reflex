@@ -80,7 +80,13 @@ def _record_failure(receipt: dict[str, object], stage: str, error: BaseException
 def _make_payloads(
     experiment_id: str, root: Path
 ) -> tuple[dict[str, object], tuple[Any, ...], tuple[Any, ...], dict[str, object]]:
-    real_records, balanced_records, synthetic_records, pins = core.load_local_data(root)
+    (
+        real_records,
+        balanced_records,
+        synthetic_records,
+        snli_training_records,
+        pins,
+    ) = core.load_natural_reasoning_data(root)
     real_train = tuple(
         record for record in real_records if record.dataset_id in data.REAL_TRAIN_DATASET_COUNTS
     )
@@ -89,7 +95,7 @@ def _make_payloads(
         for record in synthetic_records
         if record.dataset_id in data.SYNTHETIC_TRAIN_DATASET_COUNTS
     )
-    train_records = (*real_train, *synthetic_train)
+    train_records = (*real_train, *synthetic_train, *snli_training_records)
     initialization_evaluation = data.build_synthetic_evaluation_presentations(synthetic_records)
     full_evaluation = data.build_evaluation_presentations(
         real_records, balanced_records, synthetic_records
@@ -117,7 +123,7 @@ def _make_arm_payloads(
     return {
         arm: core.build_payload(
             experiment_id=experiment_id,
-            run_id=f"{experiment_id}-{suffix}",
+            run_id=f"{experiment_id}{suffix}",
             nonce=str(uuid.uuid4()),
             phase="train",
             arm=arm,
@@ -126,7 +132,8 @@ def _make_arm_payloads(
             evaluation_presentations=evaluation_presentations,
             initialization=initialization,
         )
-        for arm, suffix in (("real_only", "real"), ("synthetic_mix", "mix"))
+        for arm in data.ARM_NAMES
+        for suffix in (data.RUN_SUFFIXES[arm],)
     }
 
 
@@ -172,7 +179,7 @@ def _execute_lifecycle(
     evidence = init_result.get("evidence")
     initialization = evidence.get("initialization") if isinstance(evidence, dict) else None
     arm_payloads = dict(make_arm_payloads(initialization))
-    if set(arm_payloads) != {"real_only", "synthetic_mix"}:
+    if set(arm_payloads) != set(data.ARM_NAMES):
         raise ValueError("training payloads must contain both approved arms")
     payloads.update(arm_payloads)
     with ThreadPoolExecutor(max_workers=2, thread_name_prefix="mixture-arm") as executor:
@@ -263,7 +270,7 @@ def _run(args: argparse.Namespace, reservation: smoke.ArtifactReservation) -> in
             ]
             receipt["status"] = (
                 "passed"
-                if set(receipt["results"]) == {"initialize", "real_only", "synthetic_mix"}
+                if set(receipt["results"]) == {"initialize", *data.ARM_NAMES}
                 and statuses == ["passed", "passed", "passed"]
                 else "failed"
             )

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "run_id": "targeted-reasoning-2026-10-05-r2",
+  "observed_at_utc": "2026-10-05T23:38:09.793418+00:00",
+  "study_execution_status": "interrupted_not_passed",
+  "source_commit": "a7c4cf41e36142bf489239852f97275eee4fd046",
+  "plan_sha256": "01de7e3f5224aad57b0874deafa0204acfd1c8e1906a8a62aa18679e999390c9",
+  "receipt_sha256": "f2ac56eb3d21192b0b6ac33a87ae9bce1ca559e6c5fa0f2cb6c5bc9f79730fda",
+  "controller": {
+    "receipt_status": "failed",
+    "lifecycle_status": "failed",
+    "failure_type": "KeyboardInterrupt",
+    "failure_origin_established": false,
+    "required_lifecycle_calls_present": false,
+    "automatic_retry_authorized": false,
+    "continuation_ends_at_failure_boundary": true
+  },
+  "worker_execution": {
+    "independent_validation": "passed",
+    "reserved_content_opened": false,
+    "learning_analysis_run": false,
+    "learning_checks_total": 24,
+    "learning_checks_evaluated": 0,
+    "improvement_measured": false,
+    "arms": {
+      "unchanged_reference": {
+        "worker_status": "passed",
+        "final_evaluation_forwards": 6182,
+        "training_updates": 0,
+        "training_forwards": 0,
+        "reload_forwards": 0,
+        "completed_forwards": 6182
+      },
+      "control": {
+        "worker_status": "passed",
+        "final_evaluation_forwards": 6182,
+        "training_updates": 1200,
+        "training_forwards": 4800,
+        "saved_update": 1200,
+        "reload_presentations": 32,
+        "completed_forwards": 11014,
+        "changed_lora_tensor_count": 120,
+        "base_gradients_absent": true,
+        "reload_tensor_values_exact": true,
+        "reload_winners_match": true,
+        "max_reload_logit_delta": 0.0,
+        "adapter_tensor_sha256": "94af7be983285bc15b6e88a914033ed7b22386d921ed3d286ac4e1b6bd61f4f7"
+      },
+      "treatment": {
+        "worker_status": "passed",
+        "final_evaluation_forwards": 6182,
+        "training_updates": 1200,
+        "training_forwards": 4800,
+        "saved_update": 1200,
+        "reload_presentations": 32,
+        "completed_forwards": 11014,
+        "changed_lora_tensor_count": 120,
+        "base_gradients_absent": true,
+        "reload_tensor_values_exact": true,
+        "reload_winners_match": true,
+        "max_reload_logit_delta": 0.0,
+        "adapter_tensor_sha256": "9225338bfee852ef8a8530f05d789e72732d7f8862f406c2c0007f28bccb6426"
+      }
+    }
+  },
+  "analysis_barrier": {
+    "status": "analysis_blocked_as_required",
+    "validator_message": "only a passed schema-1 receipt can be analyzed",
+    "accuracy_computed": false,
+    "receipt_modified": false
+  },
+  "preservation": {
+    "trained_adapters_preserved_on_modal": true,
+    "saved_files_per_trained_arm": 3,
+    "storage_checked_by_names_and_sizes_only": true,
+    "weights_downloaded": false,
+    "new_compute_for_storage_check": false,
+    "result_evidence_mutated": false,
+    "reserved_content_opened": false,
+    "previously_selected_adapter": "snli_mix update 378"
+  },
+  "provider_observation": {
+    "checked_at_utc": "2026-10-05T23:32:45.582398+00:00",
+    "app_state": "APP_STATE_STOPPED",
+    "running_tasks": 0,
+    "worker_disappearance_logged": true,
+    "provider_retry_outcome": "unknown",
+    "call_graph_is_authoritative_for_retry_absence": false,
+    "cli_user_stop_log_followed_terminal_event": true,
+    "cli_label_attributes_stop_to_raj": false
+  },
+  "billing": {
+    "scope": "workspace-wide",
+    "metered_usd": "4.86004350",
+    "billed_usd": "0E-8",
+    "delayed_and_revisable": true,
+    "per_run_invoice": false
+  },
+  "future_recovery": {
+    "saved_data_only_review_may_be_considered_with_explicit_authorization": true,
+    "current_frozen_rules_authorize_adoption": false,
+    "new_training_authorized_by_this_report": false
+  },
+  "evidence_sha256": {
+    ".context/targeted-r2-recovered-worker-validation.json": "426db07c1b70f77fc2af595005201e5891674a79c2f2940bd5fc2008f4eaf007",
+    ".context/targeted-r2-terminal-account.json": "3d63c6e4356a1088574f20ffa7879822ab7dc4c19fca3d758c0849742f8a0e24",
+    ".context/targeted-r2-controller-events-safe.json": "7e542e04059cd52081bd375341f0f4b4d556e045bd703394675d9ea2faeff0d6",
+    ".context/targeted-r2-failure-adjudication.json": "085cdd5fae21345917c68197ed0b88220c930d7aa147b5fa6689114e2e2d06fb",
+    ".context/targeted-r2-root-rehearsal-review.json": "b3264601e1908bb35ad6d5aa617952acc109a55ddb567e04997c1e0f907c8d0d",
+    ".context/targeted-r2-call-graph.json": "a2625fae92c09a7e9b2f93d4800abfb37e5436dae0885ddcba6ea8f2a5aef2e4",
+    ".context/targeted-r2-system-modal.log": "28535c04c8f86a85920ad4ed2404aed7bf569070735e3e2602ed86f38dd7f8e3",
+    ".context/targeted-r2-adapter-storage-metadata.json": "2d86600b984d5e655064365cd23b8c74cad6551b134f14003a7eb4bb333b376c",
+    ".context/targeted-r2-analysis-barrier-check.json": "6ae5060bca094b15f6132f235b7b2000ae3f9f61333b0c94bb3705496c5ae1db"
+  }
+}

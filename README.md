@@ -56,4 +56,11 @@ The reading gain is clearer. The cause-and-effect interval includes both gains a
 
 The new practice **did not pass** its success checks: routing scored higher, but tool choice scored lower. Its average was 37.20%, versus 33.04% for more existing practice and 31.85% for the unchanged adapter. The gain over the control was 4.17 points, below the required 5, and its uncertainty range included losses. Seventeen of 21 checks passed; all earlier-skill point limits passed. Keep the earlier selected adapter. See the [full result and limits](docs/runtime-rule-study-results.md). Calibration and test sets remain sealed.
 
+The earlier selected adapter then completed a **700-question public benchmark test**.
+Across two answer orders, science accuracy rose from 52.3% to 68.5%.
+Sentence logic rose from 50.7% to 64.2%, with an uncertainty range that includes zero.
+Commonsense stayed near chance: 49.3% to 51.5%. These are separate task scores;
+there is no overall reasoning score or new comparison against Intern and Kev.
+See the [results and remaining weaknesses](docs/fresh-eval-results.md).
+
 No account is needed for CPU work; the existing Modal profile is configured. Start with the [research plan](docs/research-plan.md) and [runtime decisions ADR](docs/adr/0001-runtime-decisions.md). Published results for other systems belong to their authors and are not Reflex measurements.

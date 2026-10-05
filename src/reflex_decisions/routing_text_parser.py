@@ -15,7 +15,7 @@ from .routing_rules import (
     RoutingScenario,
     answer_ids,
 )
-from .routing_text import ROUTING_CONTEXT_PREFIX, ROUTING_QUESTION
+from .routing_text import ROUTING_TEMPLATES
 from .schema import DecisionRequest
 
 _ANSWER_SUFFIX = "\nAnswer:\n"
@@ -29,6 +29,7 @@ _SPECIAL_LABELS = {
 class ParsedRoutingPrompt:
     scenario: RoutingScenario
     option_ids: tuple[str, ...]
+    template_id: str = "routing-v1"
 
 
 def _object(value: Any, field: str) -> dict[str, Any]:
@@ -78,12 +79,18 @@ def parse_routing_prompt(prompt: str) -> ParsedRoutingPrompt:
             "prompt",
         )
         context = _string(outer["context"], "context")
-        if not context.startswith(ROUTING_CONTEXT_PREFIX):
+        matching_templates = [
+            (template_id, prefix, question)
+            for template_id, (prefix, question) in ROUTING_TEMPLATES.items()
+            if context.startswith(prefix)
+        ]
+        if len(matching_templates) != 1:
             raise ValueError("context instructions are unrecognized")
+        template_id, context_prefix, question = matching_templates[0]
         block = _require_keys(
             _object(
                 json.loads(
-                    context[len(ROUTING_CONTEXT_PREFIX) :],
+                    context[len(context_prefix) :],
                     object_pairs_hook=_unique_object,
                 ),
                 "routing data",
@@ -122,8 +129,8 @@ def parse_routing_prompt(prompt: str) -> ParsedRoutingPrompt:
         )
         scenario = RoutingScenario(features, destination_ids, rules, query)
 
-        if outer["question"] != ROUTING_QUESTION:
-            raise ValueError("question is unrecognized")
+        if outer["question"] != question:
+            raise ValueError("question is unrecognized for routing template")
         options = _list(outer["options"], "options")
         by_label = {
             "Route to " + json.dumps(destination_id, ensure_ascii=False): destination_id
@@ -147,7 +154,7 @@ def parse_routing_prompt(prompt: str) -> ParsedRoutingPrompt:
         expected_ids = answer_ids(scenario)
         if len(option_ids) != len(expected_ids) or set(option_ids) != set(expected_ids):
             raise ValueError("options must contain every routing choice exactly once")
-        return ParsedRoutingPrompt(scenario, tuple(option_ids))
+        return ParsedRoutingPrompt(scenario, tuple(option_ids), template_id)
     except (KeyError, TypeError, json.JSONDecodeError) as exc:
         raise ValueError(f"invalid routing prompt: {exc}") from exc
 

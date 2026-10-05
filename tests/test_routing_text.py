@@ -58,6 +58,18 @@ def _prompt_with_block(block: dict[str, object]) -> str:
     return _prompt_with_payload(_payload_with_context(context))
 
 
+def _handwritten_scenario() -> RoutingScenario:
+    return RoutingScenario(
+        features=(
+            Feature("tier", ("standard", "urgent")),
+            Feature("region", ("west", "east")),
+        ),
+        destination_ids=("queue-a", "queue-b"),
+        rules=(RouteRule(("urgent", "west"), "queue-b"),),
+        query=("urgent", "west"),
+    )
+
+
 def test_parser_recovers_handwritten_model_prompt_without_renderer() -> None:
     parse_prompt = getattr(routing_text_parser, "parse_routing_prompt", None)
     assert callable(parse_prompt), "routing prompt parser API must exist"
@@ -74,6 +86,83 @@ def test_parser_recovers_handwritten_model_prompt_without_renderer() -> None:
         query=("urgent", "west"),
     )
     assert parsed.option_ids == ("queue-a", "queue-b", "no_route", "insufficient_information")
+
+
+def test_default_template_keeps_handwritten_prompt_bytes() -> None:
+    request = routing_text.render_routing_request(_handwritten_scenario())
+
+    assert rendering.render_prompt(request) == HANDWRITTEN_PROMPT
+
+
+def test_registered_templates_roundtrip_same_facts_and_reversed_menu() -> None:
+    fixture = routing_text_parser.parse_routing_prompt(HANDWRITTEN_PROMPT)
+    template_ids = (
+        "routing-v1",
+        "routing-development-v1",
+        "routing-calibration-v1",
+        "routing-sealed-v1",
+    )
+    requested_order = tuple(reversed(answer_ids(fixture.scenario)))
+
+    for template_id in template_ids:
+        request = routing_text.render_routing_request(
+            fixture.scenario,
+            option_order=requested_order,
+            template_id=template_id,
+        )
+        parsed = routing_text_parser.parse_routing_prompt(rendering.render_prompt(request))
+
+        assert parsed.scenario == fixture.scenario
+        assert parsed.option_ids == requested_order
+        assert parsed.template_id == template_id
+
+
+def test_templates_are_distinct_and_default_aliases_remain_compatible() -> None:
+    expected_ids = {
+        "routing-v1",
+        "routing-development-v1",
+        "routing-calibration-v1",
+        "routing-sealed-v1",
+    }
+    templates = routing_text.ROUTING_TEMPLATES
+    assert set(templates) == expected_ids
+    assert "Return the exact matching rule's destination" in templates["routing-sealed-v1"][0]
+    assert templates["routing-v1"] == (
+        routing_text.ROUTING_CONTEXT_PREFIX,
+        routing_text.ROUTING_QUESTION,
+    )
+    prefixes = [prefix for prefix, _ in templates.values()]
+    questions = [question for _, question in templates.values()]
+    assert len(set(questions)) == len(questions)
+    assert all(
+        not first.startswith(second)
+        for index, first in enumerate(prefixes)
+        for other_index, second in enumerate(prefixes)
+        if index != other_index
+    )
+
+    fixture = routing_text_parser.parse_routing_prompt(HANDWRITTEN_PROMPT)
+    assert fixture.template_id == "routing-v1"
+    assert (
+        routing_text_parser.ParsedRoutingPrompt(fixture.scenario, fixture.option_ids).template_id
+        == "routing-v1"
+    )
+
+
+def test_renderer_rejects_unknown_template_id() -> None:
+    with pytest.raises(ValueError, match="unknown routing template"):
+        routing_text.render_routing_request(_handwritten_scenario(), template_id="unknown-v1")
+
+
+def test_parser_rejects_template_prefix_with_another_templates_question() -> None:
+    request = routing_text.render_routing_request(
+        _handwritten_scenario(), template_id="routing-development-v1"
+    )
+    payload = json.loads(rendering.render_prompt(request)[: -len(_ANSWER_SUFFIX)])
+    payload["question"] = routing_text.ROUTING_QUESTION
+
+    with pytest.raises(ValueError, match="question is unrecognized for routing template"):
+        routing_text_parser.parse_routing_prompt(_prompt_with_payload(payload))
 
 
 def test_renderer_keeps_complete_menu_when_order_is_overridden() -> None:

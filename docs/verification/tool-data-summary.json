@@ -1,0 +1,302 @@
+{
+  "answer_class_by_menu_size": {
+    "calibration": {
+      "4": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 1,
+        "tool": 3
+      },
+      "6": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 3,
+        "tool": 1
+      },
+      "8": {
+        "insufficient_information": 2,
+        "no_eligible_tool": 1,
+        "tool": 1
+      }
+    },
+    "development": {
+      "4": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 1,
+        "tool": 3
+      },
+      "6": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 3,
+        "tool": 1
+      },
+      "8": {
+        "insufficient_information": 2,
+        "no_eligible_tool": 1,
+        "tool": 1
+      }
+    },
+    "test": {
+      "4": {
+        "insufficient_information": 3,
+        "no_eligible_tool": 2,
+        "tool": 4
+      },
+      "6": {
+        "insufficient_information": 2,
+        "no_eligible_tool": 4,
+        "tool": 4
+      },
+      "8": {
+        "insufficient_information": 4,
+        "no_eligible_tool": 3,
+        "tool": 2
+      }
+    },
+    "train": {
+      "4": {
+        "insufficient_information": 6,
+        "no_eligible_tool": 7,
+        "tool": 6
+      },
+      "6": {
+        "insufficient_information": 6,
+        "no_eligible_tool": 6,
+        "tool": 6
+      },
+      "8": {
+        "insufficient_information": 6,
+        "no_eligible_tool": 6,
+        "tool": 7
+      }
+    }
+  },
+  "answers_independently_recomputed": 112,
+  "case_kind_counts": {
+    "calibration": {
+      "complete_no_eligible": 2,
+      "complete_tool": 2,
+      "missing_none_agree": 2,
+      "missing_tool_agree": 2,
+      "missing_tool_conflict": 2,
+      "missing_tool_vs_none": 2,
+      "multiple_missing": 2
+    },
+    "development": {
+      "complete_no_eligible": 2,
+      "complete_tool": 2,
+      "missing_none_agree": 2,
+      "missing_tool_agree": 2,
+      "missing_tool_conflict": 2,
+      "missing_tool_vs_none": 2,
+      "multiple_missing": 2
+    },
+    "test": {
+      "complete_no_eligible": 4,
+      "complete_tool": 4,
+      "missing_none_agree": 4,
+      "missing_tool_agree": 4,
+      "missing_tool_conflict": 4,
+      "missing_tool_vs_none": 4,
+      "multiple_missing": 4
+    },
+    "train": {
+      "complete_no_eligible": 8,
+      "complete_tool": 8,
+      "missing_none_agree": 8,
+      "missing_tool_agree": 8,
+      "missing_tool_conflict": 8,
+      "missing_tool_vs_none": 8,
+      "multiple_missing": 8
+    }
+  },
+  "clean_verification": {
+    "checks": {
+      "mypy src": {
+        "passed": true
+      },
+      "pytest": {
+        "passed": true
+      },
+      "reflex evaluate fixture": {
+        "passed": true
+      },
+      "reflex validate fixture": {
+        "passed": true
+      },
+      "ruff check": {
+        "passed": true
+      },
+      "ruff format --check": {
+        "passed": true
+      }
+    },
+    "passed": true,
+    "pytest_count": 677,
+    "pytest_passed": true,
+    "source_unchanged": true
+  },
+  "counts": {
+    "calibration": 14,
+    "development": 14,
+    "test": 28,
+    "total": 112,
+    "train": 56
+  },
+  "dataset": "tool-data-v1",
+  "export_sha256": {
+    "audit.json": "75b9f8f6968fb9292e79e34a80e6824db636e96d44a433abdb5b850ba87b0b02",
+    "calibration.jsonl": "7829fd8145aeec052eb4286eeaff97eec775f9aec6f76ad8994ef1f9a3653d91",
+    "development.jsonl": "a9fb7eeefb67f97d16825f835860e6526ee034d1be2502c54eca3539bbd261ba",
+    "manifest.json": "b05c7e7af9e8ac48a6d651f4186c50fe80602866c7178ec84d5d61561648e25d",
+    "receipt.json": "4896b0ef4d5568edb038d57ec0f16ac1fd438160a4b296bae9b63a988ab91564",
+    "recipe.json": "ca3c2ea29f3a5c4996cf779c7546238e83c599af40ea68f5e051f9d749de8ce9",
+    "sealed/test.jsonl": "e16d0e4d85857aacd10d8920eeb367e050a4fc013d396296db4beff20ff6835a",
+    "train.jsonl": "b00d021616d2f36dce5dc6f76e03a3aa884973e9af480b3e1c29fc8238cb9dca"
+  },
+  "independent_verifier_sha256": "a58d553003ca3aca3e4cbece7c9e3c055773fba82ff4c663f50c07b48eb5ef2e",
+  "menu_size_counts": {
+    "calibration": {
+      "4": 5,
+      "6": 5,
+      "8": 4
+    },
+    "development": {
+      "4": 5,
+      "6": 5,
+      "8": 4
+    },
+    "test": {
+      "4": 9,
+      "6": 10,
+      "8": 9
+    },
+    "train": {
+      "4": 19,
+      "6": 18,
+      "8": 19
+    }
+  },
+  "multiple_missing_answer_class_by_menu_size": {
+    "calibration": {
+      "4": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 0,
+        "tool": 1
+      },
+      "6": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 1,
+        "tool": 0
+      }
+    },
+    "development": {
+      "4": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 0,
+        "tool": 1
+      },
+      "6": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 1,
+        "tool": 0
+      }
+    },
+    "test": {
+      "4": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 0,
+        "tool": 1
+      },
+      "6": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 1,
+        "tool": 1
+      },
+      "8": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 0,
+        "tool": 0
+      }
+    },
+    "train": {
+      "4": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 1,
+        "tool": 1
+      },
+      "6": {
+        "insufficient_information": 0,
+        "no_eligible_tool": 1,
+        "tool": 1
+      },
+      "8": {
+        "insufficient_information": 1,
+        "no_eligible_tool": 1,
+        "tool": 1
+      }
+    }
+  },
+  "notes": [
+    "Five full-size toy seeds were exercised during source review; those are generator checks, not release or held-out test runs.",
+    "No model has been scored or trained on this dataset.",
+    "The sealed test split has 28 synthetic records and is too small for broad performance conclusions."
+  ],
+  "release_artifacts": {
+    "manifest_and_recipe_copied_byte_exact": true,
+    "manifest_copy": "data/training/tool-v1-manifest.json",
+    "processed_export": "data/processed/tool-data-v1",
+    "recipe_copy": "data/training/tool-v1-recipe.json"
+  },
+  "review": {
+    "frozen_review_sha256": "bc1c0eab69f3639af6a183cfc14aefd97052ac17afacc1da0e5bdd537bbd052a",
+    "historical_source_pins_checked": 60,
+    "result": "no actionable findings"
+  },
+  "seed": 4149131584908688448,
+  "seed_environment": {
+    "environment_sha256": {
+      ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      ".venv/pyvenv.cfg": "0834ddf31db29b682e2b70f35342d5ebd3e9286a52ee01c7ec4336c0d52ce78b",
+      "pyproject.toml": "bb3b50723a90e332358540572e3db3dadf225e7ddb00de6713ea0dfc93d7eba0",
+      "uv.lock": "387ff11e25013939e25077b09a2b5885b0f5137f856aea39330cf84d3989c367"
+    },
+    "python": "3.12.13",
+    "python_executable_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff"
+  },
+  "seed_selection": "one fresh random 64-bit seed chosen after reviewed source and exact-commit CI; no seed search",
+  "selected_at_utc": "2026-10-05T09:52:40.333637+00:00",
+  "source_ci": {
+    "audit": {
+      "commit": "f51c65314643b6ee24f0b40170defb87bf9a0b54",
+      "conclusion": "success",
+      "run": 37292560896
+    },
+    "generator": {
+      "commit": "c1de76ccbdf0c91701a558148d978a8d63926b82",
+      "conclusion": "success",
+      "run": 37292615697
+    }
+  },
+  "source_commit": "c1de76ccbdf0c91701a558148d978a8d63926b82",
+  "source_sha256": {
+    "experiments/prepare_tool_data.py": "64621b2aaa451e0682b71d7b58df12e91a8a30c704c31b1a7362b0f0851de36a",
+    "src/reflex_decisions/data.py": "ea0365aeaed37f1273976753da9e7cf472aecbeda3c294d472919d2cad4b2111",
+    "src/reflex_decisions/rendering.py": "99f568581f7893ae7646288be9eca47e256620dad437d38312c79b443f7cfa4a",
+    "src/reflex_decisions/schema.py": "6263ba9c37532f03fe151226e57003cb4ff2db746186e32c4f7c32b91baa6c0e",
+    "src/reflex_decisions/tool_data.py": "37ef88210248fe529e27ac6fe170cede415aa3fa3107eda683564d7db16b9a2b",
+    "src/reflex_decisions/tool_data_audit.py": "c23302c76b5467428eeb01b5e7181270d699986293b9dc6c5c1e9e15a609039a",
+    "src/reflex_decisions/tool_data_export.py": "ff91239d2cb5ccfc236e7180188865ad5f9fd430155df28cecd7e61555d18a5a",
+    "src/reflex_decisions/tool_data_identity.py": "aa6e663f022010239520382dbac437a89a73fb180760e11a88f21ea57c901616",
+    "src/reflex_decisions/tool_data_spec.py": "7874f620f80680700cd8d83b106c12494bfbf9d1064f3298992a5686b9d3b971",
+    "src/reflex_decisions/tool_rules.py": "e5ce1c33edde06ba63c79f94260daa9242fefa15d7c820946f15ad33733c123b",
+    "src/reflex_decisions/tool_text.py": "8b2db5216d42f499bfb9ad894cd00d6a3d01ee5bc8f070831caeb1c09f23bbf5",
+    "src/reflex_decisions/tool_text_parser.py": "80407b5e04634ef9f49dff95d881c6b9fb99f4df8029f59a57d6ab83eb547b5b"
+  },
+  "status": "generated_and_independently_verified",
+  "structural_catalog_groups": 112,
+  "verification_evidence": [
+    ".context/tool-data-release-selection.json",
+    ".context/tool-data-independent-release.json",
+    ".context/tool-data-clean-verification.json",
+    ".context/tool-data-final-review.md"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "data_kind": "fixture",
+  "datasets": [
+    {
+      "dataset_id": "tool-data-v1-train",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-tool-choice-v1",
+      "source_revision": "tool-data-v1",
+      "source_uri": "synthetic://reflex/tool-choice/v1",
+      "split": "train",
+      "task_family": "tool-choice"
+    },
+    {
+      "dataset_id": "tool-data-v1-development",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-tool-choice-v1",
+      "source_revision": "tool-data-v1",
+      "source_uri": "synthetic://reflex/tool-choice/v1",
+      "split": "development",
+      "task_family": "tool-choice"
+    },
+    {
+      "dataset_id": "tool-data-v1-calibration",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-tool-choice-v1",
+      "source_revision": "tool-data-v1",
+      "source_uri": "synthetic://reflex/tool-choice/v1",
+      "split": "calibration",
+      "task_family": "tool-choice"
+    },
+    {
+      "dataset_id": "tool-data-v1-test",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-tool-choice-v1",
+      "source_revision": "tool-data-v1",
+      "source_uri": "synthetic://reflex/tool-choice/v1",
+      "split": "test",
+      "task_family": "tool-choice"
+    }
+  ],
+  "group_partitioned_sources": [
+    "synthetic-tool-choice-v1"
+  ],
+  "held_out_families": []
+}

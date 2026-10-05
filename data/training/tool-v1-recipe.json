@@ -1,0 +1,30 @@
+{
+  "counts": {
+    "calibration": 14,
+    "development": 14,
+    "test": 28,
+    "train": 56
+  },
+  "seed": 4149131584908688448,
+  "source_hashes": {
+    "experiments/prepare_tool_data.py": "64621b2aaa451e0682b71d7b58df12e91a8a30c704c31b1a7362b0f0851de36a",
+    "src/reflex_decisions/data.py": "ea0365aeaed37f1273976753da9e7cf472aecbeda3c294d472919d2cad4b2111",
+    "src/reflex_decisions/rendering.py": "99f568581f7893ae7646288be9eca47e256620dad437d38312c79b443f7cfa4a",
+    "src/reflex_decisions/schema.py": "6263ba9c37532f03fe151226e57003cb4ff2db746186e32c4f7c32b91baa6c0e",
+    "src/reflex_decisions/tool_data.py": "37ef88210248fe529e27ac6fe170cede415aa3fa3107eda683564d7db16b9a2b",
+    "src/reflex_decisions/tool_data_audit.py": "c23302c76b5467428eeb01b5e7181270d699986293b9dc6c5c1e9e15a609039a",
+    "src/reflex_decisions/tool_data_export.py": "ff91239d2cb5ccfc236e7180188865ad5f9fd430155df28cecd7e61555d18a5a",
+    "src/reflex_decisions/tool_data_identity.py": "aa6e663f022010239520382dbac437a89a73fb180760e11a88f21ea57c901616",
+    "src/reflex_decisions/tool_data_spec.py": "7874f620f80680700cd8d83b106c12494bfbf9d1064f3298992a5686b9d3b971",
+    "src/reflex_decisions/tool_rules.py": "e5ce1c33edde06ba63c79f94260daa9242fefa15d7c820946f15ad33733c123b",
+    "src/reflex_decisions/tool_text.py": "8b2db5216d42f499bfb9ad894cd00d6a3d01ee5bc8f070831caeb1c09f23bbf5",
+    "src/reflex_decisions/tool_text_parser.py": "80407b5e04634ef9f49dff95d881c6b9fb99f4df8029f59a57d6ab83eb547b5b"
+  },
+  "template_ids": {
+    "calibration": "tool-calibration-v1",
+    "development": "tool-development-v1",
+    "test": "tool-sealed-v1",
+    "train": "tool-v1"
+  },
+  "version": "tool-data-v1"
+}

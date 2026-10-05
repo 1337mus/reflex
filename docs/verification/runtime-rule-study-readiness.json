@@ -7,7 +7,13 @@
     ".context/runtime-rule-study-data-final-review.md": "3cc73a17fca21e3d7f83f5d912bc2902026d65532e2c112a0ee9c977f3d5906b",
     ".context/runtime-rule-study-data-freeze.json": "c631a7f3107ed3f187a54a224b691dd3b3f288a732c1382cda88750ff78fe1ad",
     ".context/runtime-rule-study-data-root-checks.json": "486add6d8ef54e5099c0bda224c7c2f9bc12cec5d5aae0e257edfdc603d915fc",
-    ".context/runtime-rule-study-data-root-preflight-agreement.json": "0bac73623843c2f897767bf11805f0a213f51e32fecc04a069c7f493632eb777"
+    ".context/runtime-rule-study-data-root-preflight-agreement.json": "0bac73623843c2f897767bf11805f0a213f51e32fecc04a069c7f493632eb777",
+    ".context/runtime-rule-study-cache-actual.json": "8c9830f3e52c5d4e1063ebdda7b1c31ccb9cd8b9fefe4e2a272672533f7c3480",
+    ".context/runtime-rule-study-analysis-clean-verification.json": "73d1a0b87f9f1c6eb28c9878cef9fdf12800046e4d4d53e03e358c361a0280fd",
+    ".context/runtime-rule-study-analysis-freeze.json": "2c95cae37a64e3e38f6767577963b6b5831141361e2287807320a837a4cfa854",
+    ".context/runtime-rule-study-statistics-worker-checks.json": "cb5d084ae9ec258d6b0ea12ebb0a54f4a40df71f5f747cb96cd9115245f7fa9a",
+    ".context/runtime-rule-study-analysis-final-review.json": "f06d1a64c67cf78d204a48a2419844748b40e12f1e348beaeb7071df7ad1d166",
+    ".context/runtime-rule-study-analysis-final-review.md": "976438ba7741ee8e059c8421726cb86c4af1c1710775ee24f23a07390122582a"
   },
   "final_review": {
     "checks": [
@@ -1187,10 +1193,11 @@
   },
   "preflight_git_head_interpretation": "The aggregate git_head records the checkout HEAD at preflight time. The final signed and pushed source commit is the separately pinned source_commit; source identity is bound by the frozen SHA-256 values.",
   "readiness_limits": [
-    "CPU preflight and local checks only; no model training or scoring was run.",
-    "No performance gain has been measured.",
-    "The new release calibration and test data remained unused.",
-    "Loader, runtime/cache integration, payload sealing, and launch checks remain unfinished."
+    "Input, schedule, prompt, and token preparation are delivered; retained-output cache joins and fixed statistics/worker contracts are verified.",
+    "No new study model training or scoring was run, so no performance gain has been measured.",
+    "The release calibration and test files remained sealed and unused.",
+    "The development panel has only 14 groups per family and the study uses one seed; results will not support broad capability claims.",
+    "Authenticated bundle, payload and result contracts, the GPU runner, and launch checks remain unfinished; the schedules are fixed but the concrete worker payloads are not yet frozen."
   ],
   "root_checks": {
     "checks": [
@@ -1300,5 +1307,165 @@
     "sha": "c883de9f0053e82554fab332fbb5b86a980a54ea",
     "url": "https://github.com/1337mus/reflex/commit/c883de9f0053e82554fab332fbb5b86a980a54ea"
   },
-  "status": "cpu_data_preparation_verified"
+  "status": "prelaunch_cpu_cache_statistics_contracts_verified",
+  "cache_statistics_and_worker_contracts": {
+    "status": "verified",
+    "source_freeze_sha256": {
+      "experiments/runtime_rule_study_cache.py": "468e57b9d72d1be3d2bb29c2b4792f2d9a97b537dbcada8cb5206d7ac051bb65",
+      "tests/test_runtime_rule_study_cache.py": "df1f76130c4e6dc634d3319c9aa5abde852fc8fa7e070cbce13aef30e23d9ac7",
+      "experiments/runtime_rule_study_statistics.py": "25ea8876e71a84b44d90cc4db5acfeec4327c1ed7c72fc1b0d58f9626367b15e",
+      "tests/test_runtime_rule_study_statistics.py": "0e26325619d5ac83f22eb5ba51e042189b404cfdc2c201095bf0cec9135007aa",
+      "experiments/runtime_rule_study_contracts.py": "909660caa77ea976c3cf9c265019063f7e1091ded55a59fbcef3a752935cd53a",
+      "tests/test_runtime_rule_study_contracts.py": "b153b758ac0fbb57649f181bd1a6aec4fef9332e08cfd90e52a6eb9d8709e69f"
+    },
+    "cache_reuse": {
+      "status": "passed",
+      "cached_output_count": 3782,
+      "cached_input_tokens": 828622,
+      "independent_old_receipt_join_matches": true,
+      "historical_source_pin_count_unchanged": 60,
+      "cache_sha256": "91ea5d7ff0bb7d812b807ecedcbb5f159236d45a08dcdabf92e563fcda6ee294",
+      "cached_outputs_sha256": "b4d476d2a8187c32bcb0bdb13ddbdfdc4aff2e785b62d02fe332d375562a65de",
+      "compilation_sha256": "b55d9901c3e77f5d574e2142d514565a63ba145346ad29cc5dcf9caa953684a8",
+      "selected_tensor_sha256": "b9ade96b9f6077934985a4b261a6f7400a1e210003b02094b492f36c8a844324",
+      "calibration_test_read": false,
+      "torch_imported": false,
+      "model_execution": false,
+      "new_model_outputs_or_statistics": false
+    },
+    "worker_budgets": {
+      "forwards_by_role": {
+        "continued_practice": {
+          "final_evaluation": 3946,
+          "reload_parity": 32,
+          "total": 5322,
+          "training": 1344
+        },
+        "runtime_mix": {
+          "final_evaluation": 3946,
+          "reload_parity": 32,
+          "total": 5322,
+          "training": 1344
+        },
+        "unchanged": {
+          "final_evaluation": 164,
+          "reload_parity": 0,
+          "total": 164,
+          "training": 0
+        }
+      },
+      "input_tokens_by_role": {
+        "continued_practice": {
+          "final_evaluation": 921580,
+          "reload_parity": 16436,
+          "total": 1163940,
+          "training": 225924
+        },
+        "runtime_mix": {
+          "final_evaluation": 921580,
+          "reload_parity": 16436,
+          "total": 1287312,
+          "training": 349296
+        },
+        "unchanged": {
+          "final_evaluation": 92958,
+          "reload_parity": 0,
+          "total": 92958,
+          "training": 0
+        }
+      },
+      "max_input_tokens": 2048,
+      "total_forwards": 10808,
+      "total_input_tokens": 2544210,
+      "training_token_difference_runtime_mix_minus_continued_practice": 123372,
+      "training_token_increase_percent_approx": 54.6
+    },
+    "statistics": {
+      "gate_component_count": 21,
+      "gate_components_by_contrast": {
+        "runtime_mix_vs_continued_practice": 11,
+        "runtime_mix_vs_unchanged": 10
+      },
+      "new_family_minimum_gain_fraction": {
+        "numerator": 1,
+        "denominator": 20
+      },
+      "retention_loss_floor_fraction": {
+        "numerator": -1,
+        "denominator": 20
+      },
+      "point_gate_arithmetic": "Exact fractions preserve zero; rounding cannot turn a zero into a pass for a strictly positive bound.",
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20266010,
+      "independent_toy_oracle": {
+        "intervals_matched": 20,
+        "gate_components_matched": 21,
+        "toy_passing_components": 12,
+        "toy_failing_components": 9,
+        "overall_result_correctly_failed": true
+      }
+    },
+    "validation": {
+      "clean_full_suite": {
+        "exit_code": 0,
+        "result": "785 passed in 50.44s"
+      },
+      "ruff_check": {
+        "exit_code": 0,
+        "result": "All checks passed!"
+      },
+      "ruff_format": {
+        "exit_code": 0,
+        "result": "208 files already formatted"
+      },
+      "mypy_src": {
+        "exit_code": 0,
+        "result": "Success: no issues found in 34 source files"
+      },
+      "scoped_strict_mypy": {
+        "exit_code": 0,
+        "result": "Success: no issues found in 3 source files"
+      },
+      "cli_fixture_checks": [
+        {
+          "exit_code": 0,
+          "result": "Validated 9 records across 3 datasets (fixture; test=9)."
+        },
+        {
+          "exit_code": 0,
+          "result": "Evaluated 9 fixture records with synthetic-logits-v1: accuracy=0.778, coverage=0.778; report written to /private/tmp/reflex-study-analysis-mq19pc0b/fixture-report.json."
+        }
+      ],
+      "focused_tests": "68 passed in 5.12s",
+      "additional_rejection_probes": 36
+    },
+    "independent_final_review": {
+      "date": "2026-10-05",
+      "verdict": "approve",
+      "findings": [],
+      "evidence_json": ".context/runtime-rule-study-analysis-final-review.json",
+      "evidence_json_sha256": "f06d1a64c67cf78d204a48a2419844748b40e12f1e348beaeb7071df7ad1d166",
+      "evidence_markdown": ".context/runtime-rule-study-analysis-final-review.md",
+      "evidence_markdown_sha256": "976438ba7741ee8e059c8421726cb86c4af1c1710775ee24f23a07390122582a"
+    },
+    "remaining_work": [
+      "Implement and review the authenticated worker bundle, payload contract, and result contract.",
+      "Implement and verify the GPU runner and lifecycle checks.",
+      "Freeze the payload and schedules, then complete launch checks before any run."
+    ],
+    "launch_started": false,
+    "new_study_model_result_available": false,
+    "source_commit": {
+      "branch": "main",
+      "sha": "074e4836c75c59a40373ef0dba06a4bd9307d8d6",
+      "url": "https://github.com/1337mus/reflex/commit/074e4836c75c59a40373ef0dba06a4bd9307d8d6",
+      "exact_commit_ci": {
+        "run_id": 37300810702,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/1337mus/reflex/actions/runs/37300810702",
+        "verified_at_utc": "2026-10-05 11:09 UTC"
+      }
+    }
+  }
 }

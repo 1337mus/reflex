@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-05",
+  "status": "review_and_ci_passed",
+  "source": {
+    "commit": "6b0dc56b5cc84f6e79357b91f2e5570f597b207c",
+    "signed": true,
+    "pushed": true,
+    "ci_run": 37290214455,
+    "ci_status": "passed",
+    "ci_conclusion": "success"
+  },
+  "behavior": {
+    "eligibility_requires": [
+      "Every required capability",
+      "The requested input type",
+      "Every required permission is granted"
+    ],
+    "selection": "Choose the unique lowest-cost eligible tool for each possible completion of unknown permissions.",
+    "no_eligible_answer": "no_eligible_tool",
+    "completion_disagreement_answer": "insufficient_information",
+    "minimum_cost_tie": "Reject the scenario if any legal permission completion has a minimum-cost tie."
+  },
+  "validation": {
+    "solver_tests_passed": 21,
+    "prompt_parser_tests_passed": 14,
+    "full_suite_tests_passed": 626,
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "mypy": "passed",
+    "cli_validation": "passed",
+    "cli_evaluation": "passed"
+  },
+  "independent_review": {
+    "status": "passed",
+    "findings": 0,
+    "exhaustive_small_solver_cases": 15552,
+    "valid_answers_in_oracle_check": 13365,
+    "minimum_tie_rejections_in_oracle_check": 2187,
+    "prompt_round_trips": 1024,
+    "historical_source_pins_unchanged": 60
+  },
+  "limits": {
+    "real_external_tools_run": false,
+    "tool_choice_release_dataset_generated": false,
+    "model_run": false,
+    "measured_model_gain": false
+  },
+  "sha256": {
+    "source_files": {
+      "src/reflex_decisions/tool_rules.py": "e5ce1c33edde06ba63c79f94260daa9242fefa15d7c820946f15ad33733c123b",
+      "src/reflex_decisions/tool_text.py": "8b2db5216d42f499bfb9ad894cd00d6a3d01ee5bc8f070831caeb1c09f23bbf5",
+      "src/reflex_decisions/tool_text_parser.py": "80407b5e04634ef9f49dff95d881c6b9fb99f4df8029f59a57d6ab83eb547b5b"
+    },
+    "test_files": {
+      "tests/test_tool_rules.py": "7802b6669316f0b3e751d9f2d2f17679aa420490d170dfbb0c2b516e463b5954",
+      "tests/test_tool_text.py": "320e43556ab31d7a311c84e81e8b86f0928242e3420503e4aff5124411f37cf9"
+    }
+  }
+}

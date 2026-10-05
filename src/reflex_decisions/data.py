@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_serializer, model_validator
 
 from .schema import DecisionRequest
 
@@ -45,6 +45,7 @@ class SplitManifest(BaseModel):
     data_kind: DataKind
     datasets: tuple[DatasetSpec, ...]
     held_out_families: tuple[str, ...] = ()
+    group_partitioned_sources: tuple[str, ...] = ()
 
     @field_validator("held_out_families")
     @classmethod
@@ -55,6 +56,15 @@ class SplitManifest(BaseModel):
             raise ValueError("held_out_families must be unique")
         return values
 
+    @field_validator("group_partitioned_sources")
+    @classmethod
+    def validate_group_partitioned_sources(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        for value in values:
+            _nonblank(value)
+        if len(values) != len(set(values)):
+            raise ValueError("group_partitioned_sources must be unique")
+        return values
+
     @model_validator(mode="after")
     def require_unique_dataset_ids(self) -> SplitManifest:
         ids = [dataset.dataset_id for dataset in self.datasets]
@@ -62,7 +72,17 @@ class SplitManifest(BaseModel):
             raise ValueError("datasets must not be empty")
         if len(ids) != len(set(ids)):
             raise ValueError("dataset IDs must be unique")
+        declared_sources = {dataset.source_id for dataset in self.datasets}
+        if not set(self.group_partitioned_sources) <= declared_sources:
+            raise ValueError("group_partitioned_sources must reference declared source IDs")
         return self
+
+    @model_serializer(mode="wrap")
+    def serialize_without_empty_group_partition_policy(self, handler: Any) -> Any:
+        serialized = handler(self)
+        if not self.group_partitioned_sources:
+            serialized.pop("group_partitioned_sources", None)
+        return serialized
 
 
 class DecisionRecord(BaseModel):
@@ -194,10 +214,14 @@ def audit_splits(
 
     datasets = {dataset.dataset_id: dataset for dataset in manifest.datasets}
     source_splits: dict[str, SplitName] = {}
+    group_partitioned_sources = set(manifest.group_partitioned_sources)
     family_splits: dict[str, set[SplitName]] = {}
     for dataset_spec in manifest.datasets:
         prior_split = source_splits.setdefault(dataset_spec.source_id, dataset_spec.split)
-        if prior_split != dataset_spec.split:
+        if (
+            prior_split != dataset_spec.split
+            and dataset_spec.source_id not in group_partitioned_sources
+        ):
             raise ValueError(f"source_id {dataset_spec.source_id!r} crosses dataset splits")
         family_splits.setdefault(dataset_spec.task_family, set()).add(dataset_spec.split)
 

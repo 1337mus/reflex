@@ -231,6 +231,365 @@
     "source_hashes_match": true,
     "status": "passed"
   },
+  "input_and_token_preparation": {
+    "actual_integration": {
+      "all_prior_preflight_identities_match": true,
+      "allowed_new_files_read_once": [
+        "data/processed/routing-data-v1/train.jsonl",
+        "data/processed/routing-data-v1/development.jsonl",
+        "data/processed/tool-data-v1/train.jsonl",
+        "data/processed/tool-data-v1/development.jsonl"
+      ],
+      "by_category": {
+        "evaluation_both_arms": {
+          "input_tokens": 1843160,
+          "max_input_tokens": 695,
+          "ordered_prompt_hashes_sha256": "a39e4e7069a99387d6a596080fce0215d089ac902fb4b8cf910b397f0e0d3e15",
+          "request_count": 7892
+        },
+        "reload_both_arms": {
+          "input_tokens": 32872,
+          "max_input_tokens": 643,
+          "ordered_prompt_hashes_sha256": "05968aa86ade2331472fb33553d9f1ae3cd5affaf7d2f5f33e100e9c0699299f",
+          "request_count": 64
+        },
+        "training_continued_practice": {
+          "input_tokens": 225924,
+          "max_input_tokens": 626,
+          "ordered_prompt_hashes_sha256": "e9a0a7a32930272fb36c3b1db7aad6e3bd6dc4b2b1574997c3d04aae3c319cdc",
+          "request_count": 1344
+        },
+        "training_runtime_mix": {
+          "input_tokens": 349296,
+          "max_input_tokens": 686,
+          "ordered_prompt_hashes_sha256": "0f29c663a349bf969dc60dd78bd77bb05d8e9717f0dcb257ab8363a2a73ff40f",
+          "request_count": 1344
+        },
+        "unchanged_adapter": {
+          "input_tokens": 92958,
+          "max_input_tokens": 695,
+          "ordered_prompt_hashes_sha256": "898b56577067c29c62b05b7fc665b893175b333c69955ab3188a495520183daa",
+          "request_count": 164
+        }
+      },
+      "calibration_test_read": false,
+      "compilation_sha256": "b55d9901c3e77f5d574e2142d514565a63ba145346ad29cc5dcf9caa953684a8",
+      "counts": {
+        "evaluation_both_arms": 7892,
+        "reload_both_arms": 64,
+        "total": 10808,
+        "training_continued_practice": 1344,
+        "training_runtime_mix": 1344,
+        "unchanged_adapter": 164
+      },
+      "helper_sha256": "db3f2b6d14d967aff854be04e9d35b78fc783df72a196e84fb8dc062ef44e1fd",
+      "input_token_counts": {
+        "evaluation_both_arms": 1843160,
+        "reload_both_arms": 32872,
+        "total": 2544210,
+        "training_continued_practice": 225924,
+        "training_runtime_mix": 349296,
+        "unchanged_adapter": 92958
+      },
+      "max_input_tokens": 695,
+      "model_execution": false,
+      "prior_preflight_sha256": "91d463e1f492fcfc8239dd6ddb349e83aebf182468c9a96d65ed0326805d88a1",
+      "schedule_sha256": {
+        "continued_practice": "71b99571a5e4603618463693fd7b948f6b68514102ed6cf6915a31652fb5ef87",
+        "runtime_mix": "d7794c3c7a5ccd2a80f5d463ba9d4982997b5c94a31d849a8f92cccc11eae415"
+      },
+      "source_sha256": {
+        "experiments/runtime_rule_study_inputs.py": "0ecef3c79ad4cdf37dad4c378917ba225592bb423a58293dcf8c784d1cb44b07",
+        "experiments/runtime_rule_study_tokens.py": "f327caba432bd04bd04ba53e7045d4413d9e701991bf8dc988109049537e3b8b",
+        "tests/test_runtime_rule_study_inputs.py": "8dd53eb2d03f6296ef18a0bc3da743eeaf7d1fbae258aa5eebf4ec2ef1b26b6f",
+        "tests/test_runtime_rule_study_tokens.py": "67c855707fce78c32224a51a8985d09e5caf002b421151ee57e0077d1c352da7"
+      },
+      "status": "passed",
+      "torch_imported": false,
+      "verified_file_count": 87
+    },
+    "clean_checkout": {
+      "checks": [
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/ruff",
+            "check",
+            "."
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-0.log",
+          "seconds": 0.05,
+          "tail": "All checks passed!\n"
+        },
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/ruff",
+            "format",
+            "--check",
+            "."
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-1.log",
+          "seconds": 0.02,
+          "tail": "202 files already formatted\n"
+        },
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/mypy",
+            "src"
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-2.log",
+          "seconds": 0.58,
+          "tail": "Success: no issues found in 34 source files\n"
+        },
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/mypy",
+            "--strict",
+            "--no-incremental",
+            "--follow-imports=silent",
+            "--ignore-missing-imports",
+            "experiments/runtime_rule_study_inputs.py",
+            "experiments/runtime_rule_study_tokens.py",
+            "tests/test_runtime_rule_study_inputs.py"
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-3.log",
+          "seconds": 0.69,
+          "tail": "Success: no issues found in 3 source files\n"
+        },
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/pytest",
+            "-q"
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-4.log",
+          "seconds": 46.02,
+          "tail": "........................................................................ [ 10%]\n........................................................................ [ 20%]\n........................................................................ [ 30%]\n........................................................................ [ 40%]\n........................................................................ [ 50%]\n........................................................................ [ 60%]\n........................................................................ [ 70%]\n........................................................................ [ 80%]\n........................................................................ [ 90%]\n.....................................................................    [100%]\n717 passed in 45.89s\n"
+        },
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/reflex",
+            "validate",
+            "--records",
+            "data/fixtures/records.jsonl",
+            "--manifest",
+            "data/fixtures/manifest.json"
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-5.log",
+          "seconds": 0.09,
+          "tail": "Validated 9 records across 3 datasets (fixture; test=9).\n"
+        },
+        {
+          "command": [
+            "/Users/raj/Projects/reflex/.venv/bin/reflex",
+            "evaluate",
+            "--records",
+            "data/fixtures/records.jsonl",
+            "--manifest",
+            "data/fixtures/manifest.json",
+            "--predictions",
+            "data/fixtures/predictions.jsonl",
+            "--output",
+            "/private/tmp/reflex-study-preparation-madaynva/fixture-report.json"
+          ],
+          "exit_code": 0,
+          "log": ".context/runtime-rule-study-preparation-clean-6.log",
+          "seconds": 0.08,
+          "tail": "Evaluated 9 fixture records with synthetic-logits-v1: accuracy=0.778, coverage=0.778; report written to /private/tmp/reflex-study-preparation-madaynva/fixture-report.json.\n"
+        }
+      ],
+      "clean_root": "/private/tmp/reflex-study-preparation-madaynva",
+      "copied_ignored_data": false,
+      "historical_pins_matched": 60,
+      "imports_verified_in_clean_checkout": true,
+      "passed": true,
+      "source_sha256": {
+        "experiments/runtime_rule_study_inputs.py": "0ecef3c79ad4cdf37dad4c378917ba225592bb423a58293dcf8c784d1cb44b07",
+        "experiments/runtime_rule_study_tokens.py": "f327caba432bd04bd04ba53e7045d4413d9e701991bf8dc988109049537e3b8b",
+        "tests/test_runtime_rule_study_inputs.py": "8dd53eb2d03f6296ef18a0bc3da743eeaf7d1fbae258aa5eebf4ec2ef1b26b6f",
+        "tests/test_runtime_rule_study_tokens.py": "67c855707fce78c32224a51a8985d09e5caf002b421151ee57e0077d1c352da7"
+      }
+    },
+    "evidence_files_sha256": {
+      ".context/runtime-rule-study-preparation-actual.json": "cac8eb7a40a730f86d55de0da93bb34033ef3485ec78365f0b587aee061c0975",
+      ".context/runtime-rule-study-preparation-clean-verification.json": "bf8a4919eae4fc83672e47d797b91130a40177b9c1bde2f81a0b43433a182b78",
+      ".context/runtime-rule-study-preparation-final-review.json": "b59d6eceb802751f0f9bf907c4549424f74a4190e6e7401626931141c242f57b",
+      ".context/runtime-rule-study-preparation-final-review.md": "eec44aa44abf90ce11c4d97024c6d2b25a352ff4bc8a4d35656991aa0fbdc059",
+      ".context/runtime-rule-study-preparation-freeze.json": "888be3d83b0bd7c857c369e0f79502f3998ca8a7759bfaf1bddc5fb188b334f5"
+    },
+    "independent_review": {
+      "checks": [
+        {
+          "command": ".venv/bin/pytest -q tests/test_runtime_rule_study_inputs.py tests/test_runtime_rule_study_tokens.py",
+          "exit_code": 0,
+          "result": "29 passed in 10.52s"
+        },
+        {
+          "command": ".venv/bin/ruff check experiments/runtime_rule_study_inputs.py experiments/runtime_rule_study_tokens.py tests/test_runtime_rule_study_inputs.py tests/test_runtime_rule_study_tokens.py",
+          "exit_code": 0,
+          "result": "All checks passed"
+        },
+        {
+          "command": ".venv/bin/ruff format --check experiments/runtime_rule_study_inputs.py experiments/runtime_rule_study_tokens.py tests/test_runtime_rule_study_inputs.py tests/test_runtime_rule_study_tokens.py",
+          "exit_code": 0,
+          "result": "4 files already formatted"
+        },
+        {
+          "command": ".venv/bin/mypy --strict --follow-imports=silent experiments/runtime_rule_study_inputs.py experiments/runtime_rule_study_tokens.py",
+          "exit_code": 1,
+          "result": "Only import-not-found for optional tokenizers at runtime_rule_study_tokens.py:76; not installed in base .venv"
+        },
+        {
+          "command": ".venv/bin/mypy --strict --follow-imports=silent --ignore-missing-imports experiments/runtime_rule_study_inputs.py experiments/runtime_rule_study_tokens.py",
+          "exit_code": 0,
+          "result": "Success: no issues found in 2 source files"
+        },
+        {
+          "command": ".venv/bin/python .context/runtime-rule-study-preparation-review-probe.py",
+          "exit_code": 0,
+          "result": "4 positive probes and 18 targeted rejection cases passed"
+        }
+      ],
+      "date": "2026-10-05",
+      "findings": [],
+      "historical_sources": {
+        "count": 60,
+        "mismatches": 0
+      },
+      "independent_probes": {
+        "independent_input_token_counts": {
+          "evaluation_both_arms": 4757720,
+          "reload_both_arms": 20544,
+          "total": 5885686,
+          "training_continued_practice": 504776,
+          "training_runtime_mix": 527314,
+          "unchanged_adapter": 75332
+        },
+        "positive_probes": [
+          "same verified bytes parsed despite every new file changing immediately after its sole read",
+          "exact 2048-token input accepted and 2049 rejected without truncation",
+          "all 6634 stored training/evaluation specs independently match raw request prompts, tokens, ordered JSON and candidate maps; multiplied accounting equals 10808 forwards",
+          "flipping every evaluation gold label leaves full compilation unchanged"
+        ],
+        "rejection_count": 18,
+        "rejections": [
+          {
+            "name": "changed on-disk bytes fail next load",
+            "reason": "pinned input SHA-256 mismatch: data/processed/routing-data-v1/train.jsonl"
+          },
+          {
+            "name": "historical source tamper",
+            "reason": "pinned input SHA-256 mismatch: src/reflex_decisions/synthetic_data.py"
+          },
+          {
+            "name": "conflicting duplicate fingerprint",
+            "reason": "conflicting verified file fingerprints: a"
+          },
+          {
+            "name": "non-string fingerprint",
+            "reason": "verified file fingerprints must map paths to lowercase SHA-256 values"
+          },
+          {
+            "name": "2049-token input",
+            "reason": "rendered prompt is 2049 tokens; limit is 2048"
+          },
+          {
+            "name": "invalid token ID True",
+            "reason": "tokenizer.encode must return a list of nonnegative integer token IDs"
+          },
+          {
+            "name": "invalid token ID 1.0",
+            "reason": "tokenizer.encode must return a list of nonnegative integer token IDs"
+          },
+          {
+            "name": "invalid token ID -1",
+            "reason": "tokenizer.encode must return a list of nonnegative integer token IDs"
+          },
+          {
+            "name": "invalid token ID '1'",
+            "reason": "tokenizer.encode must return a list of nonnegative integer token IDs"
+          },
+          {
+            "name": "candidate token collision",
+            "reason": "candidate symbols must have distinct token IDs"
+          },
+          {
+            "name": "nested gold",
+            "reason": "retention request must contain only context, question, and options"
+          },
+          {
+            "name": "option content",
+            "reason": "retention request, hash, or option order differs from its source"
+          },
+          {
+            "name": "declared option order",
+            "reason": "retention request, hash, or option order differs from its source"
+          },
+          {
+            "name": "request hash",
+            "reason": "retention request, hash, or option order differs from its source"
+          },
+          {
+            "name": "wrong dataset join",
+            "reason": "retention does not join to its exact evaluation record"
+          },
+          {
+            "name": "duplicate option IDs",
+            "reason": "retention order_ids do not match its source options"
+          },
+          {
+            "name": "extra evaluation record",
+            "reason": "evaluation records do not match final panel membership"
+          },
+          {
+            "name": "missing evaluation record",
+            "reason": "retention does not join to its exact evaluation record"
+          }
+        ],
+        "toy_compilation_sha256": "d85c8a8a2df0e58712d0a888a16b881ce73749e1eb760871491c1bc23cf1d3c0"
+      },
+      "limitations": [
+        "Full retained-source authentication remains the loader responsibility, as specified; compile_study_inputs is not a replacement authenticator for arbitrarily constructed StudyInputs.",
+        "StudyInputs and result dictionaries are shallowly mutable. Later payload construction must pin/audit the exact rows and compilation it serializes.",
+        "No actual sealed new calibration/test data, actual model outputs, model package loading, network, GPU, or remote compute was used.",
+        "Root full-suite and actual integration results are separate evidence, not independently claimed here."
+      ],
+      "probe_harness_corrections": [
+        "Initial inline probe used an unresolved macOS temp-root path, so canonical read paths were not counted; the explicit read-count assertion failed. Resolved the fixture root before rerunning.",
+        "Moving the probe to an ignored script required adding the repository root to sys.path; its first launch failed at import before executing probes. Corrected harness only; final run exited 0."
+      ],
+      "protocol_sha256": "11d58dbe075e08effd6b02614b64ac64715fe7a0db5330c0a45d6d0dc0a6ea23",
+      "reviewer": "routing_data_final_review",
+      "scope": "One final independent review of the combined frozen CPU input-loader/token-compiler slice",
+      "sha256": {
+        "experiments/runtime_rule_study_inputs.py": "0ecef3c79ad4cdf37dad4c378917ba225592bb423a58293dcf8c784d1cb44b07",
+        "experiments/runtime_rule_study_tokens.py": "f327caba432bd04bd04ba53e7045d4413d9e701991bf8dc988109049537e3b8b",
+        "tests/test_runtime_rule_study_inputs.py": "8dd53eb2d03f6296ef18a0bc3da743eeaf7d1fbae258aa5eebf4ec2ef1b26b6f",
+        "tests/test_runtime_rule_study_tokens.py": "67c855707fce78c32224a51a8985d09e5caf002b421151ee57e0077d1c352da7"
+      },
+      "test_portability": "Focused tests use repository-relative tracked sources and toy temporary data; optional backend is mocked. Root owns separate clean-checkout validation.",
+      "verdict": "approve"
+    },
+    "interpretation_limits": [
+      "Both arms get equal presentations and updates, but treatment gets about 55 percent more training tokens.",
+      "28 new questions in 28 groups, presented 164 times. No new calibration or test data was used.",
+      "No performance gain measured. Cache validation, result analysis, payloads and GPU runner remain pending."
+    ],
+    "preparation_helper_sha256": "db3f2b6d14d967aff854be04e9d35b78fc783df72a196e84fb8dc062ef44e1fd",
+    "source_sha256": {
+      "experiments/runtime_rule_study_inputs.py": "0ecef3c79ad4cdf37dad4c378917ba225592bb423a58293dcf8c784d1cb44b07",
+      "experiments/runtime_rule_study_tokens.py": "f327caba432bd04bd04ba53e7045d4413d9e701991bf8dc988109049537e3b8b",
+      "tests/test_runtime_rule_study_inputs.py": "8dd53eb2d03f6296ef18a0bc3da743eeaf7d1fbae258aa5eebf4ec2ef1b26b6f",
+      "tests/test_runtime_rule_study_tokens.py": "67c855707fce78c32224a51a8985d09e5caf002b421151ee57e0077d1c352da7"
+    },
+    "status": "verified CPU-only; no new GPU run",
+    "training_token_delta": 123372,
+    "training_token_increase_percent": 54.60774419716365
+  },
   "preflight_aggregate": {
     "disjointness": {
       "record_ids": true,

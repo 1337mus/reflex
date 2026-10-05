@@ -1,0 +1,570 @@
+{
+  "artifacts": {
+    "analysis": {
+      "path": "artifacts/snli-balanced-2026-10-04-r1-analysis.json",
+      "sha256": "668d119255e017e3b1a42e31e378aa6fb15c2ba2d8731df6e767dd97eba045b1"
+    },
+    "receipt": {
+      "path": "artifacts/snli-balanced-2026-10-04-r1-receipt.json",
+      "sha256": "76be5d7870a8780e5bebb59adf4fb834c908042b6686a21fdc045965ab68eed7"
+    },
+    "teardown_billing": {
+      "path": "artifacts/snli-balanced-2026-10-04-r1-teardown-billing.json",
+      "sha256": "4e0d9263243fd103778611ce25d73ae8e577b9c35eb748d2317c69a4ed242f31"
+    }
+  },
+  "bootstrap": {
+    "interval": "95% percentile",
+    "replicates": 2000,
+    "seed": 20261006,
+    "unit": "source_group"
+  },
+  "independent_validation": {
+    "adapter_reload_evidence_passed": true,
+    "checks": [
+      "Every model output was recounted, including confusion-relevant predictions, semantic flips, exact ties, and all-six-order correctness.",
+      "All paired group-bootstrap interval values matched the recorded analysis."
+    ],
+    "reviewer": "root independent recount",
+    "status": "passed"
+  },
+  "limitations": [
+    "R1 does not reverse or replace the preregistered R2 SNLI non-regression gate failure.",
+    "The balanced panel contains different examples from R2, so R1 cannot isolate the effect of balancing from changed examples.",
+    "The reference systems use different prompt and tokenizer paths; task-schema familiarity and pretraining exposure remain possible.",
+    "No broad, unseen-data, or model-superiority claim follows from this selected development panel."
+  ],
+  "models": {
+    "intern": {
+      "all_order": {
+        "accuracy": 0.5815972222222222,
+        "bootstrap_95": {
+          "lower": 0.5486111111111112,
+          "upper": 0.6163194444444444
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 177,
+            "entailment": 0,
+            "neutral": 207
+          },
+          "entailment": {
+            "contradiction": 34,
+            "entailment": 202,
+            "neutral": 148
+          },
+          "neutral": {
+            "contradiction": 70,
+            "entailment": 23,
+            "neutral": 291
+          }
+        },
+        "correct": 670,
+        "group_equal_weight_accuracy": 0.5815972222222222,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 177,
+            "recall": 0.4609375,
+            "support": 384
+          },
+          "entailment": {
+            "correct": 202,
+            "recall": 0.5260416666666666,
+            "support": 384
+          },
+          "neutral": {
+            "correct": 291,
+            "recall": 0.7578125,
+            "support": 384
+          }
+        },
+        "presentation_count": 1152,
+        "tie_count": 0,
+        "unique_max_accuracy": 0.5815972222222222,
+        "unique_max_correct_count": 670,
+        "unique_max_count": 1152,
+        "unique_max_coverage": 1.0
+      },
+      "forward_counts": {
+        "auxiliary": 1,
+        "scored": 1152,
+        "total": 1153
+      },
+      "model_id": "internlm/Intern-Decision-0.8B",
+      "model_revision": "85a0cc5a99d67ea8d56dfe98115689212867171d",
+      "original_order": {
+        "accuracy": 0.5,
+        "bootstrap_95": {
+          "lower": 0.453125,
+          "upper": 0.5416666666666666
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 0,
+            "entailment": 0,
+            "neutral": 64
+          },
+          "entailment": {
+            "contradiction": 0,
+            "entailment": 34,
+            "neutral": 30
+          },
+          "neutral": {
+            "contradiction": 0,
+            "entailment": 2,
+            "neutral": 62
+          }
+        },
+        "correct": 96,
+        "group_equal_weight_accuracy": 0.5,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 0,
+            "recall": 0.0,
+            "support": 64
+          },
+          "entailment": {
+            "correct": 34,
+            "recall": 0.53125,
+            "support": 64
+          },
+          "neutral": {
+            "correct": 62,
+            "recall": 0.96875,
+            "support": 64
+          }
+        },
+        "presentation_count": 192,
+        "tie_count": 0,
+        "unique_max_accuracy": 0.5,
+        "unique_max_correct_count": 96,
+        "unique_max_count": 192,
+        "unique_max_coverage": 1.0
+      },
+      "record_behavior": {
+        "all_six_correct_record_count": 43,
+        "record_count": 192,
+        "semantic_flip_count": 139
+      }
+    },
+    "kev": {
+      "all_order": {
+        "accuracy": 0.7612847222222222,
+        "bootstrap_95": {
+          "lower": 0.7083116319444445,
+          "upper": 0.8125217013888888
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 196,
+            "entailment": 0,
+            "neutral": 188
+          },
+          "entailment": {
+            "contradiction": 0,
+            "entailment": 312,
+            "neutral": 72
+          },
+          "neutral": {
+            "contradiction": 6,
+            "entailment": 9,
+            "neutral": 369
+          }
+        },
+        "correct": 877,
+        "group_equal_weight_accuracy": 0.7612847222222222,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 196,
+            "recall": 0.5104166666666666,
+            "support": 384
+          },
+          "entailment": {
+            "correct": 312,
+            "recall": 0.8125,
+            "support": 384
+          },
+          "neutral": {
+            "correct": 369,
+            "recall": 0.9609375,
+            "support": 384
+          }
+        },
+        "presentation_count": 1152,
+        "tie_count": 0,
+        "unique_max_accuracy": 0.7612847222222222,
+        "unique_max_correct_count": 877,
+        "unique_max_count": 1152,
+        "unique_max_coverage": 1.0
+      },
+      "forward_counts": {
+        "auxiliary": 2,
+        "scored": 1152,
+        "total": 1154
+      },
+      "model_id": "jaredpalmer/kev-0.8b",
+      "model_revision": "9a45d25eb2ab761841196625383fa1dff0e56c1e",
+      "original_order": {
+        "accuracy": 0.7447916666666666,
+        "bootstrap_95": {
+          "lower": 0.6875,
+          "upper": 0.8020833333333334
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 28,
+            "entailment": 0,
+            "neutral": 36
+          },
+          "entailment": {
+            "contradiction": 0,
+            "entailment": 54,
+            "neutral": 10
+          },
+          "neutral": {
+            "contradiction": 1,
+            "entailment": 2,
+            "neutral": 61
+          }
+        },
+        "correct": 143,
+        "group_equal_weight_accuracy": 0.7447916666666666,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 28,
+            "recall": 0.4375,
+            "support": 64
+          },
+          "entailment": {
+            "correct": 54,
+            "recall": 0.84375,
+            "support": 64
+          },
+          "neutral": {
+            "correct": 61,
+            "recall": 0.953125,
+            "support": 64
+          }
+        },
+        "presentation_count": 192,
+        "tie_count": 0,
+        "unique_max_accuracy": 0.7447916666666666,
+        "unique_max_correct_count": 143,
+        "unique_max_count": 192,
+        "unique_max_coverage": 1.0
+      },
+      "record_behavior": {
+        "all_six_correct_record_count": 137,
+        "record_count": 192,
+        "semantic_flip_count": 20
+      }
+    },
+    "qwen_base": {
+      "all_order": {
+        "accuracy": 0.3880208333333333,
+        "bootstrap_95": {
+          "lower": 0.3741319444444444,
+          "upper": 0.4019097222222222
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 29,
+            "entailment": 167,
+            "neutral": 188
+          },
+          "entailment": {
+            "contradiction": 6,
+            "entailment": 261,
+            "neutral": 117
+          },
+          "neutral": {
+            "contradiction": 18,
+            "entailment": 209,
+            "neutral": 157
+          }
+        },
+        "correct": 447,
+        "group_equal_weight_accuracy": 0.3880208333333333,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 29,
+            "recall": 0.07552083333333333,
+            "support": 384
+          },
+          "entailment": {
+            "correct": 261,
+            "recall": 0.6796875,
+            "support": 384
+          },
+          "neutral": {
+            "correct": 157,
+            "recall": 0.4088541666666667,
+            "support": 384
+          }
+        },
+        "presentation_count": 1152,
+        "tie_count": 83,
+        "unique_max_accuracy": 0.3882132834424696,
+        "unique_max_correct_count": 415,
+        "unique_max_count": 1069,
+        "unique_max_coverage": 0.9279513888888888
+      },
+      "forward_counts": {
+        "auxiliary": 0,
+        "scored": 1152,
+        "total": 1152
+      },
+      "model_id": "Qwen/Qwen3.5-0.8B-Base",
+      "model_revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+      "original_order": {
+        "accuracy": 0.5,
+        "bootstrap_95": {
+          "lower": 0.4375,
+          "upper": 0.5625
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 28,
+            "entailment": 7,
+            "neutral": 29
+          },
+          "entailment": {
+            "contradiction": 6,
+            "entailment": 41,
+            "neutral": 17
+          },
+          "neutral": {
+            "contradiction": 18,
+            "entailment": 19,
+            "neutral": 27
+          }
+        },
+        "correct": 96,
+        "group_equal_weight_accuracy": 0.5,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 28,
+            "recall": 0.4375,
+            "support": 64
+          },
+          "entailment": {
+            "correct": 41,
+            "recall": 0.640625,
+            "support": 64
+          },
+          "neutral": {
+            "correct": 27,
+            "recall": 0.421875,
+            "support": 64
+          }
+        },
+        "presentation_count": 192,
+        "tie_count": 35,
+        "unique_max_accuracy": 0.5222929936305732,
+        "unique_max_correct_count": 82,
+        "unique_max_count": 157,
+        "unique_max_coverage": 0.8177083333333334
+      },
+      "record_behavior": {
+        "all_six_correct_record_count": 0,
+        "record_count": 192,
+        "semantic_flip_count": 192
+      }
+    },
+    "qwen_final": {
+      "all_order": {
+        "accuracy": 0.3628472222222222,
+        "bootstrap_95": {
+          "lower": 0.3489583333333333,
+          "upper": 0.3776041666666667
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 14,
+            "entailment": 254,
+            "neutral": 116
+          },
+          "entailment": {
+            "contradiction": 0,
+            "entailment": 381,
+            "neutral": 3
+          },
+          "neutral": {
+            "contradiction": 5,
+            "entailment": 356,
+            "neutral": 23
+          }
+        },
+        "correct": 418,
+        "group_equal_weight_accuracy": 0.3628472222222222,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 14,
+            "recall": 0.036458333333333336,
+            "support": 384
+          },
+          "entailment": {
+            "correct": 381,
+            "recall": 0.9921875,
+            "support": 384
+          },
+          "neutral": {
+            "correct": 23,
+            "recall": 0.059895833333333336,
+            "support": 384
+          }
+        },
+        "presentation_count": 1152,
+        "tie_count": 17,
+        "unique_max_accuracy": 0.36651982378854625,
+        "unique_max_correct_count": 416,
+        "unique_max_count": 1135,
+        "unique_max_coverage": 0.9852430555555556
+      },
+      "forward_counts": {
+        "auxiliary": 0,
+        "scored": 1152,
+        "total": 1152
+      },
+      "model_id": "Qwen/Qwen3.5-0.8B-Base",
+      "model_revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+      "original_order": {
+        "accuracy": 0.3333333333333333,
+        "bootstrap_95": {
+          "lower": 0.3333333333333333,
+          "upper": 0.3333333333333333
+        },
+        "confusion": {
+          "contradiction": {
+            "contradiction": 0,
+            "entailment": 64,
+            "neutral": 0
+          },
+          "entailment": {
+            "contradiction": 0,
+            "entailment": 64,
+            "neutral": 0
+          },
+          "neutral": {
+            "contradiction": 0,
+            "entailment": 64,
+            "neutral": 0
+          }
+        },
+        "correct": 64,
+        "group_equal_weight_accuracy": 0.3333333333333333,
+        "per_class_recall": {
+          "contradiction": {
+            "correct": 0,
+            "recall": 0.0,
+            "support": 64
+          },
+          "entailment": {
+            "correct": 64,
+            "recall": 1.0,
+            "support": 64
+          },
+          "neutral": {
+            "correct": 0,
+            "recall": 0.0,
+            "support": 64
+          }
+        },
+        "presentation_count": 192,
+        "tie_count": 0,
+        "unique_max_accuracy": 0.3333333333333333,
+        "unique_max_correct_count": 64,
+        "unique_max_count": 192,
+        "unique_max_coverage": 1.0
+      },
+      "record_behavior": {
+        "all_six_correct_record_count": 62,
+        "record_count": 192,
+        "semantic_flip_count": 65
+      }
+    }
+  },
+  "operations": {
+    "app_id": "ap-XQ4OLLSz9D09DWnkaJ2bmv",
+    "app_state": "stopped",
+    "billing_attribution": "Not a per-run invoice; these values cannot be attributed to R1.",
+    "billing_summary_captured_at_utc": "2026-10-05T04:41:18.423830+00:00",
+    "billing_summary_scope": "workspace-wide current-month snapshot",
+    "stopped_at_local": "2026-10-04 21:40:07-07:00",
+    "tasks_remaining": 0,
+    "workspace_billed_cost_after_credits": "0E-8",
+    "workspace_metered_cost": "0.75366943"
+  },
+  "paired_all_order_differences": {
+    "qwen_final_minus_intern": {
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261006,
+      "ci95": {
+        "lower": -0.2586805555555556,
+        "upper": -0.18140190972222234
+      },
+      "estimate": -0.21875
+    },
+    "qwen_final_minus_kev": {
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261006,
+      "ci95": {
+        "lower": -0.4479166666666667,
+        "upper": -0.3480902777777778
+      },
+      "estimate": -0.3984375
+    },
+    "qwen_final_minus_qwen_base": {
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261006,
+      "ci95": {
+        "lower": -0.04253472222222223,
+        "upper": -0.008680555555555563
+      },
+      "estimate": -0.025173611111111105
+    }
+  },
+  "report_date_local": "2026-10-04",
+  "run": {
+    "auxiliary_forwards": 3,
+    "lifecycle_failure": null,
+    "modal_sdk_version": "1.6.1",
+    "nonce": "82275cb4-90fb-490e-82b6-02b31a1e4a92",
+    "panel_sha256": "02ea3c75b6ef866e4c35090b7510bd4e0e4523650186e9bd6d302671333737fd",
+    "pins": {
+      "manifest_sha256": "4ecab09c6f013c274b38a81c6ef226226fee6520745e01457f461c5e5dc628bd",
+      "protocol_sha256": "e41334b9d2f6b47d057907782c889251f8e952fae9e77d173e1d7bd69062a4ae",
+      "recipe_sha256": "e11fc94b99376f4860caf3b9afbb22026e6015ee7b4bfeb42344a7a0cc0bbd58",
+      "records_sha256": "a1fa41d19b381e227ebca258b1561e7e39184f6f58a325aaa5a2b1ff61ddd98c"
+    },
+    "receipt_status": "passed",
+    "run_id": "69235ff7-259f-40b4-8c60-fd73d61c98de",
+    "runner_source_commit": "563e8e362bcca3180f12e6dd96048758e8af5df3",
+    "scored_forwards": 4608,
+    "total_forwards": 4611
+  },
+  "runner_ci": {
+    "checks": [
+      "lint",
+      "format",
+      "mypy src",
+      "323 tests passed",
+      "installed CLI fixture smoke passed"
+    ],
+    "head_commit": "563e8e362bcca3180f12e6dd96048758e8af5df3",
+    "run_id": 37264163333,
+    "status": "success",
+    "workflow": "main CPU CI"
+  },
+  "schema": "reflex-snli-diagnostic-summary-v1",
+  "scope": {
+    "dataset": "SNLI 1.0 development member",
+    "interpretation": "Conditional development evidence; not a sealed test or population estimate.",
+    "permutations_per_record": 6,
+    "presentations_per_model": 1152,
+    "records": 192,
+    "records_per_source_group": 3,
+    "source_groups": 64
+  },
+  "status": "verified"
+}

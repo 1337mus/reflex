@@ -22,7 +22,15 @@
     ".context/runtime-rule-study-package-actual-shape-diagnostic.json": "ca09b3183dd6a289d90d2bf615176d4f2aa6ad9da16decbaf0410b71a9fb1345",
     ".context/runtime-rule-study-bundle-progress-final-review.json": "c9f75f8bc1da6f93913e3ea975325b9933b89f27f30bc8c64bb5503c18c5281c",
     ".context/runtime-rule-study-payload-training-final-review.json": "6bbb96c085eaa277c7284bc2cff8fa70cbc03b9a31223ed5feceda7db9040195",
-    ".context/runtime-rule-study-package-source-ci.json": "5e9532cf786e34c34194385f4f1ab85bcc5c52980bb8fc48e4ce3e411a58ed30"
+    ".context/runtime-rule-study-package-source-ci.json": "5e9532cf786e34c34194385f4f1ab85bcc5c52980bb8fc48e4ce3e411a58ed30",
+    ".context/runtime-rule-study-result-freeze.json": "c69babe7e4e499f63288d2512d21fb35702bfa23e4f8404b0ddb1c85a35d9932",
+    ".context/runtime-rule-study-result-clean-verification.json": "841bf34326dacd28b9d92d2a48517be5d7e76c8a5658e304b4ddfdb7f5e5cefa",
+    ".context/runtime-rule-study-result-fix-clean-verification.json": "5c807367995e1d123ee8b14e37ba90fea146e0e28051390739c53921c6cb0559",
+    ".context/runtime-rule-study-result-final-review.json": "fc3e58902cf32d01ca19bac0a5d1e34c9c2868baca09287e3fde50b8ef5f653d",
+    ".context/runtime-rule-study-result-review-probes.json": "30dc694d9e5a656768d974c79e6df224f24695acd50b6eb125468e3968a35d86",
+    ".context/runtime-rule-study-result-raw-key-probe.json": "32220c8e77b498064f5b587c6162e0a8f3cf62001642043204ab767c56c33e05",
+    ".context/runtime-rule-study-result-source-ci.json": "b7e58d3cb1f7a5bbafbc44fc11c0582aefc67d2715a7daa70502e0e597f36112",
+    ".context/runtime-rule-study-result-account.json": "1e830f90ca2d58e9f5c618e8f945e3c35f81cfb95ac0d63fe7cd51ad52169950"
   },
   "final_review": {
     "checks": [
@@ -1316,7 +1324,7 @@
     "sha": "c883de9f0053e82554fab332fbb5b86a980a54ea",
     "url": "https://github.com/1337mus/reflex/commit/c883de9f0053e82554fab332fbb5b86a980a54ea"
   },
-  "status": "prelaunch_cpu_worker_packages_verified",
+  "status": "prelaunch_cpu_result_validation_verified",
   "cache_statistics_and_worker_contracts": {
     "status": "verified",
     "source_freeze_sha256": {
@@ -1599,6 +1607,487 @@
       "Finish and review returned-result validation.",
       "Build and verify the bounded GPU runtime and host.",
       "Freeze real launch inputs and refresh exact CI, source/data pins and personal Modal usage before compute."
+    ]
+  },
+  "result_validation": {
+    "source_commit": {
+      "sha": "38984e5ea081431a735f4ac54c872c39c103610d",
+      "branch": "main",
+      "signature": "verified",
+      "exact_commit_ci": {
+        "conclusion": "success",
+        "headSha": "38984e5ea081431a735f4ac54c872c39c103610d",
+        "status": "completed",
+        "url": "https://github.com/1337mus/reflex/actions/runs/37307020076",
+        "test_result": "Lint, typecheck, and test\tRun tests\t2026-10-05T12:08:09.4931233Z ======================= 1049 passed in 220.42s (0:03:40) =======================",
+        "verified_at_utc": "2026-10-05T12:08:41.337981+00:00"
+      }
+    },
+    "source_sha256": {
+      "experiments/runtime_rule_study_provenance.py": "6f4a37bf7ddfd8325764113511503052e0a5dd4abe96628c69624ed2a795447b",
+      "tests/test_runtime_rule_study_provenance.py": "9b7e639e300c516c80078bbdfa6c7a74da36ceb58012be12c606a4b2fa419088",
+      "experiments/runtime_rule_study_output_evidence.py": "d89c320c678b645dcc0240bf542a2a85bb22d65fbc15f115e78e38f1f149acbb",
+      "tests/test_runtime_rule_study_output_evidence.py": "3d569ffd9941f810c984dc0eefb2d2cddcba16af6659b26d42dcabe9f8524e83",
+      "experiments/runtime_rule_study_results.py": "c3aaba492e8202a43063d80d385c73d3226e8ac3f948776716fb8198e8c141ce",
+      "tests/test_runtime_rule_study_results.py": "95c110d1e472e6573477115134f5a18b7b6b4e5d82ad5d596da72949a61954db"
+    },
+    "clean_full_suite_before_narrow_correction": "1048 passed",
+    "clean_focused_after_correction": "20 passed; repository Ruff/format, source mypy and scoped strict mypy passed",
+    "independent_final_review": {
+      "date": "2026-10-05",
+      "verify_by": "2026-10-05",
+      "reviewer": "routing_data_final_review",
+      "verdict": "approve",
+      "findings": [],
+      "scope": "One independent final review of the frozen provenance/output-evidence/results modules and matching tests, followed by one narrow results-wrapper correction check. No repetition of old package/bundle/progress reviews.",
+      "source_parent": "e29191fb5f75127d4d292f1651f6a1bf8c6a9606",
+      "launch_authority": false,
+      "original_sha256": {
+        "experiments/runtime_rule_study_provenance.py": "6f4a37bf7ddfd8325764113511503052e0a5dd4abe96628c69624ed2a795447b",
+        "tests/test_runtime_rule_study_provenance.py": "9b7e639e300c516c80078bbdfa6c7a74da36ceb58012be12c606a4b2fa419088",
+        "experiments/runtime_rule_study_output_evidence.py": "d89c320c678b645dcc0240bf542a2a85bb22d65fbc15f115e78e38f1f149acbb",
+        "tests/test_runtime_rule_study_output_evidence.py": "3d569ffd9941f810c984dc0eefb2d2cddcba16af6659b26d42dcabe9f8524e83",
+        "experiments/runtime_rule_study_results.py": "2392f83e03656fb2164699dc530b153f8ca85902ff1578f3d2358a9d014a7498",
+        "tests/test_runtime_rule_study_results.py": "43102576d7fb2c33777406fb40fb997d59583fc62532b380d38fb1293c54c1ec"
+      },
+      "sha256": {
+        "experiments/runtime_rule_study_provenance.py": "6f4a37bf7ddfd8325764113511503052e0a5dd4abe96628c69624ed2a795447b",
+        "tests/test_runtime_rule_study_provenance.py": "9b7e639e300c516c80078bbdfa6c7a74da36ceb58012be12c606a4b2fa419088",
+        "experiments/runtime_rule_study_output_evidence.py": "d89c320c678b645dcc0240bf542a2a85bb22d65fbc15f115e78e38f1f149acbb",
+        "tests/test_runtime_rule_study_output_evidence.py": "3d569ffd9941f810c984dc0eefb2d2cddcba16af6659b26d42dcabe9f8524e83",
+        "experiments/runtime_rule_study_results.py": "c3aaba492e8202a43063d80d385c73d3226e8ac3f948776716fb8198e8c141ce",
+        "tests/test_runtime_rule_study_results.py": "95c110d1e472e6573477115134f5a18b7b6b4e5d82ad5d596da72949a61954db"
+      },
+      "changed_after_original_review": [
+        "experiments/runtime_rule_study_results.py",
+        "tests/test_runtime_rule_study_results.py"
+      ],
+      "resolved_findings": [
+        {
+          "priority": "P2",
+          "title": "Reject nested non-string object keys before normalizing a result",
+          "file": "experiments/runtime_rule_study_results.py",
+          "original_line": 60,
+          "cause": "The envelope originally checked only top-level keys, then JSON normalization converted nested integer snapshot keys to strings before the training/provenance validators saw them.",
+          "original_observation": {
+            "direct_training_error": "training evidence object keys must be strings",
+            "outer_result_status": "passed",
+            "raw_snapshot_key_types": [
+              "int",
+              "int"
+            ],
+            "validated_snapshot_key_types": [
+              "str",
+              "str"
+            ]
+          },
+          "original_evidence": ".context/runtime-rule-study-result-raw-key-probe.json",
+          "resolution": "New recursive key check runs before any result normalization. The regression rejects integer snapshot keys and proves the raw input remains unchanged.",
+          "narrow_confirmation": "All three role passes still validate; original integer snapshot keys reject for both trained roles; nested int/bool/float diagnostic keys reject; valid adverse preflight observations remain unchanged."
+        }
+      ],
+      "checks": [
+        {
+          "command": ".venv/bin/pytest -q tests/test_runtime_rule_study_provenance.py tests/test_runtime_rule_study_output_evidence.py tests/test_runtime_rule_study_results.py",
+          "exit_code": 0,
+          "result": "119 passed in 39.79s",
+          "state": "original frozen six-file slice"
+        },
+        {
+          "command": ".venv/bin/ruff check <six frozen files>",
+          "exit_code": 0,
+          "result": "All checks passed",
+          "state": "original frozen six-file slice"
+        },
+        {
+          "command": ".venv/bin/ruff format --check <six frozen files>",
+          "exit_code": 0,
+          "result": "6 files already formatted",
+          "state": "original frozen six-file slice"
+        },
+        {
+          "command": ".venv/bin/mypy --strict --follow-imports=silent --ignore-missing-imports <three frozen source modules>",
+          "exit_code": 0,
+          "result": "Success: no issues found in 3 source files",
+          "state": "original frozen six-file slice"
+        },
+        {
+          "command": ".venv/bin/python .context/runtime-rule-study-result-review-probe.py",
+          "exit_code": 0,
+          "result": "14 positive traces, 59 reason-checked rejections, one historical fail-closed exception limitation",
+          "state": "original frozen production slice"
+        },
+        {
+          "command": ".venv/bin/python .context/runtime-rule-study-result-correction-probe.py",
+          "exit_code": 0,
+          "result": "4 acceptances, 5 reason-checked nested-key rejections, raw invalid inputs unchanged",
+          "state": "corrected final slice"
+        }
+      ],
+      "independent_probes": {
+        "accepted_count": 14,
+        "rejection_count": 59,
+        "accepted": [
+          "unchanged complete pass",
+          "unchanged failed artifact finalization preserves all outputs",
+          "continued_practice complete pass",
+          "trained failed artifact finalization retains complete evidence",
+          "legal training boundary 0/0 pending=True snapshot=False",
+          "legal training boundary 671/167 pending=True snapshot=False",
+          "legal training boundary 672/168 pending=False snapshot=False",
+          "legal training boundary 672/168 pending=True snapshot=True",
+          "legal training boundary 673/168 pending=True snapshot=True",
+          "failed training preserves frozen-base violation and unchanged adapter",
+          "untouched reload before final evaluation ends",
+          "failed first reload return may have terminal missing output",
+          "failed reload-load before any reload call retains adverse tokenizer observation",
+          "reload counterparts joined after full final list reversal"
+        ],
+        "rejections": [
+          {
+            "name": "unknown counts cannot masquerade as zero worker work",
+            "reason": "forward counts values must be strict nonnegative integers"
+          },
+          {
+            "name": "result identity experiment_id",
+            "reason": "result experiment_id differs from the authenticated payload"
+          },
+          {
+            "name": "result identity study_id",
+            "reason": "result study_id differs from the authenticated payload"
+          },
+          {
+            "name": "result identity nonce",
+            "reason": "result nonce differs from the authenticated payload"
+          },
+          {
+            "name": "result identity role",
+            "reason": "result role differs from the authenticated payload"
+          },
+          {
+            "name": "result identity payload_sha256",
+            "reason": "result payload_sha256 differs from the authenticated payload"
+          },
+          {
+            "name": "result identity bundle_sha256",
+            "reason": "result bundle_sha256 differs from the authenticated payload"
+          },
+          {
+            "name": "invalid raw winner rejected without repairing caller data",
+            "reason": "scored outputs winner violates the lexicographic tie rule"
+          },
+          {
+            "name": "finalize cannot hide a terminal reload output gap",
+            "reason": "passed reload must match the complete panel and forward count"
+          },
+          {
+            "name": "passed reload cannot substitute selected starting tensors",
+            "reason": "true reload tensor equality requires the known final tensor digest"
+          },
+          {
+            "name": "passed reload binds exact final trained tensor hash",
+            "reason": "true reload tensor equality requires the known final tensor digest"
+          },
+          {
+            "name": "missing midpoint at completed 672 pending=True",
+            "reason": "training must retain the midpoint adapter snapshot"
+          },
+          {
+            "name": "missing midpoint at completed 673 pending=False",
+            "reason": "training must retain the midpoint adapter snapshot"
+          },
+          {
+            "name": "pending first call needs optimizer despite zero observed returns",
+            "reason": "pending training forward requires verified initialization, inventory, and fresh optimizer"
+          },
+          {
+            "name": "next batch cannot use unrecorded optimizer update",
+            "reason": "pending batch boundary requires its completed optimizer update"
+          },
+          {
+            "name": "loss gap cannot conceal a subsequently pending call",
+            "reason": "terminal training loss gap cannot coexist with a pending or later call"
+          },
+          {
+            "name": "adverse reload observation still cannot precede complete evaluation",
+            "reason": "reload work requires complete final outputs and a final tensor digest"
+          },
+          {
+            "name": "reload terminal row gap cannot precede pending second call",
+            "reason": "terminal reload output gap must remain in failed reload phase"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 0",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 1",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 2",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 3",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 4",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 5",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 6",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 7",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 8",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 9",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 10",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 11",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 12",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 13",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 14",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 15",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 16",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 17",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 18",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 19",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 20",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 21",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 22",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 23",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 24",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 25",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 26",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 27",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 28",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 29",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 30",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "wrong prompt on reload counterpart 31",
+            "reason": "final reload counterparts prompt hash differs from the canonical rendered request"
+          },
+          {
+            "name": "loaded runtime pin torch",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin torchvision",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin transformers",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin peft",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin Pillow",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin pydantic",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin huggingface-hub",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin tokenizers",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          },
+          {
+            "name": "loaded runtime pin safetensors",
+            "reason": "runtime_versions differ from payload or frozen pins"
+          }
+        ],
+        "limitations": [
+          {
+            "name": "historical absurd-integer candidate-logit overflow",
+            "exception_type": "OverflowError",
+            "message": "int too large to convert to float",
+            "implication": "Fails closed; host must preserve raw result and validation error for any validation exception, not only ValueError."
+          }
+        ],
+        "historical_source_verification": {
+          "count": 60,
+          "mismatches": 0
+        }
+      },
+      "narrow_correction_probes": {
+        "accepted_count": 4,
+        "rejection_count": 5,
+        "accepted": [
+          "unchanged full passed result",
+          "continued_practice full passed result",
+          "runtime_mix full passed result",
+          "string-keyed nested adverse preflight evidence remains unchanged"
+        ],
+        "rejections": [
+          {
+            "name": "continued_practice original non-string snapshot keys",
+            "reason": "result must be a JSON object with string keys"
+          },
+          {
+            "name": "runtime_mix original non-string snapshot keys",
+            "reason": "result must be a JSON object with string keys"
+          },
+          {
+            "name": "nested diagnostic raw key int",
+            "reason": "result must be a JSON object with string keys"
+          },
+          {
+            "name": "nested diagnostic raw key bool",
+            "reason": "result must be a JSON object with string keys"
+          },
+          {
+            "name": "nested diagnostic raw key float",
+            "reason": "result must be a JSON object with string keys"
+          }
+        ],
+        "raw_invalid_inputs_preserved": true
+      },
+      "root_clean_validation": {
+        "original_evidence": ".context/runtime-rule-study-result-clean-verification.json",
+        "original_hashes_match": true,
+        "original_full_suite": "1048 passed in 122.34s",
+        "corrected_evidence": ".context/runtime-rule-study-result-fix-clean-verification.json",
+        "corrected_hashes_match": true,
+        "corrected_focused_suite": "20 passed in 42.66s",
+        "corrected_static_checks": "Repository Ruff lint/format, src mypy and three-module strict mypy all exit 0",
+        "full_suite_repeated": false
+      },
+      "historical_source_verification": {
+        "count": 60,
+        "mismatches": 0
+      },
+      "final_slice_hash_verification": {
+        "count": 6,
+        "mismatches": 0
+      },
+      "state_contract_review": [
+        "Trusted expected payload digest is mandatory; result identity fields canonically bind to the authenticated payload.",
+        "Preflight cannot claim completed or pending work. Any later phase or model call requires complete loaded provenance and the selected adapter identity.",
+        "Pending first training call requires initialization, inventory and the fresh zero-state optimizer; pending batch boundaries require the preceding optimizer update.",
+        "Snapshot168 is required before pending training index672 or completed count673. Failure exactly at the snapshot boundary may retain the incomplete save state.",
+        "Evaluation/reload work requires full successful training; reload/finalize require complete evaluation outputs. Untouched reload evidence remains valid during partial evaluation.",
+        "Terminal output/loss gaps are allowed only as failure evidence with no pending or subsequent work; counts remain observed completed counts and exclude pending calls.",
+        "Passed trained results bind the reload digest to the final changed training digest, all32 exact counterpart identities/winners and measured maximum logit delta <=0.001.",
+        "Structured adverse failures survive validation; rejected raw input is not repaired or mutated. Unknown host progress cannot be represented by null worker counts or a fabricated zero trace."
+      ],
+      "limitations": [
+        "The historical finite-number helper raises OverflowError for candidate logits such as 10**400. It fails closed rather than accepting or coercing them. Future host invalid-result handling must preserve the raw result and exception for any ordinary validation exception, including OverflowError, not only ValueError. No historical helper was edited.",
+        "A consistent receipt does not prove physical model execution, authentic measurements, source Git/CI authority or saved tensor contents. The host must independently authenticate the payload/source and verify runtime, storage and teardown boundaries.",
+        "Host timeout/transport failure remains a separate unknown-progress envelope. These modules validate returned worker evidence and do not implement the future host or remote runtime.",
+        "Only self-authored fixture data and pinned source metadata were used. No actual new calibration/test content, actual model output, Torch/GPU/model loading, network or Git operation was used.",
+        "Only ignored review evidence under .context was written by this reviewer; implementation correction was performed by its owner."
+      ],
+      "handoff": {
+        "next_action": "Root may continue delivery of this exact frozen slice using the matching clean verification and resolved-review evidence; final host must catch and preserve invalid raw validation results. Recheck hashes if any source changes.",
+        "durable_context_owner": "Root owns the existing personal Reflex context and delivery state; this delegated review does not duplicate or alter them."
+      }
+    },
+    "preserved_pre_delivery_finding": "The whole-result normalizer could turn malformed nested numeric keys into valid strings. Recursive raw-key validation now rejects that input before normalization; the failed probe and original files remain saved.",
+    "no_new_model_execution": true,
+    "no_actual_new_calibration_or_test_read": true,
+    "historical_sources_unchanged": 60,
+    "limits": [
+      "CPU toy results prove validator behavior, not actual model execution or learning.",
+      "Any host validation exception must preserve the raw result; a historical huge-integer logit input can raise OverflowError."
+    ],
+    "evidence_files_sha256": {
+      ".context/runtime-rule-study-result-freeze.json": "c69babe7e4e499f63288d2512d21fb35702bfa23e4f8404b0ddb1c85a35d9932",
+      ".context/runtime-rule-study-result-clean-verification.json": "841bf34326dacd28b9d92d2a48517be5d7e76c8a5658e304b4ddfdb7f5e5cefa",
+      ".context/runtime-rule-study-result-fix-clean-verification.json": "5c807367995e1d123ee8b14e37ba90fea146e0e28051390739c53921c6cb0559",
+      ".context/runtime-rule-study-result-final-review.json": "fc3e58902cf32d01ca19bac0a5d1e34c9c2868baca09287e3fde50b8ef5f653d",
+      ".context/runtime-rule-study-result-review-probes.json": "30dc694d9e5a656768d974c79e6df224f24695acd50b6eb125468e3968a35d86",
+      ".context/runtime-rule-study-result-raw-key-probe.json": "32220c8e77b498064f5b587c6162e0a8f3cf62001642043204ab767c56c33e05",
+      ".context/runtime-rule-study-result-source-ci.json": "b7e58d3cb1f7a5bbafbc44fc11c0582aefc67d2715a7daa70502e0e597f36112",
+      ".context/runtime-rule-study-result-account.json": "1e830f90ca2d58e9f5c618e8f945e3c35f81cfb95ac0d63fe7cd51ad52169950"
+    },
+    "remaining_work": [
+      "Finish and review GPU scorer, fixed training loop, worker entry point and Modal host.",
+      "Freeze real study inputs and exact signed source; verify CI and refresh personal Modal usage before compute."
     ]
   }
 }

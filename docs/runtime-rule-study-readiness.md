@@ -1,6 +1,8 @@
 # Runtime-rule study readiness
 
-The data preparation, analysis rules, and worker input packages are verified. The package code is signed and pushed in [b7ac35a](https://github.com/1337mus/reflex/commit/b7ac35a63d27581ec7f624f71f8e7e5ee65af61a); [its exact-commit checks passed](https://github.com/1337mus/reflex/actions/runs/37305014205). No model has trained or scored in this new study. There is no new performance result yet.
+The result checks are complete. The GPU runner is still being built. No model has trained or scored in this new study. There is no new performance result yet.
+
+The result code is signed and pushed in [38984e5](https://github.com/1337mus/reflex/commit/38984e5ea081431a735f4ac54c872c39c103610d). [GitHub checks passed](https://github.com/1337mus/reflex/actions/runs/37307020076) on that exact commit. The earlier worker packages also passed [their checks](https://github.com/1337mus/reflex/actions/runs/37305014205).
 
 The input and schedule slice was delivered in [c883de9](https://github.com/1337mus/reflex/commit/c883de9f0053e82554fab332fbb5b86a980a54ea), with [passing GitHub checks](https://github.com/1337mus/reflex/actions/runs/37296034094). The reviewed cache, statistics, and worker-contract files are signed and pushed in [074e483](https://github.com/1337mus/reflex/commit/074e4836c75c59a40373ef0dba06a4bd9307d8d6); [its exact-commit CI passed](https://github.com/1337mus/reflex/actions/runs/37300810702).
 
@@ -15,7 +17,7 @@ The loader checks pinned file hashes. The prompt compiler records token counts a
 | Total planned input tokens | 2,544,210 |
 | Longest prompt / limit | 695 / 2,048 tokens |
 | New calibration or test files opened | 0 |
-| Tests on the final source commit | 929 passed |
+| Tests on the latest result source commit | 1,049 passed |
 
 The schedules, prompt identities, and token totals matched the earlier preparation. The integrated work remained CPU-only and did not load model weights.
 
@@ -59,10 +61,23 @@ Two checks found issues before delivery. The older number questions use 2, 4, 8,
 
 Completed calls and unfinished calls are recorded separately. A timeout therefore cannot turn unknown GPU work into a claim of zero work. The future runner must update these records at each model-call boundary.
 
+## Result checks
+
+A worker must show which code, model, tokenizer, and saved adapter it used. The checker matches these records to the fixed plan. It keeps completed calls separate from a call whose outcome is unknown.
+
+| Check | What the checker enforces |
+| --- | --- |
+| Training | 336 completed steps; saves at steps 168 and 336 |
+| Final scoring | Every planned answer is present, in the right order |
+| Reload from disk | The saved weights match; all 32 check answers match |
+| Failure | Keep the available evidence and the original error |
+
+The clean-copy suite passed 1,048 tests before one narrow correction. Review found that malformed field names could be converted before checking. The fix now rejects them first. The 20 affected tests and static checks passed afterward. The final GitHub run passed 1,049 tests. Independent review has no unresolved findings. These were CPU checks with test data; they did not run the model.
+
 ## Limits and remaining work
 
 The new development panel has 28 groups: 14 routing and 14 tool-choice groups. It is a small, previously inspected development panel, not a sealed test. Each family has only two questions with more than one missing input. In these questions, all possible values lead to the same answer. The panel does not cover cases where those values lead to different answers. This is a one-seed engineering study, not evidence of broad capability. Token exposure also differs between the two training plans.
 
-The worker input packages and partial-work records are now verified. The returned-result checks and GPU runner remain. Before launch, freeze the real worker inputs and code, verify the exact-commit checks, and refresh personal Modal usage against the project budget. No run has started. New calibration and test files remain sealed and unused.
+The input packages and returned-result checks are now verified. The GPU scorer, training loop, worker entry point, and Modal host remain in development. Before launch, freeze the real worker inputs and code, verify the exact-commit checks, and refresh personal Modal usage against the project budget. No run has started. New calibration and test files remain sealed and unused.
 
 Counts, hashes, and check evidence are in [runtime-rule-study-readiness.json](verification/runtime-rule-study-readiness.json). The accepted design is [runtime-rule-study-protocol.md](runtime-rule-study-protocol.md).

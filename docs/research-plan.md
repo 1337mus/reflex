@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-05
 
-**Status:** The human-labeled reasoning comparison passed all nine preset checks: 86.46% versus 66.75% for its matched synthetic-repeat control. Independent calculations and saved-file checks passed; the apps are stopped. SNLI is now a training source, so this is within-source development evidence. See the [results and tradeoffs](natural-reasoning-results.md). The two earlier synthetic-mixture results remain separate below; the original real-data pilot remains a failed candidate.
+**Status:** The saved adapter scored 27/32 on both reading comprehension and cause-and-effect questions excluded from its training. The fresh base scored 17/32 and 24/32, respectively. The reading gain is clearer; the cause-and-effect interval includes gains and losses. Independent calculations and reload checks passed, and the GPU app stopped. See the [transfer results and limits](adapter-transfer-results.md). The prior human-labeled reasoning comparison remains 86.46% versus 66.75%, with all nine checks passed ([results](natural-reasoning-results.md)). That SNLI result uses a source now present in training. The two earlier synthetic-mixture results remain separate below; the original real-data pilot remains a failed candidate.
 
 | Run | Real-only | Synthetic mix | Gain |
 | --- | ---: | ---: | ---: |
@@ -135,7 +135,7 @@ flowchart LR
 
 The approved GitHub destination is the private personal repository `1337mus/reflex`. The existing authenticated Modal profile `reflex-personal` in workspace `rajath-61258` ran the smoke, prior-art comparisons, bounded rehearsal, real-data R2 pilot, and both controlled-mixture seeds; the pinned Intern/K reference comparison is complete ([report](real-pilot-baselines-results.md)). Anonymous public model and tokenizer downloads succeeded. A Hugging Face account is only needed for checkpoint uploads or gated/private resources. Do not request keys in chat; use provider secrets. Before another training run, decide the task families, data licenses/provenance, holdout design, and evaluation acceptance criteria; any paid run still requires an explicit launch.
 
-Immediate next step: run the separate [COPA/BoolQ evaluation](adapter-transfer-protocol.md) with the selected SNLI adapter and a fresh matched BF16 base. Keep its 272-forward budget and fixed analysis. These development panels were excluded from adapter training but were inspected earlier; they are not sealed tests. Then use the evidence to plan a broader multi-task study with disjoint training, development, calibration, and sealed-test pools. Preserve the earlier failed candidate. Keep paid follow-ons bounded under the existing user authorization; do not infer general superiority or release readiness.
+Immediate next step: build a small [routing-data prototype](runtime-rule-data-plan.md), starting with a program that calculates the correct answer from supplied rules. Verify the answer program and prompt text before generating training data. Then design a matched training comparison with separate training, development, calibration, and sealed-test pools. The completed [COPA/BoolQ evaluation](adapter-transfer-results.md) used 272 model passes; its panels were excluded from adapter training but inspected earlier. Preserve the earlier failed candidate. Keep paid follow-ons bounded under the existing user authorization; do not infer general superiority or release readiness.
 
 ## Sources
 

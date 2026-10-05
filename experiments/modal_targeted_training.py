@@ -12,6 +12,7 @@ import re
 import shutil
 import subprocess
 import threading
+import time
 from collections.abc import Mapping
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from datetime import UTC, datetime, timedelta
@@ -39,15 +40,28 @@ VOLUME_NAME = "reflex-rehearsal-artifacts"
 VOLUME_ROOT = "/artifacts"
 _REMOTE_CANCEL_TIMEOUT_SECONDS = 5.0
 _REMOTE_CANCEL_BATCH_GRACE_SECONDS = 1.0
+COORDINATOR_EXECUTION = {
+    "cpu": 1,
+    "memory_mib": 4096,
+    "timeout_seconds": 9000,
+    "startup_timeout_seconds": 300,
+    "max_containers": 1,
+    "max_inputs": 1,
+    "scaledown_window_seconds": 2,
+    "retries": 0,
+    "single_use_containers": True,
+}
 
 
 def _modal_reference_worker(payload: dict[str, object]) -> dict[str, object]:
+    _claim_worker_role(payload, ROLE_UNCHANGED)
     from experiments import targeted_training_runtime as runtime
 
     return runtime.run_worker(payload)
 
 
 def _modal_control_worker(payload: dict[str, object]) -> dict[str, object]:
+    _claim_worker_role(payload, ROLE_CONTROL)
     import modal
 
     from experiments import targeted_training_runtime as runtime
@@ -59,6 +73,7 @@ def _modal_control_worker(payload: dict[str, object]) -> dict[str, object]:
 
 
 def _modal_treatment_worker(payload: dict[str, object]) -> dict[str, object]:
+    _claim_worker_role(payload, ROLE_TREATMENT)
     import modal
 
     from experiments import targeted_training_runtime as runtime
@@ -67,6 +82,28 @@ def _modal_treatment_worker(payload: dict[str, object]) -> dict[str, object]:
         return runtime.run_worker(payload)
     finally:
         modal.Volume.from_name(VOLUME_NAME, environment_name="main").commit()
+
+
+def _claim_worker_role(payload: dict[str, object], role: str) -> None:
+    """Reject duplicate provider entry before any model package or forward pass."""
+    import modal
+
+    from experiments import targeted_training_core as core
+    from experiments.targeted_training_coordinator import CLAIM_DICT_NAME, claim_once
+
+    checked = core.validate_role_payload(payload)
+    if checked["role"] != role:
+        raise ValueError("worker role differs from registered Modal function")
+    store = modal.Dict.from_name(
+        CLAIM_DICT_NAME, environment_name=ENVIRONMENT, create_if_missing=True
+    )
+    if not claim_once(
+        store,
+        checked["run_id"],
+        role,
+        {"payload_sha256": checked["payload_sha256"], "claimed_at_utc": _now_utc()},
+    ):
+        raise ValueError("duplicate role attempt")
 
 
 def _build_modal_image(modal: Any, snapshot_root: Path, source_manifest: Mapping[str, str]) -> Any:
@@ -187,7 +224,7 @@ def _load_cpu_tokenizer(root: Path) -> object:
 
 def _create_modal_workers(
     modal: Any, image: Any, run_id: str = "definition-check"
-) -> tuple[Any, Mapping[str, Any]]:
+) -> tuple[Any, Mapping[str, Any], Any]:
     """Create exact single-use functions; no remote work runs until caller invokes them."""
     volume = modal.Volume.from_name(VOLUME_NAME, environment_name="main")
     readonly = volume.with_mount_options(read_only=True)
@@ -218,7 +255,24 @@ def _create_modal_workers(
             ROLE_TREATMENT: _modal_treatment_worker,
         }[role]
         workers[role] = app.function(**options)(entry)
-    return app, workers
+    from experiments.targeted_training_coordinator import _modal_coordinator_entry
+
+    coordinator = app.function(
+        cpu=(1.0, 1.0),
+        memory=(4096, 4096),
+        timeout=9000,
+        startup_timeout=300,
+        max_containers=1,
+        min_containers=0,
+        buffer_containers=0,
+        scaledown_window=2,
+        retries=0,
+        single_use_containers=True,
+        include_source=False,
+        serialized=False,
+        volumes={VOLUME_ROOT: volume},
+    )(_modal_coordinator_entry)
+    return app, workers, coordinator
 
 
 def build_receipt(
@@ -240,6 +294,61 @@ def build_receipt(
         "role_payloads": dict(role_payloads),
         "roles": dict(roles),
     }
+
+
+def _dispatch_detached(
+    app: Any,
+    workers: Mapping[str, Any],
+    coordinator: Any,
+    plan: Mapping[str, object],
+    role_payloads: Mapping[str, object],
+    destination: Path,
+) -> dict[str, object]:
+    """Save app identity before one spawn; never retry an ambiguous acknowledgement."""
+    app_id: str | None = None
+    spawn_attempted = False
+    try:
+        with app.run(detach=True, environment_name=ENVIRONMENT):
+            app_id = getattr(app, "app_id", None)
+            if not isinstance(app_id, str) or not app_id:
+                raise ValueError("Modal app ID is missing before coordinator spawn")
+            _write_json_exclusive(
+                destination / "app.json",
+                {
+                    "app_id": app_id,
+                    "run_id": plan["run_id"],
+                    "plan_sha256": plan.get("plan_sha256"),
+                    "source_commit": plan.get("source_commit"),
+                },
+            )
+            spawn_attempted = True
+            call = coordinator.spawn(dict(plan), dict(role_payloads), app_id, dict(workers))
+            call_id = _require_call_id(call)
+            dispatch = {
+                "status": "dispatched",
+                "app_id": app_id,
+                "run_id": plan["run_id"],
+                "plan_sha256": plan.get("plan_sha256"),
+                "coordinator_call_id": call_id,
+            }
+            _write_json_exclusive(destination / "dispatch.json", dispatch)
+            return dispatch
+        return {
+            "status": "unknown" if spawn_attempted else "failed",
+            "app_id": app_id,
+            "run_id": plan["run_id"],
+            "plan_sha256": plan.get("plan_sha256"),
+            "failure_type": "SuppressedContextException",
+        }
+    except BaseException as error:
+        status = "unknown" if spawn_attempted else "failed"
+        return {
+            "status": status,
+            "app_id": app_id,
+            "run_id": plan["run_id"],
+            "plan_sha256": plan.get("plan_sha256"),
+            "failure_type": type(error).__name__,
+        }
 
 
 def prepare_plan(
@@ -374,66 +483,217 @@ def launch_plan(
     _write_json_exclusive(run_marker, marker)
     _write_json_exclusive(destination / "attempt.json", marker)
 
-    events = destination / "events.jsonl"
-
-    def persist(kind: str, evidence: object) -> None:
-        with events.open("a", encoding="utf-8") as stream:
-            stream.write(_json_line({"kind": kind, "evidence": evidence, "at_utc": _now_utc()}))
-            stream.flush()
-            os.fsync(stream.fileno())
-
-    roles: dict[str, object] = {}
-    lifecycle: dict[str, object] = {}
-    app_id: str | None = None
-    provider: _ModalProvider | None = None
-    app: object | None = None
     try:
         import modal
 
         image = _build_modal_image(modal, snapshot, manifest)
-        app, workers = _create_modal_workers(modal, image, plan["run_id"])
-        provider = _ModalProvider()
-        with app.run(environment_name=ENVIRONMENT):
-            app_id = getattr(app, "app_id", None)
-            lifecycle = _execute_modal_roles(
-                app, workers, payloads, persist, provider, core.validate_completed_result
-            )
-        roles = lifecycle.get("roles", {})
-        if isinstance(app_id, str):
-            teardown = provider.verify_teardown(app_id)
-            persist("teardown", teardown)
-            lifecycle["teardown"] = teardown
-            if not teardown.get("verified"):
-                lifecycle["status"] = "failed"
-        receipt = build_receipt(plan, payloads, roles)
-        receipt["status"] = lifecycle.get("status", "failed")
-        receipt["lifecycle"] = {key: value for key, value in lifecycle.items() if key != "roles"}
+        app, workers, coordinator = _create_modal_workers(modal, image, plan["run_id"])
+        dispatch = _dispatch_detached(app, workers, coordinator, plan, payloads, destination)
     except BaseException as error:
-        roles = lifecycle.get("roles", roles)
-        if app_id is None and app is not None:
-            app_id = getattr(app, "app_id", None)
-        emergency_teardown: dict[str, object] | None = None
-        if isinstance(app_id, str) and provider is not None:
-            try:
-                emergency_teardown = provider.stop(app_id)
-                persist("emergency_teardown", emergency_teardown)
-            except BaseException as teardown_error:
-                emergency_teardown = {
-                    "verified": False,
-                    "failure_type": type(teardown_error).__name__,
-                }
-                persist("teardown_failure", emergency_teardown)
-        persist("host_failure", {"type": type(error).__name__, "stage": "modal_lifecycle"})
-        receipt = build_receipt(plan, payloads, roles)
-        receipt["status"] = "failed"
-        receipt["failure"] = {"type": type(error).__name__, "stage": "modal_lifecycle"}
-        receipt["lifecycle"] = {
-            **{key: value for key, value in lifecycle.items() if key != "roles"},
-            "app_id": app_id,
-            "teardown": emergency_teardown,
+        dispatch = {
+            "status": "failed",
+            "run_id": plan["run_id"],
+            "plan_sha256": plan["plan_sha256"],
+            "failure_type": type(error).__name__,
         }
+    if dispatch["status"] != "dispatched":
+        _write_json_exclusive(destination / "dispatch-failure.json", dispatch)
+    return dispatch
+
+
+def recover_plan(
+    plan_path: str | Path,
+    expected_plan_sha256: str,
+    output_dir: str | Path,
+    *,
+    root: str | Path = ".",
+    read_terminal: Any = None,
+    read_identity: Any = None,
+    provider: Any = None,
+    call_status: Any = None,
+) -> dict[str, object]:
+    """Observe one prior attempt; never define, spawn, or replay a remote function."""
+    from experiments.targeted_training_coordinator import (
+        finalize_remote_receipt,
+        validate_remote_receipt_identity,
+    )
+
+    plan_file = Path(plan_path).resolve(strict=True)
+    plan = json.loads(plan_file.read_text(encoding="utf-8"))
+    if (
+        not isinstance(plan, dict)
+        or plan.get("plan_sha256") != expected_plan_sha256
+        or _canonical_digest({key: value for key, value in plan.items() if key != "plan_sha256"})
+        != expected_plan_sha256
+    ):
+        raise ValueError("recovery plan identity differs")
+    destination = Path(output_dir).resolve(strict=True)
+    attempt = json.loads((destination / "attempt.json").read_text(encoding="utf-8"))
+    app_marker = json.loads((destination / "app.json").read_text(encoding="utf-8"))
+    run_marker_path = (
+        Path(root).resolve(strict=True) / "artifacts" / f"{plan['run_id']}.targeted-attempt.json"
+    )
+    run_marker = json.loads(run_marker_path.read_text(encoding="utf-8"))
+    expected = {
+        "run_id": plan["run_id"],
+        "plan_sha256": expected_plan_sha256,
+        "source_commit": plan["source_commit"],
+    }
+    if (
+        not isinstance(attempt, dict)
+        or not isinstance(app_marker, dict)
+        or not isinstance(run_marker, dict)
+        or attempt != run_marker
+        or any(
+            attempt.get(key) != value or app_marker.get(key) != value
+            for key, value in expected.items()
+        )
+        or not isinstance(app_marker.get("app_id"), str)
+        or re.fullmatch(r"ap-[A-Za-z0-9]+", app_marker["app_id"]) is None
+    ):
+        raise ValueError("recovery attempt or app identity differs")
+    dispatch_file = destination / "dispatch.json"
+    dispatch = (
+        json.loads(dispatch_file.read_text(encoding="utf-8")) if dispatch_file.exists() else None
+    )
+    if dispatch is not None and (
+        not isinstance(dispatch, dict)
+        or dispatch.get("status") != "dispatched"
+        or dispatch.get("app_id") != app_marker["app_id"]
+        or dispatch.get("run_id") != plan["run_id"]
+        or dispatch.get("plan_sha256") != expected_plan_sha256
+        or not isinstance(dispatch.get("coordinator_call_id"), str)
+    ):
+        raise ValueError("recovery dispatch identity differs")
+    marker = {**app_marker}
+    if dispatch is not None:
+        marker["coordinator_call_id"] = dispatch["coordinator_call_id"]
+    if (
+        read_terminal is None
+        or provider is None
+        or call_status is None
+        or (dispatch is None and read_identity is None)
+    ):
+        _modal_preflight(plan["run_id"], require_unused=False)
+        read_terminal = read_terminal or _read_remote_terminal
+        read_identity = read_identity or _read_remote_identity
+        provider = provider or _ModalProvider()
+        call_status = call_status or _coordinator_call_status
+    if dispatch is None:
+        remote_identity = read_identity(plan["run_id"], app_marker["app_id"])
+        if remote_identity is not None:
+            expected_identity = {
+                **expected,
+                "app_id": app_marker["app_id"],
+                "coordinator_call_id": remote_identity.get("coordinator_call_id")
+                if isinstance(remote_identity, dict)
+                else None,
+            }
+            if (
+                not isinstance(remote_identity, dict)
+                or remote_identity != expected_identity
+                or not isinstance(remote_identity["coordinator_call_id"], str)
+                or re.fullmatch(r"fc-[A-Za-z0-9]+", remote_identity["coordinator_call_id"]) is None
+            ):
+                raise ValueError("recovery remote coordinator identity differs")
+            marker["coordinator_call_id"] = remote_identity["coordinator_call_id"]
+    terminal = read_terminal(plan["run_id"], app_marker["app_id"])
+    if terminal is None:
+        observation = provider.observe(app_marker["app_id"])
+        call_state = (
+            call_status(marker["coordinator_call_id"])
+            if "coordinator_call_id" in marker
+            else "unknown"
+        )
+        stopped = (
+            observation.get("state") == "APP_STATE_STOPPED" and observation.get("n_tasks") == 0
+        )
+        created = datetime.fromisoformat(attempt["created_at_utc"].replace("Z", "+00:00"))
+        expired = created.tzinfo is None or datetime.now(UTC) - created > timedelta(seconds=9300)
+        if stopped or call_state in ("failed", "complete") or expired:
+            terminal = read_terminal(plan["run_id"], app_marker["app_id"])
+            if terminal is None:
+                teardown = provider.stop(app_marker["app_id"]) if not stopped else observation
+                outcome = {
+                    "status": "incomplete",
+                    "app_id": app_marker["app_id"],
+                    "teardown": teardown,
+                }
+                _write_json_exclusive(destination / "incomplete.json", outcome)
+                return outcome
+        else:
+            return {"status": "pending", "app_id": app_marker["app_id"], "call_state": call_state}
+    if not isinstance(terminal, dict):
+        raise ValueError("remote terminal receipt is malformed")
+    payloads = {
+        role: json.loads((plan_file.parent / f"{role}-payload.json").read_text(encoding="utf-8"))
+        for role in (ROLE_UNCHANGED, ROLE_CONTROL, ROLE_TREATMENT)
+    }
+    validate_remote_receipt_identity(plan, payloads, marker, terminal)
+    teardown = provider.verify_teardown(app_marker["app_id"])
+    receipt = finalize_remote_receipt(plan, payloads, marker, terminal, teardown)
     _write_json_exclusive(destination / "receipt.json", receipt)
-    return receipt
+    return {
+        "status": receipt["status"],
+        "app_id": app_marker["app_id"],
+        "receipt": str(destination / "receipt.json"),
+    }
+
+
+def _read_remote_terminal(run_id: str, app_id: str) -> dict[str, object] | None:
+    import modal
+
+    from experiments.targeted_training_coordinator import EVIDENCE_DIRECTORY
+
+    volume = modal.Volume.from_name(VOLUME_NAME, environment_name=ENVIRONMENT)
+    path = f"/{EVIDENCE_DIRECTORY}/{run_id}/{app_id}/terminal.json"
+    try:
+        raw = b"".join(volume.read_file(path))
+    except FileNotFoundError:
+        return None
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise ValueError("remote terminal receipt is malformed")
+    return value
+
+
+def _read_remote_identity(run_id: str, app_id: str) -> dict[str, object] | None:
+    import modal
+
+    from experiments.targeted_training_coordinator import EVIDENCE_DIRECTORY
+
+    volume = modal.Volume.from_name(VOLUME_NAME, environment_name=ENVIRONMENT)
+    path = f"/{EVIDENCE_DIRECTORY}/{run_id}/{app_id}/identity.json"
+    try:
+        raw = b"".join(volume.read_file(path))
+    except FileNotFoundError:
+        return None
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise ValueError("remote coordinator identity is malformed")
+    return value
+
+
+def _coordinator_call_status(call_id: str) -> str:
+    import modal
+
+    try:
+        modal.FunctionCall.from_id(call_id).get(timeout=0)
+    except TimeoutError as error:
+        return "failed" if hasattr(error, "__line_cache__") else "pending"
+    except (
+        modal.exception.FunctionTimeoutError,
+        modal.exception.InternalFailure,
+        modal.exception.RemoteError,
+        modal.exception.ExecutionError,
+        modal.exception.OutputExpiredError,
+    ):
+        return "failed"
+    except modal.exception.Error as error:
+        return "failed" if hasattr(error, "__line_cache__") else "unknown"
+    except Exception as error:
+        return "failed" if hasattr(error, "__line_cache__") else "unknown"
+    return "complete"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -449,6 +709,10 @@ def main(argv: list[str] | None = None) -> int:
     launch.add_argument("--expected-plan-sha256", required=True)
     launch.add_argument("--clearance", required=True)
     launch.add_argument("--output-dir", required=True)
+    recovery = mode.add_parser("recover")
+    recovery.add_argument("--plan", required=True)
+    recovery.add_argument("--expected-plan-sha256", required=True)
+    recovery.add_argument("--output-dir", required=True)
     args = parser.parse_args(argv)
     if args.mode == "plan":
         prepared = prepare_plan(args.root, args.run_id, args.output_dir)
@@ -461,18 +725,23 @@ def main(argv: list[str] | None = None) -> int:
             ).strip()
         )
         return 0
-    receipt = launch_plan(
+    if args.mode == "recover":
+        result = recover_plan(args.plan, args.expected_plan_sha256, args.output_dir, root=args.root)
+        print(_json_line(result).strip())
+        return 0 if result["status"] in ("pending", "passed") else 1
+    dispatch = launch_plan(
         args.plan, args.expected_plan_sha256, args.clearance, args.output_dir, root=args.root
     )
     print(
         _json_line(
             {
-                "status": receipt["status"],
-                "receipt": str(Path(args.output_dir).resolve() / "receipt.json"),
+                "status": dispatch["status"],
+                "app_id": dispatch.get("app_id"),
+                "dispatch": str(Path(args.output_dir).resolve() / "dispatch.json"),
             }
         ).strip()
     )
-    return 0 if receipt["status"] == "passed" else 1
+    return 0 if dispatch["status"] == "dispatched" else 1
 
 
 def _canonical_digest(value: object) -> str:
@@ -575,7 +844,7 @@ def _validate_clearance(plan: Mapping[str, object], value: object) -> None:
         raise ValueError("budget estimate exceeds its explicit clearance")
 
 
-def _modal_preflight(run_id: str) -> None:
+def _modal_preflight(run_id: str, *, require_unused: bool = True) -> None:
     """Verify the fixed profile and inspect active apps before defining a worker."""
     from experiments import modal_smoke
 
@@ -596,18 +865,48 @@ def _modal_preflight(run_id: str) -> None:
         await workspace.hydrate()
         if workspace.name != WORKSPACE:
             raise ValueError("Modal credentials do not identify the personal workspace")
-        response = await client._stub.AppList(api_pb2.AppListRequest(environment_name=ENVIRONMENT))
-        for app in response.apps:
-            if f"reflex-targeted-training-{run_id}" in (
-                getattr(app, "name", None),
-                getattr(app, "description", None),
-            ):
-                raise ValueError("run ID already has a Modal app")
+        if require_unused:
+            response = await client._stub.AppList(
+                api_pb2.AppListRequest(environment_name=ENVIRONMENT)
+            )
+            for app in response.apps:
+                if f"reflex-targeted-training-{run_id}" in (
+                    getattr(app, "name", None),
+                    getattr(app, "description", None),
+                ):
+                    raise ValueError("run ID already has a Modal app")
 
     asyncio.run(check_apps())
 
 
 class _ModalProvider:
+    def observe(self, app_id: str) -> dict[str, object]:
+        return asyncio.run(self._observe(app_id))
+
+    async def _observe(self, app_id: str) -> dict[str, object]:
+        import modal
+        from modal_proto import api_pb2
+
+        if not isinstance(app_id, str) or re.fullmatch(r"ap-[A-Za-z0-9]+", app_id) is None:
+            raise ValueError("Modal app ID is malformed")
+        modal.config._set_profile(PROFILE)
+        client = await modal.client._Client.from_env()
+        lifecycle = await asyncio.wait_for(
+            client._stub.AppGetLifecycle(api_pb2.AppGetLifecycleRequest(app_id=app_id)), timeout=5
+        )
+        tasks = await asyncio.wait_for(
+            client._stub.TaskList(
+                api_pb2.TaskListRequest(environment_name=ENVIRONMENT, app_id=app_id)
+            ),
+            timeout=5,
+        )
+        if any(getattr(task, "app_id", None) != app_id for task in tasks.tasks):
+            raise ValueError("TaskList returned a different app ID")
+        return {
+            "state": api_pb2.AppState.Name(lifecycle.lifecycle.app_state),
+            "n_tasks": len(tasks.tasks),
+        }
+
     def stop(self, app_id: str) -> dict[str, object]:
         return asyncio.run(self._teardown(app_id, force_stop=True))
 
@@ -746,6 +1045,7 @@ def build_launch_plan(
         "workspace": WORKSPACE,
         "environment": ENVIRONMENT,
         "modal_sdk_version": MODAL_SDK_VERSION,
+        "execution": {"detach": True, "coordinator": dict(COORDINATOR_EXECUTION)},
         "roles": roles,
         "role_payload_sha256": digests,
     }
@@ -877,8 +1177,22 @@ def _execute_modal_roles(
                 for role in (ROLE_CONTROL, ROLE_TREATMENT)
             }
             pending = set(futures)
+            deadline = (
+                time.monotonic()
+                + max(
+                    ROLE_RESOURCES[ROLE_CONTROL].timeout_seconds,
+                    ROLE_RESOURCES[ROLE_TREATMENT].timeout_seconds,
+                )
+                + 360
+            )
             while pending:
-                completed, pending = wait(pending, return_when=FIRST_COMPLETED)
+                completed, pending = wait(
+                    pending,
+                    timeout=max(0, deadline - time.monotonic()),
+                    return_when=FIRST_COMPLETED,
+                )
+                if not completed:
+                    raise TimeoutError("arm result wait exceeded its fixed deadline")
                 for future in completed:
                     role = futures[future]
                     receive(role, future.result())

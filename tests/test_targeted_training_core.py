@@ -5,6 +5,17 @@ import copy
 import pytest
 
 
+def test_targeted_source_manifest_pins_coordinator_and_recovery_contract() -> None:
+    from pathlib import Path
+
+    from experiments import targeted_training_core as core
+
+    root = Path(__file__).resolve().parents[1]
+    manifest = core.targeted_source_manifest(root)
+    assert "experiments/targeted_training_coordinator.py" in manifest
+    assert "docs/targeted-execution-recovery.md" in manifest
+
+
 @pytest.fixture(scope="module")
 def valid_unchanged_payload() -> dict[str, object]:
     from pathlib import Path

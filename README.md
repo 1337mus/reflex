@@ -41,6 +41,8 @@ Both controlled-mixture runs passed all seven checks on the balanced SNLI develo
 | R1 | 617/1,152 (53.56%) | 781/1,152 (67.80%) | +14.24 pp |
 | R2 | 493/1,152 (42.80%) | 748/1,152 (64.93%) | +22.14 pp |
 
-These two runs do not measure seed uncertainty. Kev remains ahead on this panel at 877/1,152 (76.13%). See the separate [R1 results](docs/mixture-training-results.md) and [R2 results](docs/mixture-training-seed2-results.md), with their [R1 verification summary](docs/verification/mixture-training-summary.json) and [R2 verification summary](docs/verification/mixture-training-seed2-summary.json).
+These two runs do not measure seed uncertainty. Kev scored 877/1,152 (76.13%), ahead of both synthetic-mixture runs. See the separate [R1 results](docs/mixture-training-results.md) and [R2 results](docs/mixture-training-seed2-results.md), with their [R1 verification summary](docs/verification/mixture-training-summary.json) and [R2 verification summary](docs/verification/mixture-training-seed2-summary.json).
+
+The next matched comparison added human-labeled reasoning practice. It scored **996/1,152 (86.46%)**, versus **769/1,152 (66.75%)** for extra synthetic practice. All nine checks passed. These are now within-source SNLI development results. The saved adapter will next be checked on cause-and-effect and reading-comprehension tasks. See the [result and tradeoffs](docs/natural-reasoning-results.md) and [verification evidence](docs/verification/natural-reasoning-summary.json).
 
 No account is needed for CPU work; the existing Modal profile is configured. Start with the [research plan](docs/research-plan.md) and [runtime decisions ADR](docs/adr/0001-runtime-decisions.md). Published results for other systems belong to their authors and are not Reflex measurements.

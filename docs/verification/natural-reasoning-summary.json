@@ -1,0 +1,997 @@
+{
+  "all_nine_learning_checks_passed": true,
+  "artifact_sha256": {
+    ".context/natural-reasoning-candidate.json": "6cd473f02ea8f3b9bfa973ed6434419895b5f08a6412656d0ee6c02a973a4c0f",
+    ".context/natural-reasoning-final-review.md": "c0f4e4be50cfca7df4fe4227610bcc5042332c5ddaee51001e3a23f50a841b5a",
+    ".context/natural-reasoning-independent-results.json": "330808c4f7ec040a05973dd598fe4f2493b315f39deb03748db65dd3bb000f82",
+    ".context/natural-reasoning-launch-signoff.json": "93762f880c79a6509c14a74143962e8c5b51de9b0e7b458aed5de77672e8c834",
+    ".context/natural-reasoning-root-independent-agreement.json": "442959c888db906e59af747f183f047b1247bc042c3b377150dd2755823da6c6",
+    "artifacts/natural-reasoning-2026-10-04-r1-analysis.json": "76d8ea6672df3b38a5554c77d5dc85fbfe4a451cd1a3021e6f23beb656e7c949",
+    "artifacts/natural-reasoning-2026-10-04-r1-receipt.json": "d71ed1d77b46d19022850736c88d9ec3528d4dbfb5d9131a8a01b900454aaf67",
+    "artifacts/natural-reasoning-2026-10-04-r1-storage-verification.json": "24047c8c90f2c0eda4318fe0194fa60753a69f7ce3994b3ce7e05e1c6be4b518",
+    "artifacts/natural-reasoning-2026-10-04-r1-teardown-billing.json": "8b706a55ca02be793180875313d2d0a47c2a269ba5b67e5512122dafc7b6358f"
+  },
+  "execution": {
+    "snli_mix": {
+      "base_gradients_none": true,
+      "changed_adapter_tensors": 120,
+      "final_snapshot": {
+        "files_sha256": {
+          "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+          "adapter_config.json": "04e104f70daf01ecec8ae454495593c89540b9a2d6dca0adf9b63558c90bfdce",
+          "adapter_model.safetensors": "de496c34b7ef667f091519f24b87755b29248df67bae0d66a4cf0d3206f15272"
+        },
+        "path": "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-378",
+        "update": 378
+      },
+      "initialization_verified": true,
+      "reload": {
+        "max_abs_difference": 0.0,
+        "tensor_values_exact": true,
+        "winner_match": true
+      },
+      "reload_checks": 32,
+      "updates_completed": 378
+    },
+    "synthetic_repeat": {
+      "base_gradients_none": true,
+      "changed_adapter_tensors": 120,
+      "final_snapshot": {
+        "files_sha256": {
+          "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+          "adapter_config.json": "d249b6104a27d391efab00264baa1dad4d81974bffa19c8b2e0ea5885b49e294",
+          "adapter_model.safetensors": "060e21f7a2fc5474f5c94f5d018544a0d0a7ca9f9ce1de466bc13a8edb9a5f25"
+        },
+        "path": "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-378",
+        "update": 378
+      },
+      "initialization_verified": true,
+      "reload": {
+        "max_abs_difference": 0.0,
+        "tensor_values_exact": true,
+        "winner_match": true
+      },
+      "reload_checks": 32,
+      "updates_completed": 378
+    }
+  },
+  "execution_status": "passed",
+  "experiment_id": "natural-reasoning-2026-10-04-r1",
+  "independent_agreement": {
+    "all_intervals_match": true,
+    "analysis_protocol": "natural-reasoning-v1",
+    "comparison_scope": [
+      "all three states and six development datasets",
+      "selected and original order correct, presentation, and group counts",
+      "selected-order and original-order equal-source-group mean accuracies",
+      "original-order confusion matrices for original-pilot and balanced SNLI",
+      "all nine gate values, thresholds, pass results, and paired 95% intervals",
+      "actual forward and input-token phase ledgers from the receipt and independent recount",
+      "analysis total forwards and its canonical hash binding to the provided receipt"
+    ],
+    "dataset_order_count_checks": 36,
+    "equal_group_mean_checks": 36,
+    "execution_totals": {
+      "forward_plan_by_state": {
+        "initialize": {
+          "base_evaluation": 939,
+          "final_evaluation": 0,
+          "reload_parity": 0,
+          "total": 939,
+          "training": 0
+        },
+        "snli_mix": {
+          "base_evaluation": 0,
+          "final_evaluation": 4023,
+          "reload_parity": 32,
+          "total": 5567,
+          "training": 1512
+        },
+        "synthetic_repeat": {
+          "base_evaluation": 0,
+          "final_evaluation": 4023,
+          "reload_parity": 32,
+          "total": 5567,
+          "training": 1512
+        }
+      },
+      "forward_total": 12073,
+      "input_token_cap": 24725504,
+      "input_token_counts_by_state": {
+        "initialize": {
+          "base_evaluation": 260662,
+          "final_evaluation": 0,
+          "reload_parity": 0,
+          "total": 260662,
+          "training": 0
+        },
+        "snli_mix": {
+          "base_evaluation": 0,
+          "final_evaluation": 876540,
+          "reload_parity": 7371,
+          "total": 1141319,
+          "training": 257408
+        },
+        "synthetic_repeat": {
+          "base_evaluation": 0,
+          "final_evaluation": 876540,
+          "reload_parity": 7371,
+          "total": 1192406,
+          "training": 308495
+        }
+      },
+      "input_token_total": 2594387,
+      "receipt_and_independent_ledgers_match": true
+    },
+    "experiment_id": "natural-reasoning-2026-10-04-r1",
+    "gates_checked": 9,
+    "inputs": {
+      "analysis_sha256": "76d8ea6672df3b38a5554c77d5dc85fbfe4a451cd1a3021e6f23beb656e7c949",
+      "independent_sha256": "330808c4f7ec040a05973dd598fe4f2493b315f39deb03748db65dd3bb000f82",
+      "receipt_sha256": "d71ed1d77b46d19022850736c88d9ec3528d4dbfb5d9131a8a01b900454aaf67"
+    },
+    "mixture_receipt_canonical_json_sha256": "0c2933cd5530f970c2159fd2a8224adcaf9a7f42f328e4084ddb02cd3652f730",
+    "receipt": {
+      "experiment_id": "natural-reasoning-2026-10-04-r1",
+      "result_statuses": {
+        "initialize": "passed",
+        "snli_mix": "passed",
+        "synthetic_repeat": "passed"
+      },
+      "status": "passed"
+    },
+    "snli_confusion_matrices_checked": 6,
+    "status": "passed"
+  },
+  "learning_checks": {
+    "atomic_fact_snli_mix_minus_synthetic_repeat": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "-1/45",
+          "value": -0.022222222222222223
+        },
+        "upper": {
+          "fraction": "-1/225",
+          "value": -0.0044444444444444444
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "-1/75",
+        "value": -0.013333333333333334
+      }
+    },
+    "balanced_snli_mix_minus_base": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "485/1152",
+          "value": 0.4210069444444444
+        },
+        "upper": {
+          "fraction": "607/1152",
+          "value": 0.5269097222222222
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "61/128",
+        "value": 0.4765625
+      }
+    },
+    "balanced_snli_mix_minus_synthetic_repeat": {
+      "minimum": {
+        "fraction": "1/20",
+        "value": 0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "55/384",
+          "value": 0.14322916666666666
+        },
+        "upper": {
+          "fraction": "11281/46080",
+          "value": 0.24481336805555556
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "227/1152",
+        "value": 0.1970486111111111
+      }
+    },
+    "dbpedia_original_r2_anchor": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "0/1",
+          "value": 0.0
+        },
+        "upper": {
+          "fraction": "5/28",
+          "value": 0.17857142857142858
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "5/56",
+        "value": 0.08928571428571429
+      }
+    },
+    "dbpedia_selected_snli_mix_minus_synthetic_repeat": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "-3001/62720",
+          "value": -0.047847576530612244
+        },
+        "upper": {
+          "fraction": "13/392",
+          "value": 0.03316326530612245
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "-9/1568",
+        "value": -0.005739795918367347
+      }
+    },
+    "numeric_selection_snli_mix_minus_synthetic_repeat": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "-33/400",
+          "value": -0.0825
+        },
+        "upper": {
+          "fraction": "3/400",
+          "value": 0.0075
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "-7/200",
+        "value": -0.035
+      }
+    },
+    "original_snli_qwen_base_anchor": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "51/128",
+          "value": 0.3984375
+        },
+        "upper": {
+          "fraction": "75/128",
+          "value": 0.5859375
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "63/128",
+        "value": 0.4921875
+      }
+    },
+    "sms_original_r2_anchor": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "-1/20",
+          "value": -0.05
+        },
+        "upper": {
+          "fraction": "1/20",
+          "value": 0.05
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "0/1",
+        "value": 0.0
+      }
+    },
+    "sms_selected_snli_mix_minus_synthetic_repeat": {
+      "minimum": {
+        "fraction": "-1/20",
+        "value": -0.05
+      },
+      "paired_bootstrap_95": {
+        "lower": {
+          "fraction": "-1/40",
+          "value": -0.025
+        },
+        "upper": {
+          "fraction": "0/1",
+          "value": 0.0
+        }
+      },
+      "passed": true,
+      "value": {
+        "fraction": "-1/120",
+        "value": -0.008333333333333333
+      }
+    }
+  },
+  "limits": [
+    "SNLI training and evaluation share a source; these are within-source development results.",
+    "One training initialization; intervals describe source-group sampling, not seed variation.",
+    "The same 192 balanced questions appear in six orders; 64 source groups are the resampling units.",
+    "Numeric selected-order accuracy averages orders within records, records within groups, and groups equally.",
+    "Retention checks use point differences against a five-point limit, not a confidence bound.",
+    "Reference runtimes and prompts differ. No sealed test, general superiority, speed, or cost claim.",
+    "Workspace billing is delayed and revisable; it is not the cost of this individual experiment."
+  ],
+  "next_selection": {
+    "agreement_sha256": "442959c888db906e59af747f183f047b1247bc042c3b377150dd2755823da6c6",
+    "analysis_sha256": "76d8ea6672df3b38a5554c77d5dc85fbfe4a451cd1a3021e6f23beb656e7c949",
+    "arm": "snli_mix",
+    "selection_id": "adapter-transfer-v1",
+    "snapshot": {
+      "files_sha256": {
+        "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+        "adapter_config.json": "04e104f70daf01ecec8ae454495593c89540b9a2d6dca0adf9b63558c90bfdce",
+        "adapter_model.safetensors": "de496c34b7ef667f091519f24b87755b29248df67bae0d66a4cf0d3206f15272"
+      },
+      "path": "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-378",
+      "update": 378
+    },
+    "storage_verification_sha256": "24047c8c90f2c0eda4318fe0194fa60753a69f7ce3994b3ce7e05e1c6be4b518",
+    "training_receipt_sha256": "d71ed1d77b46d19022850736c88d9ec3528d4dbfb5d9131a8a01b900454aaf67",
+    "training_run_id": "natural-reasoning-2026-10-04-r1",
+    "update": 378
+  },
+  "protocol": "docs/natural-reasoning-protocol.md",
+  "schema_version": 1,
+  "source_ci_run": 37275028352,
+  "source_commit": "3143e4a0533b3ed111fd1fcba398e652a41f4b46",
+  "states": {
+    "base": {
+      "per_dataset": {
+        "dbpedia14-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "31/56",
+            "value": 0.5535714285714286
+          },
+          "original_order_presentations": {
+            "correct": 31,
+            "total": 56
+          },
+          "record_count": 56,
+          "selected_group_mean_accuracy": {
+            "fraction": "205/392",
+            "value": 0.5229591836734694
+          },
+          "selected_presentations": {
+            "correct": 820,
+            "total": 1568
+          },
+          "source_group_count": 56
+        },
+        "sms-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "13/30",
+            "value": 0.43333333333333335
+          },
+          "original_order_presentations": {
+            "correct": 26,
+            "total": 60
+          },
+          "record_count": 60,
+          "selected_group_mean_accuracy": {
+            "fraction": "59/120",
+            "value": 0.49166666666666664
+          },
+          "selected_presentations": {
+            "correct": 59,
+            "total": 120
+          },
+          "source_group_count": 60
+        },
+        "snli-balanced-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "1/2",
+            "value": 0.5
+          },
+          "original_order_presentations": {
+            "correct": 96,
+            "total": 192
+          },
+          "record_count": 192,
+          "selected_group_mean_accuracy": {
+            "fraction": "149/384",
+            "value": 0.3880208333333333
+          },
+          "selected_presentations": {
+            "correct": 447,
+            "total": 1152
+          },
+          "source_group_count": 64
+        },
+        "snli-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "57/128",
+            "value": 0.4453125
+          },
+          "original_order_presentations": {
+            "correct": 57,
+            "total": 128
+          },
+          "record_count": 128,
+          "selected_group_mean_accuracy": {
+            "fraction": "57/128",
+            "value": 0.4453125
+          },
+          "selected_presentations": {
+            "correct": 57,
+            "total": 128
+          },
+          "source_group_count": 128
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "31/75",
+            "value": 0.41333333333333333
+          },
+          "original_order_presentations": {
+            "correct": 31,
+            "total": 75
+          },
+          "record_count": 75,
+          "selected_group_mean_accuracy": {
+            "fraction": "191/450",
+            "value": 0.42444444444444446
+          },
+          "selected_presentations": {
+            "correct": 191,
+            "total": 450
+          },
+          "source_group_count": 25
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "8/25",
+            "value": 0.32
+          },
+          "original_order_presentations": {
+            "correct": 16,
+            "total": 50
+          },
+          "record_count": 50,
+          "selected_group_mean_accuracy": {
+            "fraction": "113/400",
+            "value": 0.2825
+          },
+          "selected_presentations": {
+            "correct": 54,
+            "total": 364
+          },
+          "source_group_count": 25
+        }
+      },
+      "snli_confusion_by_dataset": {
+        "snli-balanced-v1-development": {
+          "labels": [
+            "contradiction",
+            "entailment",
+            "neutral"
+          ],
+          "matrix": {
+            "contradiction": {
+              "contradiction": 28,
+              "entailment": 7,
+              "neutral": 29
+            },
+            "entailment": {
+              "contradiction": 6,
+              "entailment": 41,
+              "neutral": 17
+            },
+            "neutral": {
+              "contradiction": 18,
+              "entailment": 19,
+              "neutral": 27
+            }
+          }
+        },
+        "snli-pilot-v1-development": {
+          "labels": [
+            "contradiction",
+            "entailment",
+            "neutral"
+          ],
+          "matrix": {
+            "contradiction": {
+              "contradiction": 54,
+              "entailment": 9,
+              "neutral": 59
+            },
+            "entailment": {
+              "contradiction": 0,
+              "entailment": 0,
+              "neutral": 1
+            },
+            "neutral": {
+              "contradiction": 2,
+              "entailment": 0,
+              "neutral": 3
+            }
+          }
+        }
+      }
+    },
+    "snli_mix": {
+      "per_dataset": {
+        "dbpedia14-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "55/56",
+            "value": 0.9821428571428571
+          },
+          "original_order_presentations": {
+            "correct": 55,
+            "total": 56
+          },
+          "record_count": 56,
+          "selected_group_mean_accuracy": {
+            "fraction": "109/112",
+            "value": 0.9732142857142857
+          },
+          "selected_presentations": {
+            "correct": 1526,
+            "total": 1568
+          },
+          "source_group_count": 56
+        },
+        "sms-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "29/30",
+            "value": 0.9666666666666667
+          },
+          "original_order_presentations": {
+            "correct": 58,
+            "total": 60
+          },
+          "record_count": 60,
+          "selected_group_mean_accuracy": {
+            "fraction": "29/30",
+            "value": 0.9666666666666667
+          },
+          "selected_presentations": {
+            "correct": 116,
+            "total": 120
+          },
+          "source_group_count": 60
+        },
+        "snli-balanced-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "167/192",
+            "value": 0.8697916666666666
+          },
+          "original_order_presentations": {
+            "correct": 167,
+            "total": 192
+          },
+          "record_count": 192,
+          "selected_group_mean_accuracy": {
+            "fraction": "83/96",
+            "value": 0.8645833333333334
+          },
+          "selected_presentations": {
+            "correct": 996,
+            "total": 1152
+          },
+          "source_group_count": 64
+        },
+        "snli-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "15/16",
+            "value": 0.9375
+          },
+          "original_order_presentations": {
+            "correct": 120,
+            "total": 128
+          },
+          "record_count": 128,
+          "selected_group_mean_accuracy": {
+            "fraction": "15/16",
+            "value": 0.9375
+          },
+          "selected_presentations": {
+            "correct": 120,
+            "total": 128
+          },
+          "source_group_count": 128
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "73/75",
+            "value": 0.9733333333333334
+          },
+          "original_order_presentations": {
+            "correct": 73,
+            "total": 75
+          },
+          "record_count": 75,
+          "selected_group_mean_accuracy": {
+            "fraction": "74/75",
+            "value": 0.9866666666666667
+          },
+          "selected_presentations": {
+            "correct": 444,
+            "total": 450
+          },
+          "source_group_count": 25
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "41/50",
+            "value": 0.82
+          },
+          "original_order_presentations": {
+            "correct": 41,
+            "total": 50
+          },
+          "record_count": 50,
+          "selected_group_mean_accuracy": {
+            "fraction": "13/16",
+            "value": 0.8125
+          },
+          "selected_presentations": {
+            "correct": 259,
+            "total": 364
+          },
+          "source_group_count": 25
+        }
+      },
+      "snli_confusion_by_dataset": {
+        "snli-balanced-v1-development": {
+          "labels": [
+            "contradiction",
+            "entailment",
+            "neutral"
+          ],
+          "matrix": {
+            "contradiction": {
+              "contradiction": 58,
+              "entailment": 0,
+              "neutral": 6
+            },
+            "entailment": {
+              "contradiction": 1,
+              "entailment": 57,
+              "neutral": 6
+            },
+            "neutral": {
+              "contradiction": 9,
+              "entailment": 3,
+              "neutral": 52
+            }
+          }
+        },
+        "snli-pilot-v1-development": {
+          "labels": [
+            "contradiction",
+            "entailment",
+            "neutral"
+          ],
+          "matrix": {
+            "contradiction": {
+              "contradiction": 117,
+              "entailment": 0,
+              "neutral": 5
+            },
+            "entailment": {
+              "contradiction": 0,
+              "entailment": 1,
+              "neutral": 0
+            },
+            "neutral": {
+              "contradiction": 2,
+              "entailment": 1,
+              "neutral": 2
+            }
+          }
+        }
+      }
+    },
+    "synthetic_repeat": {
+      "per_dataset": {
+        "dbpedia14-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "53/56",
+            "value": 0.9464285714285714
+          },
+          "original_order_presentations": {
+            "correct": 53,
+            "total": 56
+          },
+          "record_count": 56,
+          "selected_group_mean_accuracy": {
+            "fraction": "1535/1568",
+            "value": 0.9789540816326531
+          },
+          "selected_presentations": {
+            "correct": 1535,
+            "total": 1568
+          },
+          "source_group_count": 56
+        },
+        "sms-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "29/30",
+            "value": 0.9666666666666667
+          },
+          "original_order_presentations": {
+            "correct": 58,
+            "total": 60
+          },
+          "record_count": 60,
+          "selected_group_mean_accuracy": {
+            "fraction": "39/40",
+            "value": 0.975
+          },
+          "selected_presentations": {
+            "correct": 117,
+            "total": 120
+          },
+          "source_group_count": 60
+        },
+        "snli-balanced-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "5/8",
+            "value": 0.625
+          },
+          "original_order_presentations": {
+            "correct": 120,
+            "total": 192
+          },
+          "record_count": 192,
+          "selected_group_mean_accuracy": {
+            "fraction": "769/1152",
+            "value": 0.6675347222222222
+          },
+          "selected_presentations": {
+            "correct": 769,
+            "total": 1152
+          },
+          "source_group_count": 64
+        },
+        "snli-pilot-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "45/128",
+            "value": 0.3515625
+          },
+          "original_order_presentations": {
+            "correct": 45,
+            "total": 128
+          },
+          "record_count": 128,
+          "selected_group_mean_accuracy": {
+            "fraction": "45/128",
+            "value": 0.3515625
+          },
+          "selected_presentations": {
+            "correct": 45,
+            "total": 128
+          },
+          "source_group_count": 128
+        },
+        "synthetic-atomic-fact-inference-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "1/1",
+            "value": 1.0
+          },
+          "original_order_presentations": {
+            "correct": 75,
+            "total": 75
+          },
+          "record_count": 75,
+          "selected_group_mean_accuracy": {
+            "fraction": "1/1",
+            "value": 1.0
+          },
+          "selected_presentations": {
+            "correct": 450,
+            "total": 450
+          },
+          "source_group_count": 25
+        },
+        "synthetic-numeric-selection-v1-development": {
+          "original_order_group_mean_accuracy": {
+            "fraction": "43/50",
+            "value": 0.86
+          },
+          "original_order_presentations": {
+            "correct": 43,
+            "total": 50
+          },
+          "record_count": 50,
+          "selected_group_mean_accuracy": {
+            "fraction": "339/400",
+            "value": 0.8475
+          },
+          "selected_presentations": {
+            "correct": 272,
+            "total": 364
+          },
+          "source_group_count": 25
+        }
+      },
+      "snli_confusion_by_dataset": {
+        "snli-balanced-v1-development": {
+          "labels": [
+            "contradiction",
+            "entailment",
+            "neutral"
+          ],
+          "matrix": {
+            "contradiction": {
+              "contradiction": 23,
+              "entailment": 2,
+              "neutral": 39
+            },
+            "entailment": {
+              "contradiction": 1,
+              "entailment": 60,
+              "neutral": 3
+            },
+            "neutral": {
+              "contradiction": 8,
+              "entailment": 19,
+              "neutral": 37
+            }
+          }
+        },
+        "snli-pilot-v1-development": {
+          "labels": [
+            "contradiction",
+            "entailment",
+            "neutral"
+          ],
+          "matrix": {
+            "contradiction": {
+              "contradiction": 41,
+              "entailment": 0,
+              "neutral": 81
+            },
+            "entailment": {
+              "contradiction": 0,
+              "entailment": 1,
+              "neutral": 0
+            },
+            "neutral": {
+              "contradiction": 1,
+              "entailment": 1,
+              "neutral": 3
+            }
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "app_id": "ap-Bsl4H9LZXx7m46WSwSSRBj",
+    "files": {
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-init/adapter-update-000/README.md": {
+        "bytes": 5376,
+        "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-init/adapter-update-000/adapter_config.json": {
+        "bytes": 1201,
+        "sha256": "1c49389e6b251163b7bcb0c96672c6c254c4fe120c5750905b62ce6c1c2ee040"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-init/adapter-update-000/adapter_model.safetensors": {
+        "bytes": 8077112,
+        "sha256": "159c3a2c6b5857665cb50c5314c0ecec45b9526453702812a45a2585873667d3"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-189/README.md": {
+        "bytes": 5376,
+        "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-189/adapter_config.json": {
+        "bytes": 1201,
+        "sha256": "04e104f70daf01ecec8ae454495593c89540b9a2d6dca0adf9b63558c90bfdce"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-189/adapter_model.safetensors": {
+        "bytes": 8077112,
+        "sha256": "9802a67d4d6225ca09cb71c0f62ed121bea8e25c002b0df58e134ddd60f1f289"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-378/README.md": {
+        "bytes": 5376,
+        "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-378/adapter_config.json": {
+        "bytes": 1201,
+        "sha256": "04e104f70daf01ecec8ae454495593c89540b9a2d6dca0adf9b63558c90bfdce"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-378/adapter_model.safetensors": {
+        "bytes": 8077112,
+        "sha256": "de496c34b7ef667f091519f24b87755b29248df67bae0d66a4cf0d3206f15272"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-189/README.md": {
+        "bytes": 5376,
+        "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-189/adapter_config.json": {
+        "bytes": 1201,
+        "sha256": "d249b6104a27d391efab00264baa1dad4d81974bffa19c8b2e0ea5885b49e294"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-189/adapter_model.safetensors": {
+        "bytes": 8077112,
+        "sha256": "de4de43113f495b5cb919a11f68ae18a35e0a1a1f2e79088a3227b28ffdf797a"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-378/README.md": {
+        "bytes": 5376,
+        "sha256": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-378/adapter_config.json": {
+        "bytes": 1201,
+        "sha256": "d249b6104a27d391efab00264baa1dad4d81974bffa19c8b2e0ea5885b49e294"
+      },
+      "/artifacts/runs/natural-reasoning-2026-10-04-r1-syn/adapter-update-378/adapter_model.safetensors": {
+        "bytes": 8077112,
+        "sha256": "060e21f7a2fc5474f5c94f5d018544a0d0a7ca9f9ce1de466bc13a8edb9a5f25"
+      }
+    },
+    "status": "passed"
+  },
+  "teardown_and_billing": {
+    "apps": [
+      {
+        "app_id": "ap-Bsl4H9LZXx7m46WSwSSRBj",
+        "n_running_tasks": 0,
+        "state": "APP_STATE_STOPPED"
+      },
+      {
+        "app_id": "ap-uOXcnYuVB6hKeauurP7lH6",
+        "n_running_tasks": 0,
+        "state": "APP_STATE_STOPPED"
+      }
+    ],
+    "billing": {
+      "adjustments": {
+        "Credits": "-2.30000000",
+        "Free Storage": "-0E-8",
+        "Network Egress Allowance": "-0.00579380",
+        "Plan Cost": "0E-8",
+        "Reservation Adjustment": "-0E-8"
+      },
+      "billed_cost": "0E-8",
+      "end_timestamp": "2026-11-01T00:00:00+00:00",
+      "metered_cost": "2.30579380",
+      "metered_cost_breakdown": {
+        "Ephemeral Apps": "2.30484908",
+        "LLM Tokens": "0E-8",
+        "Volumes": "0E-8"
+      },
+      "start_timestamp": "2026-10-01T00:00:00+00:00"
+    },
+    "checked_at_utc": "2026-10-05T07:16:17.564657+00:00",
+    "note": "Workspace-wide, lagging and revisable billing. Not a per-run invoice.",
+    "profile": "reflex-personal",
+    "workspace": "rajath-61258"
+  },
+  "verified_data_file_count": 15,
+  "verified_source_file_count": 51
+}

@@ -1,0 +1,19 @@
+{
+  "agreement_sha256": "442959c888db906e59af747f183f047b1247bc042c3b377150dd2755823da6c6",
+  "analysis_sha256": "76d8ea6672df3b38a5554c77d5dc85fbfe4a451cd1a3021e6f23beb656e7c949",
+  "arm": "snli_mix",
+  "selection_id": "adapter-transfer-v1",
+  "snapshot": {
+    "files_sha256": {
+      "README.md": "92e8f81cfaad2d573876e41fc50df417babefe42ef14f1f80f08174714d52689",
+      "adapter_config.json": "04e104f70daf01ecec8ae454495593c89540b9a2d6dca0adf9b63558c90bfdce",
+      "adapter_model.safetensors": "de496c34b7ef667f091519f24b87755b29248df67bae0d66a4cf0d3206f15272"
+    },
+    "path": "/artifacts/runs/natural-reasoning-2026-10-04-r1-snli/adapter-update-378",
+    "update": 378
+  },
+  "storage_verification_sha256": "24047c8c90f2c0eda4318fe0194fa60753a69f7ce3994b3ce7e05e1c6be4b518",
+  "training_receipt_sha256": "d71ed1d77b46d19022850736c88d9ec3528d4dbfb5d9131a8a01b900454aaf67",
+  "training_run_id": "natural-reasoning-2026-10-04-r1",
+  "update": 378
+}

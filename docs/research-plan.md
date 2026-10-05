@@ -1,8 +1,8 @@
 # Reflex v0.1 research and execution plan
 
-**Date:** 2026-10-04
+**Date:** 2026-10-05
 
-**Status:** R1 and R2 each passed all seven preset checks on the balanced SNLI development panel. Their results stay separate; the intervals describe evaluation-group sampling for each initialization, not seed uncertainty. Topic and spam retention passed in both runs, and both apps are stopped. The earlier real-data R2 pilot remains a failed candidate.
+**Status:** The human-labeled reasoning comparison passed all nine preset checks: 86.46% versus 66.75% for its matched synthetic-repeat control. Independent calculations and saved-file checks passed; the apps are stopped. SNLI is now a training source, so this is within-source development evidence. See the [results and tradeoffs](natural-reasoning-results.md). The two earlier synthetic-mixture results remain separate below; the original real-data pilot remains a failed candidate.
 
 | Run | Real-only | Synthetic mix | Gain |
 | --- | ---: | ---: | ---: |
@@ -135,7 +135,7 @@ flowchart LR
 
 The approved GitHub destination is the private personal repository `1337mus/reflex`. The existing authenticated Modal profile `reflex-personal` in workspace `rajath-61258` ran the smoke, prior-art comparisons, bounded rehearsal, real-data R2 pilot, and both controlled-mixture seeds; the pinned Intern/K reference comparison is complete ([report](real-pilot-baselines-results.md)). Anonymous public model and tokenizer downloads succeeded. A Hugging Face account is only needed for checkpoint uploads or gated/private resources. Do not request keys in chat; use provider secrets. Before another training run, decide the task families, data licenses/provenance, holdout design, and evaluation acceptance criteria; any paid run still requires an explicit launch.
 
-Immediate next step: use the two separate controlled-mixture results to plan a preregistered multi-task study with disjoint train, development, calibration, and sealed-test pools. Preserve the earlier failed real-data R2 result and leave sealed-test data untouched. The reviewed synthetic candidate has been used in the two controlled runs; those development results do not turn it into sealed-test evidence. Any paid follow-on still requires an explicit launch. Do not present the fixture rehearsal as benchmark or generalization evidence, and do not infer broad superiority from these selected development results.
+Immediate next step: run the separate [COPA/BoolQ evaluation](adapter-transfer-protocol.md) with the selected SNLI adapter and a fresh matched BF16 base. Keep its 272-forward budget and fixed analysis. These development panels were excluded from adapter training but were inspected earlier; they are not sealed tests. Then use the evidence to plan a broader multi-task study with disjoint training, development, calibration, and sealed-test pools. Preserve the earlier failed candidate. Keep paid follow-ons bounded under the existing user authorization; do not infer general superiority or release readiness.
 
 ## Sources
 

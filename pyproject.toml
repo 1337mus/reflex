@@ -22,6 +22,7 @@ packages = ["src/reflex_decisions"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
@@ -35,4 +36,3 @@ python_version = "3.12"
 strict = true
 packages = ["reflex_decisions"]
 mypy_path = "src"
-

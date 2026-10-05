@@ -1,0 +1,44 @@
+Stanford Natural Language Inference Corpus development pilot source and attribution
+
+Source: Stanford NLP SNLI 1.0 archive
+https://nlp.stanford.edu/projects/snli/snli_1.0.zip . The locally acquired
+archive SHA-256 is
+afb3d70a5af5d8de0d9d81e2637e0fb8c22d1235c2749d83125ca43dab0dbd3e. Only the
+snli_1.0/snli_1.0_dev.jsonl member and snli_1.0/README.txt were read. The
+development member SHA-256 is
+9c03faff70182ef086ebfeed2cffbabb5fcc6a84a8b3314decbbb5b01f07f4bf. Training
+and test examples were not read.
+
+The Stanford NLP project page states that the Stanford Natural Language
+Inference Corpus by the Stanford NLP Group is licensed under Creative Commons
+Attribution-ShareAlike 4.0 International (CC BY-SA 4.0):
+https://creativecommons.org/licenses/by-sa/4.0/ . The archive contains no
+separate license file; the license statement is on the official project page.
+The archive README requests citation of the SNLI paper and describes its
+sources. It says the premise captions come from Flickr30k except where noted;
+Flickr30k is also released under an Attribution-ShareAlike license. The README
+also notes that about 4,000 training sentences came from a VisualGenome pilot.
+That training-only note does not imply those rows were included in this pilot.
+
+Processing: only labeled development pairs with a consensus gold label are
+eligible; rows with gold_label "-" are excluded. Pairs are deduplicated by
+whitespace-normalized, case-folded premise and hypothesis. Connected source
+groups use captionID or normalized premise links, including links contributed
+by duplicate rows. Thirty-two groups are selected by the frozen hash recipe.
+Each pair is presented as a three-way relation decision with option IDs in
+the original entailment, neutral, contradiction order. These are development
+measurements, not an unseen-family or contamination-free evaluation.
+
+Please cite:
+
+Samuel R. Bowman, Gabor Angeli, Christopher Potts, and Christopher D. Manning.
+2015. “A large annotated corpus for learning natural language inference.”
+Proceedings of EMNLP 2015.
+http://nlp.stanford.edu/pubs/snli_paper.pdf
+
+For Flickr30k source descriptions, also cite:
+
+Peter Young, Alice Lai, Micah Hodosh, and Julia Hockenmaier. 2014. “From image
+descriptions to visual denotations: New similarity metrics for semantic
+inference over event descriptions.” Transactions of the Association for
+Computational Linguistics 2: 67–78.

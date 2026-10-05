@@ -1,0 +1,35 @@
+BoolQ development pilot source and attribution
+
+Source: google/boolq, Hugging Face dataset repository commit
+35b264d03638db9f4ce671b711558bf7ff0f80d5, file
+data/validation-00000-of-00001.parquet (the 3,270-row validation/development
+split). The file SHA-256 is
+52355d11524b4b874a9b9dcc278feb10f672d52c4f4eff9872e695ede59820f8.
+The source card identifies this as the original BoolQ dataset and licenses the
+dataset under Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0):
+https://creativecommons.org/licenses/by-sa/3.0/ .
+
+The original Google Research README points to a Cloud Storage URL that now
+requires sign-in; its public storage.googleapis.com equivalent reports that
+the owning project's billing account is closed. This dataset mirror was used
+under the source amendment at docs/broader-baseline-source-amendment.md. The
+mirror is not claimed to be byte-identical to the original JSONL. Its schema
+contains question, answer and passage and has no page title, so repeated-page
+grouping can only use normalized passage text.
+
+Processing: the pinned parquet was decoded with PyArrow 25.0.1 and exported
+as compact UTF-8 JSONL with sorted keys and one LF-terminated row per example.
+The export SHA-256 is
+c81b6520f1a51a8b96de45420b3d1f78184aee00373c77852132b297f2e567ef. The pilot
+uses 32 development source groups selected by the frozen hash recipe. It
+preserves the question and passage, maps the BoolQ answer to the stable yes/no
+option IDs, and deduplicates normalized question/passage pairs. These are
+development measurements; the sample does not establish page-level
+independence or an unseen-family result.
+
+Please cite:
+
+Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael
+Collins, and Kristina Toutanova. 2019. “BoolQ: Exploring the Surprising
+Difficulty of Natural Yes/No Questions.” NAACL.
+https://arxiv.org/abs/1905.10044

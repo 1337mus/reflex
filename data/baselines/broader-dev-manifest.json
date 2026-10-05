@@ -1,0 +1,24 @@
+{
+  "data_kind": "benchmark",
+  "datasets": [
+    {
+      "dataset_id": "boolq-dev-pilot-v1",
+      "source_id": "google-boolq",
+      "task_family": "yes-no-reading-comprehension",
+      "split": "development",
+      "source_uri": "https://huggingface.co/datasets/google/boolq/resolve/35b264d03638db9f4ce671b711558bf7ff0f80d5/data/validation-00000-of-00001.parquet",
+      "source_revision": "35b264d03638db9f4ce671b711558bf7ff0f80d5",
+      "license": "CC BY-SA 3.0"
+    },
+    {
+      "dataset_id": "snli-dev-pilot-v1",
+      "source_id": "stanford-snli-1.0",
+      "task_family": "natural-language-inference-three-way",
+      "split": "development",
+      "source_uri": "https://nlp.stanford.edu/projects/snli/snli_1.0.zip#snli_1.0/snli_1.0_dev.jsonl",
+      "source_revision": "SNLI 1.0",
+      "license": "CC BY-SA 4.0"
+    }
+  ],
+  "held_out_families": []
+}

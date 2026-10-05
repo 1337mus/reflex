@@ -1,0 +1,42 @@
+{
+  "data_kind": "fixture",
+  "data_path": "data/processed/synthetic-seed-v1-r2",
+  "fact_claim_links_checked": 450,
+  "file_sha256": {
+    "audit.json": "19f6b90426517bc50734a48f26e35d22ebc0aef794cac73e0adb29db9df666d1",
+    "manifest.json": "b4e8655c38eb4fb0ac95ceaf7062aa0c43f981fe9b8309f568943f4ff6c59a11",
+    "provenance.jsonl": "89c9b874f8de31bc3a61315cf4bd068147165195afb7f23472eede9ef31e45c5",
+    "recipe.json": "31a830aa56f9c28d983eea8b8942ee9f9b9db2b5199d8b2e71d42a654a337433",
+    "records.jsonl": "30b0e07b89977b1345d403936ab666b06f822e13053ffe71cf11fb0243321e5c"
+  },
+  "output_hashes_valid": true,
+  "records": 750,
+  "regeneration_equal": true,
+  "rejected_candidate": "data/processed/synthetic-seed-v1; preserved, do not train on it",
+  "review_findings_resolved": [
+    "stable split allocation under count expansion",
+    "explicit claim provenance",
+    "consistent unknown-case wording"
+  ],
+  "scenario_hashes": 300,
+  "schema_version": 1,
+  "source_file_sha256": {
+    "experiments/prepare_synthetic_data.py": "bc85c67e1e1f52f55038e0739ad12b9eb895e365b9f042a7b1ac3646404eea39",
+    "src/reflex_decisions/synthetic_data.py": "5d89a1c0cae15145d98565de2aa52d048f853a2f0baac92b55d993b1a95d205a",
+    "tests/test_synthetic_data.py": "63d90c2eccb16ced7fa2a542365b9e24baf39c8ea9d0571ca27ed070fa039932"
+  },
+  "split_counts": {
+    "calibration": 125,
+    "development": 125,
+    "test": 0,
+    "train": 500
+  },
+  "stable_expansion_verified": true,
+  "status": "data_candidate_verified_not_trained",
+  "validation": {
+    "configured_source_typecheck": "passed",
+    "focused_tests_passed": 9,
+    "format": "passed",
+    "ruff": "passed"
+  }
+}

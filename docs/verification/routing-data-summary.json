@@ -1,0 +1,75 @@
+{
+  "dataset": "routing-data-v1",
+  "release": {
+    "seed": 9104251840560150670,
+    "python": "3.12.13",
+    "selected_at_utc": "2026-10-05T09:08:52.770899+00:00",
+    "selection_method": "One fresh random seed after source review and exact-commit CI; no seed search.",
+    "source_commit": "3cf6db24fe75e2364a537c79d2c744fd1e78fd44",
+    "audit_commit": "f11fe641a183ddf755b800752abced0bb00dda71",
+    "generator_ci": 37287866796,
+    "audit_ci": 37287842621,
+    "source_ci_conclusion": "success",
+    "environment_sha256": {
+      ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      "pyproject.toml": "bb3b50723a90e332358540572e3db3dadf225e7ddb00de6713ea0dfc93d7eba0",
+      "uv.lock": "387ff11e25013939e25077b09a2b5885b0f5137f856aea39330cf84d3989c367"
+    }
+  },
+  "counts": {
+    "train": 56,
+    "development": 14,
+    "calibration": 14,
+    "test": 28,
+    "total": 112
+  },
+  "independent_release_checks": {
+    "rows": 112,
+    "rule_equivalence_groups": 112,
+    "cross_split_rule_equivalence_groups": 0,
+    "answers_matching_independent_prompt_recount": 112,
+    "source_hashes_matching": 11,
+    "source_hashes_expected": 11,
+    "training_two_missing_menu_outcome_combinations": 8,
+    "training_two_missing_menu_outcome_combinations_possible": 9,
+    "multiple_outcome_classes_at_each_training_menu_size": true,
+    "verifier_sha256": "451fd5027e1b431867854c11c2f4305e894bd9459fd6e6a5da09c0f39bb294f4"
+  },
+  "source_verification": {
+    "tests_passed": 591,
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "mypy": "passed",
+    "cli_checks": "passed"
+  },
+  "review_corrections": {
+    "four_attributes_with_two_allowed_values_each": true,
+    "structural_pool_exhaustion_resolved": true,
+    "two_missing_menu_outcome_coupling_resolved": true,
+    "toy_seeds_4_7_and_maximum_supported_seed_passed": true,
+    "toy_maximum_count_rows": 448,
+    "toy_independent_prompt_answers_checked": 784,
+    "toy_note": "These are generator checks, including toy test-split records; they are not release evaluation."
+  },
+  "export_hashes": {
+    "train.jsonl": "7a4ef948025a8ab98c113d1917bae92cd0ed74389b87b4641c162e4fe53b6b67",
+    "development.jsonl": "becef704b8fb342f8c1b75159af751212fcd9089fafb773420a416180e726366",
+    "calibration.jsonl": "f92d5e24bd8c8907b7af47881e11222946e2b0487b5bcc144755fff4eec9f39a",
+    "sealed/test.jsonl": "160f1817f0dbfddfa2406273364dda7495fef8ba0d80b005cae7b007a36532b4",
+    "manifest.json": "3d9401e0177f166aee80d401bee20848f69bdcabf9104fa928160afe81e2af31",
+    "recipe.json": "c9e3f24fc45d92d9c7344a63f64bf2d83d3715c622945e7c778def246a10ecf0",
+    "audit.json": "f07059ef08988288a216a2eb01246d76e1f0125b1ed8c7a6d663a2c34fff2608"
+  },
+  "receipt_sha256": "8e6ce03f768be6e98cc12f8d85da1700138eb087b8b188fec14cf0da06642a5f",
+  "model_training_or_scoring": "not performed",
+  "limitations": [
+    "The sealed set has 28 questions and cannot establish broad superiority or performance across many kinds of routing tasks.",
+    "Toy-seed and toy-answer checks establish generator behavior, not model performance.",
+    "Tool-choice data remains the next data task."
+  ],
+  "matched_study_prerequisites": [
+    "Use equal presentations and update counts.",
+    "Treatment replaces repeated existing practice with new-family examples; the continued-training control keeps existing practice.",
+    "Include retention results."
+  ]
+}

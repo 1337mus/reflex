@@ -1,0 +1,29 @@
+{
+  "counts": {
+    "calibration": 14,
+    "development": 14,
+    "test": 28,
+    "train": 56
+  },
+  "seed": 9104251840560150670,
+  "source_hashes": {
+    "experiments/prepare_routing_data.py": "ac96379e81e16acb32990a401cfc81c75dd1e6ee20a3c713c4c7a25fdf87782a",
+    "src/reflex_decisions/data.py": "ea0365aeaed37f1273976753da9e7cf472aecbeda3c294d472919d2cad4b2111",
+    "src/reflex_decisions/rendering.py": "99f568581f7893ae7646288be9eca47e256620dad437d38312c79b443f7cfa4a",
+    "src/reflex_decisions/routing_data.py": "d0a3efa7a4b34f599d2c2d709e7c52a5622cf35a2414a55658dd01a124a66460",
+    "src/reflex_decisions/routing_data_audit.py": "9d2215c336c5570e8f139dc0a0bad9fe64436c7e78dbe7efda91edbf05329532",
+    "src/reflex_decisions/routing_data_export.py": "774f001b5f9d4dc782e0d7cbd1493885c0974650d8b0e9a3a0028402cb017ce0",
+    "src/reflex_decisions/routing_data_spec.py": "0f35d42261e9a2237bb1fb571be630969a7696d2fabd0e6cba1a609098286a5b",
+    "src/reflex_decisions/routing_rules.py": "6d9109a55054dafc89d3854e636998b8e39c10081f9ef9c23d98324451a8837a",
+    "src/reflex_decisions/routing_text.py": "0555f0d168597a17372210b22af7a8ac2d8813e24d8c7bfe7f4fdf83b132217f",
+    "src/reflex_decisions/routing_text_parser.py": "ddab7ab969135a6386bb4b7ed1358bf5f35a62bf2b35bb6f7c4bbe6f95be1419",
+    "src/reflex_decisions/schema.py": "6263ba9c37532f03fe151226e57003cb4ff2db746186e32c4f7c32b91baa6c0e"
+  },
+  "template_ids": {
+    "calibration": "routing-calibration-v1",
+    "development": "routing-development-v1",
+    "test": "routing-sealed-v1",
+    "train": "routing-v1"
+  },
+  "version": "routing-data-v1"
+}

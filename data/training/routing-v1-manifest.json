@@ -1,0 +1,45 @@
+{
+  "data_kind": "fixture",
+  "datasets": [
+    {
+      "dataset_id": "routing-data-v1-train",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-support-routing-v1",
+      "source_revision": "routing-data-v1",
+      "source_uri": "synthetic://reflex/support-routing/v1",
+      "split": "train",
+      "task_family": "support-routing"
+    },
+    {
+      "dataset_id": "routing-data-v1-development",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-support-routing-v1",
+      "source_revision": "routing-data-v1",
+      "source_uri": "synthetic://reflex/support-routing/v1",
+      "split": "development",
+      "task_family": "support-routing"
+    },
+    {
+      "dataset_id": "routing-data-v1-calibration",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-support-routing-v1",
+      "source_revision": "routing-data-v1",
+      "source_uri": "synthetic://reflex/support-routing/v1",
+      "split": "calibration",
+      "task_family": "support-routing"
+    },
+    {
+      "dataset_id": "routing-data-v1-test",
+      "license": "self-authored synthetic",
+      "source_id": "synthetic-support-routing-v1",
+      "source_revision": "routing-data-v1",
+      "source_uri": "synthetic://reflex/support-routing/v1",
+      "split": "test",
+      "task_family": "support-routing"
+    }
+  ],
+  "group_partitioned_sources": [
+    "synthetic-support-routing-v1"
+  ],
+  "held_out_families": []
+}

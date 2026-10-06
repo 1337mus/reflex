@@ -63,4 +63,9 @@ Commonsense stayed near chance: 49.3% to 51.5%. These are separate task scores;
 there is no overall reasoning score or new comparison against Intern and Kev.
 See the [results and remaining weaknesses](docs/fresh-eval-results.md).
 
+The new sentence logic and commonsense practice improved both reserved tasks,
+but failed fixed acceptance checks: 19 of 24 passed, with losses on supported
+HANS claims, science (ARC), reading (BoolQ), and cause and effect (COPA). Keep
+the previously selected adapter. See the [targeted R2 results and limits](docs/targeted-training-results.md).
+
 No account is needed for CPU work; the existing Modal profile is configured. Start with the [research plan](docs/research-plan.md) and [runtime decisions ADR](docs/adr/0001-runtime-decisions.md). Published results for other systems belong to their authors and are not Reflex measurements.

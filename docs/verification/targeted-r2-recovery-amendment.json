@@ -22,6 +22,15 @@
     }
   },
   "amendment_id": "targeted-r2-saved-result-recovery-2026-10-05",
+  "amendment_revision": 2,
+  "v1_amendment_sha256": "2b3c099e41fd07af2e9b622187cc622f20f33fdaa2ea768a43f4699d198dd328",
+  "v1_source_commit": "76ad2f97619d118110d61f67c46d8d4417f0421f",
+  "correction_timing": "after_first_production_calculation",
+  "correction_scope": "recovery_wrapper_semantic_request_hash_only",
+  "correction_proof": {
+    "path": ".context/targeted-r2-recovery-hash-correction.json",
+    "sha256": "89e62c125e831ec5bddfa96db11955c5d7cedb589709db7b9139f767c6117acf"
+  },
   "bundle": {
     "file_sha256": {
       "audit.json": "d003609ea73f265c69ec61cafd86b73cf1e07a18c17c90631e0bd001fa5d1e32",
@@ -43,10 +52,11 @@
     "sha256": "6f5142d831545a2db3ea3384a92e823423c98b6621c1306f3af1d31e41a75c23"
   },
   "evidence_file_sha256": {
-    ".context/recount_targeted_recovery.py": "6ae0d5bfc6e72eef8dc1a69e632ab6ae3fda20a379c321f65a24bff84699b668",
+    ".context/recount_targeted_recovery.py": "ef1d10ba08b0650b3245050d2ff230d7c8d8ce482e0f137416aeede32f7cdb03",
     ".context/recount_targeted_study.py": "0b8348d001877703ca9e6ec628c867aa969cb0c827eaa7a7ffacd3a8d9e7c3b2",
+    ".context/targeted-r2-recovery-hash-correction.json": "89e62c125e831ec5bddfa96db11955c5d7cedb589709db7b9139f767c6117acf",
     ".context/targeted-r2-adapter-storage-metadata.json": "2d86600b984d5e655064365cd23b8c74cad6551b134f14003a7eb4bb333b376c",
-    ".context/targeted-r2-independent-recovery-self-test.json": "83369741a65ab4241fef38225d69ff87b88b6b1366df8bce3d5c2b88825a8953",
+    ".context/targeted-r2-independent-recovery-self-test.json": "613eb1c73c08c308ec57c66ba20ed81a37409db3310b3db7a58cb9dd9e76f560",
     ".context/targeted-r2-recovered-worker-validation.json": "426db07c1b70f77fc2af595005201e5891674a79c2f2940bd5fc2008f4eaf007",
     ".context/targeted-r2-saved-recovery-account.json": "7519430949205be99caf6c7ccbccb1bf8f77718898ab4621a728be579460ea45",
     ".context/targeted-r2-saved-recovery-lifecycle.json": "7f186c57ada9ac7890f55d3a600ace67461ebccdfcf6bb654b86642db9d1199f",
